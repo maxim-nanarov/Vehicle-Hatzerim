@@ -82,7 +82,7 @@ app.post("/User_data", (req, res) => {
       }
     );
   } else {
-    res.send("SQLi? how about get f*cked m8");
+    res.send("SQLi? how about no");
   }
 });
 
