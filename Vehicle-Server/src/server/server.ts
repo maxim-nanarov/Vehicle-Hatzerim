@@ -23,7 +23,7 @@ app.get("/Users", (_req, res) => {
 });
 
 app.get("/Rides", (_req, res) => {
-  client.query("SELECT * FROM Rides;", (err: Error, response: any) => {
+  client.query("SELECT * FROM ride;", (err: Error, response: any) => {
     if (err) throw err;
     res.status(200).json(response.rows);
   });
@@ -68,13 +68,13 @@ app.post("/User_data", (req, res) => {
   var format = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
   if (!format.test(String(req.body.vals[0]))) {
     client.query(
-      `INSERT INTO Users (user_id, user_name, user_surname, user_home_phone,user_work_phone,user_personal_phone,is_admin)
+      `INSERT INTO Users (user_id, user_name, user_surname, user_home_phone, user_work_phone, user_personal_phone, is_admin)
 			VALUES ('${Number(req.body.vals[0]) /*User ID*/}', '${
         req.body.vals[1] /*User name*/
       }', '${req.body.vals[2] /*User surname*/}', '${Number(
         req.body.vals[3] /*User phone number*/
       )}', ${Number(req.body.vals[4]) /*User work number*/}, ${Number(
-        req.body.vals[5]
+        req.body.vals[5] /*User personal number*/
       )},${Boolean(req.body.vals[6])});`,
       (err: Error, response: any) => {
         if (err) throw err;
@@ -90,11 +90,13 @@ app.post("/Ride_data", (req, res) => {
   var format = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
   if (!format.test(String(req.body.vals[0]))) {
     client.query(
-      `INSERT INTO Ride (ride_id, starting_date, finishing_date, will_take_riders, vehicle_plate_num, user_id, destination_id,reason_id)
-			VALUES ('${req.body.vals[0]}', ${Number(req.body.vals[1])}, ${Number(
+      `INSERT INTO Ride 
+			VALUES (${Number(req.body.vals[0])}', ${req.body.vals[1]}, ${
         req.body.vals[2]
-      )}, '${req.body.vals[3]}', ${Number(req.body.vals[4])}, ${Number(
+      }, '${req.body.vals[3]}', ${Boolean(req.body.vals[4])}, ${Number(
         req.body.vals[5]
+      )}, ${Number(req.body.vals[6])}, ${Number(req.body.vals[7])}, ${Number(
+        req.body.vals[8]
       )});`,
       (err: Error, response: any) => {
         if (err) throw err;
@@ -102,7 +104,7 @@ app.post("/Ride_data", (req, res) => {
       }
     );
   } else {
-    res.send("SQLi? how about get f*cked m8");
+    res.send("SQLi? how about no");
   }
 });
 
