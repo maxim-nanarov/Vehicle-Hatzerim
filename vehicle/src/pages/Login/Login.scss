@@ -1,0 +1,30 @@
+html,
+body,
+.App {
+  height: 100%;
+}
+
+.MainDiv {
+  background-color: beige;
+  border: 1px black solid;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.LoginDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  input {
+    border: 1px rgb(248, 191, 2) solid;
+
+    transition: 0.3s;
+  }
+  input:focus {
+    border: 1px rgb(0, 0, 0) solid;
+  }
+}
+.Button {
+}

@@ -1,5 +1,5 @@
 import React from "react";
 
-export default function Main_menu() {
-  return <div>Main_menu</div>;
+export default function MainMenu() {
+  return <div>Main menu</div>;
 }

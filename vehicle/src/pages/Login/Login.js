@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Myimage from "../../pictures/Logo_Hatzerim.jpg";
+import "./Login.scss";
 
 export default function Login() {
   const [users, setUser] = useState();
@@ -24,22 +26,33 @@ export default function Login() {
 
     let password = formData.password;
     console.log(password);
+    let flag = false;
+    let name;
+    let surname;
     users.forEach((user) => {
       console.log(user.user_id);
       if (user.user_id === parseInt(password)) {
-        return <label>found</label>;
+        flag = true;
+        name = user.user_name;
+        surname = user.user_surname;
       }
     });
+    if (flag) {
+      window.location.href = `${origin}/Main_Menu`;
+      alert("Welcome : " + name + " " + surname);
+    } else {
+      alert("you enterd the wrong password");
+    }
   };
 
   console.log(users);
   return (
-    <div>
+    <div className="MainDiv">
       <form onSubmit={Submit} id="addForm">
-        <div>
-          <img src="../pictures/Logo_Hatzerim.jpg" alt="Logo"></img>
+        <div className="PictureDiv">
+          <img src={Myimage} alt="Logo"></img>
         </div>
-        <div>
+        <div className="LoginDiv">
           <label>Login: </label>
           <input
             type="Number"
@@ -49,7 +62,7 @@ export default function Login() {
           />
         </div>
       </form>
-      <button type="submit" value="Submit" form="addForm">
+      <button className="Button" type="submit" value="Submit" form="addForm">
         Enter
       </button>
     </div>

@@ -1,5 +1,5 @@
 import React from "react";
 
-export default function Get_vehicle() {
+export default function GetVehicle() {
   return <div>Get_vehicle</div>;
 }
