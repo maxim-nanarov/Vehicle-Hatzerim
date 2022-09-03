@@ -5,7 +5,6 @@ import "./Login.scss";
 
 export default function Login() {
   const [users, setUser] = useState();
-
   useEffect(() => {
     axios
       .get("https://vehicle-hatzerim.herokuapp.com/users", {
@@ -27,19 +26,18 @@ export default function Login() {
     let password = formData.password;
     console.log(password);
     let flag = false;
-    let name;
-    let surname;
+    let userFlag;
+
     users.forEach((user) => {
       console.log(user.user_id);
       if (user.user_id === parseInt(password)) {
         flag = true;
-        name = user.user_name;
-        surname = user.user_surname;
+        userFlag = user;
       }
     });
     if (flag) {
-      window.location.href = `${origin}/Main_Menu`;
-      alert("Welcome : " + name + " " + surname);
+      window.location.href = `${origin}/Main_Menu/${userFlag.user_id}`;
+      alert("Welcome : " + userFlag.user_name + " " + userFlag.user_surname);
     } else {
       alert("you enterd the wrong password");
     }
