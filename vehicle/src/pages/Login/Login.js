@@ -55,7 +55,7 @@ export default function Login() {
           <input
             type="Number"
             name="password"
-            placeholder="Please enter here your passwrod"
+            placeholder="Password please"
             id="password"
           />
         </div>

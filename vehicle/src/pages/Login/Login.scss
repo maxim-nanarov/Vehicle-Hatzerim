@@ -1,10 +1,21 @@
 .MainDiv {
   background-color: beige;
   border: 1px black solid;
-  border-radius: 20px;
+
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+form {
+  width: 50%;
+  display: flex;
+  // justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .LoginDiv {
@@ -12,13 +23,31 @@
   justify-content: center;
   align-items: center;
   input {
-    border: 1px rgb(248, 191, 2) solid;
-
-    transition: 0.3s;
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
   }
   input:focus {
     border: 1px rgb(0, 0, 0) solid;
   }
 }
 .Button {
+  background-color: #4caf50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  transition: 0.25s;
+  &:hover {
+    cursor: pointer;
+    border-radius: 15px;
+    background-color: #4caf4f75;
+  }
 }
