@@ -9,6 +9,7 @@ export default function VehicleSchedule() {
   const [reason, setReason] = useState([]);
   const [Type, setType] = useState([]);
   const [Vehicle, setVehicle] = useState([]);
+  const [Destinations, setDestinations] = useState([]);
 
   useEffect(() => {
     axios
@@ -65,6 +66,17 @@ export default function VehicleSchedule() {
       .then((res) => {
         setVehicle(res.data);
       });
+
+    axios
+      .get("https://vehicle-hatzerim.herokuapp.com/Destinations", {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        setDestinations(res.data);
+      });
   }, []);
 
   let count = 0;
@@ -76,15 +88,21 @@ export default function VehicleSchedule() {
     let type_name = getType(Vehicle, Type, Ride.vehicle_plate_num);
     let reason_name = getreason(Vehicle, reason, Ride.vehicle_plate_num);
     let user_name = getUser(Rides, Users, Ride.vehicle_plate_num);
+    let dstination = getDestionation(
+      Rides,
+      Destinations,
+      Ride.vehicle_plate_num
+    );
     return (
       <tr className="Card" key={count}>
         <th>{Ride.ride_id}</th>
+        <th>{user_name} </th>
         <th>{start}</th>
         <th>{finish}</th>
         <th>{JSON.stringify(Ride.will_take_riders)}</th>
         <th>{type_name}</th>
         <th>{reason_name} </th>
-        <th>{user_name} </th>
+        <th>{dstination} </th>
       </tr>
     );
   });
@@ -93,13 +111,14 @@ export default function VehicleSchedule() {
       <table>
         {" "}
         <tr className="Card" key={count}>
-          <th>id</th>
-          <th>starting</th>
-          <th>finishing</th>
-          <th>will take riders</th>
-          <th>vehicle type</th>
-          <th>reason id </th>
-          <th>user </th>
+          <th>Id</th>
+          <th>User </th>
+          <th>Starting</th>
+          <th>Finishing</th>
+          <th>Will take riders</th>
+          <th>Vehicle type</th>
+          <th>Reason </th>
+          <th>Destination </th>
         </tr>
         {a}
       </table>
@@ -161,6 +180,25 @@ function getUser(Rides_T, user_T, vehicle_plate_num) {
   user_T.forEach((user) => {
     if (user.user_id === user_searched_id) {
       x = user.user_name + " " + user.user_surname;
+      console.log(x);
+      return x;
+    }
+  });
+  return x;
+}
+function getDestionation(Rides_T, Destinations, vehicle_plate_num) {
+  let user_searched_id = 0;
+
+  Rides_T.forEach((Ride) => {
+    if (Ride.vehicle_plate_num === vehicle_plate_num) {
+      user_searched_id = Ride.user_id;
+    }
+  });
+  let x;
+  console.log(Destinations);
+  Destinations.forEach((destination) => {
+    if (destination.destination_id === user_searched_id) {
+      x = destination.destination_name;
       console.log(x);
       return x;
     }
