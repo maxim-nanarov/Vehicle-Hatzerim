@@ -5,16 +5,20 @@ export default function GetVehicle() {
   return (
     <>
       <div className="MainDivGetV">
-        <div>
-          <div>
+        <div className="signUpDiv">
+          <div className="dateDiv">
             <label>Start: </label>
-            <input type="date" />
-            <input type="time" />
+            <div>
+              <input type="date" />
+              <input type="time" />
+            </div>
           </div>
-          <div>
+          <div className="dateDiv">
             <label>finish: </label>
-            <input type="date" />
-            <input type="time" />
+            <div>
+              <input type="date" />
+              <input type="time" />
+            </div>
           </div>
           <div>
             <label>Destination</label>

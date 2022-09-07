@@ -3,3 +3,21 @@
   justify-content: center;
   align-items: center;
 }
+.signUpDiv {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid white;
+}
+
+.dateDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.ChooseTypeVhicle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
