@@ -1,9 +1,10 @@
 import React from "react";
+import "./Get_vehicle.scss";
 
 export default function GetVehicle() {
   return (
     <>
-      <div>
+      <div className="MainDivGetV">
         <div>
           <div>
             <label>Start: </label>
