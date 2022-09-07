@@ -12,7 +12,7 @@ export default function MainMenu() {
           <img src={Myimage} alt="Logo"></img>
           <label>Hello </label>
         </div>
-        <nav>
+        <nav className="topnav">
           <Link to={`/Main_Menu/${id}/Get_vehicle${search}`}>Get Vehicle</Link>
           <Link to={`/Main_Menu/${id}/Vehicle_Schedule${search}`}>
             Vehicle Schedule
