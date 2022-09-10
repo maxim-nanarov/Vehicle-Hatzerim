@@ -1,17 +1,59 @@
 import React, { useEffect, useState } from "react";
 import "./Get_vehicle.scss";
+import axios from "axios";
 
 export default function GetVehicle() {
   const [startingDate, setStartingDate] = useState();
   const [EndingDate, setEndingDate] = useState();
   const [startingHour, setStartingHour] = useState();
   const [EndingHour, setEndingHour] = useState();
+  const [Destinations, setDestinations] = useState([]);
+  const [Reasons, setReasons] = useState([]);
   useEffect(() => {
-    console.clear();
-    console.log("starting Date: " + startingDate);
-    console.log("starting Hour: " + startingHour);
-    console.log("Ending Date: " + EndingDate);
-    console.log("Ending Hour: " + EndingHour);
+    axios
+      .get("https://vehicle-hatzerim.herokuapp.com/Destinations", {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setDestinations(res.data);
+      });
+
+    axios
+      .get("https://vehicle-hatzerim.herokuapp.com/reasons", {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setReasons(res.data);
+      });
+  }, []);
+  let count = 0;
+
+  let a = Destinations.map((Destination) => {
+    count++;
+    console.log(Destination);
+    return (
+      <>
+        <option>{Destination.destination_name}</option>
+      </>
+    );
+  });
+
+  let b = Reasons.map((Reason) => {
+    count++;
+    console.log(Reason);
+    return (
+      <>
+        <option>{Reason.reason_name}</option>
+      </>
+    );
   });
 
   return (
@@ -48,19 +90,13 @@ export default function GetVehicle() {
             <div>
               <label>Destination: </label>
               <select name="cars" id="cars">
-                <option value="volvo">Volvo</option>
-                <option value="saab">Saab</option>
-                <option value="mercedes">Mercedes</option>
-                <option value="audi">Audi</option>
+                {a}
               </select>
             </div>
             <div>
               <label>Reason</label>
               <select name="cars" id="cars">
-                <option value="volvo">Volvo</option>
-                <option value="saab">Saab</option>
-                <option value="mercedes">Mercedes</option>
-                <option value="audi">Audi</option>
+                {b}
               </select>
             </div>
           </div>
