@@ -5,11 +5,15 @@ import "./Main_menu.scss";
 export default function MainMenu() {
   let { id } = useParams();
   const { search } = useLocation();
+
+  const Da = new Date();
+
   return (
     <>
       <div className="MainMenuDiv">
         <div className="header">
           <img src={Myimage} alt="Logo"></img>
+          <div>{Da.toLocaleString()}</div>
           <label>Hello </label>
         </div>
         <nav className="topnav">
