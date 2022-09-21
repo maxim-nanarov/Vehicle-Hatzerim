@@ -6,7 +6,11 @@ axios
   )
   .then(function (response) {
     // handle success
-    console.log(response.data.result);
+    let data = response.data.result.records;
+
+    data.forEach((des) => {
+      console.log(des._id, des.שם_ישוב_לועזי, des.שם_מועצה);
+    });
   })
   .catch(function (error) {
     console.log("handle error");
