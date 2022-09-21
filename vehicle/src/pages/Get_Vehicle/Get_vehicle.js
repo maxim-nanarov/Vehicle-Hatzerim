@@ -9,7 +9,22 @@ export default function GetVehicle() {
   const [EndingHour, setEndingHour] = useState();
   const [Destinations, setDestinations] = useState([]);
   const [Reasons, setReasons] = useState([]);
+  const [citys, setCity] = useState([]);
+
   useEffect(() => {
+    axios
+      .get(
+        "https://data.gov.il/api/3/action/datastore_search?resource_id=d4901968-dad3-4845-a9b0-a57d027f11ab&limit=10000"
+      )
+      .then(function (response) {
+        // handle success
+        setCity(response.data.result);
+      })
+      .catch(function (error) {
+        console.log("handle error");
+        console.log(error);
+      });
+
     axios
       .get("https://vehicle-hatzerim.herokuapp.com/Destinations", {
         headers: {
@@ -55,7 +70,8 @@ export default function GetVehicle() {
       </>
     );
   });
-
+  let currentDate = new Date().toISOString().split("T")[0];
+  console.log(currentDate);
   return (
     <>
       <div className="MainDivGetV">
@@ -64,6 +80,7 @@ export default function GetVehicle() {
             <label>Start: </label>
             <div>
               <input
+                value={currentDate}
                 type="date"
                 onChange={(e) => setStartingDate(e.target.value)}
               />
@@ -79,6 +96,7 @@ export default function GetVehicle() {
               <input
                 type="date"
                 onChange={(e) => setEndingDate(e.target.value)}
+                value={currentDate}
               />
               <input
                 type="time"
@@ -99,6 +117,10 @@ export default function GetVehicle() {
                 {b}
               </select>
             </div>
+          </div>
+          <div>
+            <label>Will you take riders?</label>
+            <input type="checkBox"></input>
           </div>
         </div>
         <div>
