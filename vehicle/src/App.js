@@ -4,7 +4,7 @@ import MainMenu from "./pages/MainMenu/Main_menu";
 import "./pages/Login/Login.scss";
 import GetVehicle from "./pages/Get_Vehicle/Get_vehicle";
 import VehicleSchedule from "./pages/Vehicle_Schedule/Vehicle_Schedule";
-import Rides from "./pages/Rides";
+import Rides from "./pages/Rides/Rides";
 
 function App() {
   return (
