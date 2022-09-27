@@ -91,7 +91,7 @@ app.post("/Ride_data", (req, res) => {
   if (!format.test(String(req.body.vals[0]))) {
     client.query(
       `INSERT INTO Ride 
-			VALUES (${Number(req.body.vals[0])}', ${req.body.vals[1]}, ${
+			VALUES ('${Number(req.body.vals[0])}', ${req.body.vals[1]}, ${
         req.body.vals[2]
       }, '${req.body.vals[3]}', ${Boolean(req.body.vals[4])}, ${Number(
         req.body.vals[5]
@@ -108,76 +108,21 @@ app.post("/Ride_data", (req, res) => {
   }
 });
 
-// app.get("/add_sock", (_req, res) => {
-//   res.sendFile(path.join(root, "add.html"));
-// });
-
-// app.get("/edit_sock", (_req, res) => {
-//   res.sendFile(path.join(root, "edit.html"));
-// });
-
-// app.post("/edit_submit", (req, res) => {
-//   let values = req.body.vals;
-//   console.log(values);
-//   var format = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
-//   if (!format.test(String(values[0]))) {
-//     client.query(
-//       `Update socks SET model='${values[0]}', quantity=${Number(
-//         values[1]
-//       )},size=${Number(values[2])},manufacturing_year = '${
-//         values[3]
-//       }',location_id=${Number(values[4])}, officer_id= ${Number(
-//         values[5]
-//       )} WHERE sock_id=${values[6]};`,
-//       (err: Error, _response: any) => {
-//         if (err) throw err;
-//         res.send(`edited sock-id: ${values[5]}`);
-//       }
-//     );
-//   } else {
-//     res.send("No SQLi, f*ck off m8");
-//   }
-// });
-
-// app.post("/remove", (req, res) => {
-//   let sock_id = req.body.id;
-//   var format = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
-//   if (!format.test(String(sock_id))) {
-//     client.query(
-//       `DELETE FROM locations_history WHERE sock_id=${sock_id};DELETE FROM socks WHERE sock_id=${sock_id};`,
-//       (err: Error, _response: any) => {
-//         if (err) throw err;
-//         res.end(`Removed ${sock_id}`);
-//       }
-//     );
-//   } else {
-//     res.send("No SQLi, f*ck off m8");
-//   }
-// });
-
-// app.get("/locations", (_req, res) => {
-//   client.query(
-//     "SELECT base_name,location_id FROM locations",
-//     (err: Error, response: any) => {
-//       if (err) throw err;
-//       res.status(200).json(response.rows);
-//     }
-//   );
-// });
-
-// app.get("/officers", (_req, res) => {
-//   client.query(
-//     "SELECT officer_id, name FROM officers",
-//     (err: Error, response: any) => {
-//       if (err) throw err;
-//       res.status(200).json(response.rows);
-//     }
-//   );
-// });
-
-// app.get("*", (_req, res) => {
-//   res.sendFile(path.join(root, "index.html"));
-// });
+app.post("/Destionaion_Data", (req, res) => {
+  var format = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+  if (!format.test(String(req.body.vals[0]))) {
+    client.query(
+      `INSERT INTO Destinations 
+			VALUES (${Number(req.body.vals[0])}, ${req.body.vals[1]},1);`,
+      (err: Error, response: any) => {
+        if (err) throw err;
+        res.send(response);
+      }
+    );
+  } else {
+    res.send("SQLi? how about no");
+  }
+});
 
 const port = process.env.PORT || 4000;
 app.listen(port, () => {
