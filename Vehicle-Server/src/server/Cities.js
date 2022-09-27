@@ -9,7 +9,14 @@ axios
     let data = response.data.result.records;
 
     data.forEach((des) => {
-      console.log(des._id, des.שם_ישוב_לועזי, des.שם_מועצה);
+      if (
+        des.שם_מועצה === "בני שמעון" ||
+        des.לשכה === "באר שבע                  "
+      ) {
+        console.log(des._id, des.שם_ישוב_לועזי, 1);
+      } else {
+        console.log(des._id, des.שם_ישוב_לועזי, 2);
+      }
     });
   })
   .catch(function (error) {
