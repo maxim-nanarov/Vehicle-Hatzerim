@@ -69,8 +69,11 @@ export default function GetVehicle() {
   let currentDate = new Date().toISOString().split("T")[0];
 
   useEffect(() => {
+    let time = new Date();
     setStartingDate(new Date().toDateString());
-    setStartingHour(new Date().toTimeString());
+    setStartingHour(new Date().toTimeString().slice(0, 8));
+    setEndingDate(new Date().toDateString());
+    setEndingHour(new Date().toTimeString().slice(0, 8));
   }, [startingDate, startingHour]);
 
   return (
@@ -92,6 +95,7 @@ export default function GetVehicle() {
                   id="Starting_Hour"
                   name="Starting_Hour"
                   type="time"
+                  value={startingHour}
                   onChange={(e) => setStartingHour(e.target.value)}
                 />
               </div>
@@ -110,6 +114,7 @@ export default function GetVehicle() {
                   id="Ending_Hour"
                   name="Ending_Hour"
                   type="time"
+                  value={EndingHour}
                   onChange={(e) => setEndingHour(e.target.value)}
                 />
               </div>
