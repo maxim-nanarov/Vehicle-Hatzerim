@@ -33,7 +33,6 @@ export default function GetVehicle() {
         },
       })
       .then((res) => {
-        console.log(res.data);
         setDestinations(res.data);
       });
 
@@ -45,7 +44,6 @@ export default function GetVehicle() {
         },
       })
       .then((res) => {
-        console.log(res.data);
         setReasons(res.data);
       });
   }, []);
@@ -53,7 +51,6 @@ export default function GetVehicle() {
 
   let a = Destinations.map((Destination) => {
     count++;
-    console.log(Destination);
     return (
       <>
         <option>{Destination.destination_name}</option>
@@ -63,7 +60,6 @@ export default function GetVehicle() {
 
   let b = Reasons.map((Reason) => {
     count++;
-    console.log(Reason);
     return (
       <>
         <option>{Reason.reason_name}</option>
@@ -71,62 +67,95 @@ export default function GetVehicle() {
     );
   });
   let currentDate = new Date().toISOString().split("T")[0];
-  console.log(currentDate);
+
+  useEffect(() => {
+    setStartingDate(new Date().toDateString());
+    setStartingHour(new Date().toTimeString());
+  }, [startingDate, startingHour]);
+
   return (
     <>
       <div className="MainDivGetV">
-        <div className="signUpDiv">
-          <div className="dateDiv">
-            <label>Start: </label>
-            <div>
-              <input
-                value={currentDate}
-                type="date"
-                onChange={(e) => setStartingDate(e.target.value)}
-              />
-              <input
-                type="time"
-                onChange={(e) => setStartingHour(e.target.value)}
-              />
+        <form id="AddForm" onSubmit={onSubmit}>
+          <div className="signUpDiv">
+            <div className="dateDiv">
+              <label>Start: </label>
+              <div>
+                <input
+                  id="Starting_Date"
+                  name="Starting_Date"
+                  value={currentDate}
+                  type="date"
+                  onChange={(e) => setStartingDate(e.target.value)}
+                />
+                <input
+                  id="Starting_Hour"
+                  name="Starting_Hour"
+                  type="time"
+                  onChange={(e) => setStartingHour(e.target.value)}
+                />
+              </div>
             </div>
-          </div>
-          <div className="dateDiv">
-            <label>finish: </label>
-            <div>
-              <input
-                type="date"
-                onChange={(e) => setEndingDate(e.target.value)}
-                value={currentDate}
-              />
-              <input
-                type="time"
-                onChange={(e) => setEndingHour(e.target.value)}
-              />
+            <div className="dateDiv">
+              <label>finish: </label>
+              <div>
+                <input
+                  id="Ending_Date"
+                  name="Ending_Date"
+                  type="date"
+                  onChange={(e) => setEndingDate(e.target.value)}
+                  value={currentDate}
+                />
+                <input
+                  id="Ending_Hour"
+                  name="Ending_Hour"
+                  type="time"
+                  onChange={(e) => setEndingHour(e.target.value)}
+                />
+              </div>
             </div>
-          </div>
-          <div className="ChooseTypeVhicle">
-            <div>
-              <label>Destination: </label>
-              <select name="cars" id="cars">
-                {a}
-              </select>
+            <div className="ChooseTypeVhicle">
+              <div>
+                <label>Destination: </label>
+                <select name="Destination" id="Destination">
+                  {a}
+                </select>
+              </div>
+              <div>
+                <label>Reason</label>
+                <select name="cars" id="cars">
+                  {b}
+                </select>
+              </div>
             </div>
             <div>
-              <label>Reason</label>
-              <select name="cars" id="cars">
-                {b}
-              </select>
+              <label>Will you take riders?</label>
+              <input
+                name="Take_Riders"
+                id="Take_Riders"
+                type="checkBox"
+              ></input>
             </div>
           </div>
           <div>
-            <label>Will you take riders?</label>
-            <input type="checkBox"></input>
+            <button form="AddForm" type="submit" value="Submit">
+              Submit
+            </button>
           </div>
-        </div>
-        <div>
-          <button>Submit</button>
-        </div>
+        </form>
       </div>
     </>
   );
+
+  function onSubmit(e) {
+    e.preventDefault();
+    let formData = new FormData(e.target);
+    formData = Object.fromEntries(formData);
+    if (formData.Take_Riders === undefined) {
+      formData.Take_Riders = false;
+    } else {
+      formData.Take_Riders = true;
+    }
+    console.log(formData);
+  }
 }
