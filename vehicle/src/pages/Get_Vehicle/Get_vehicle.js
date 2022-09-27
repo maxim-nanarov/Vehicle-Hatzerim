@@ -156,6 +156,7 @@ export default function GetVehicle() {
     } else {
       formData.Take_Riders = true;
     }
+    //To Do: put form Data to an post request to the Rides server
     console.log(formData);
   }
 }

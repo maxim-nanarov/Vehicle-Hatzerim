@@ -109,19 +109,16 @@ app.post("/Ride_data", (req, res) => {
 });
 
 app.post("/Destionaion_Data", (req, res) => {
-  var format = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
-  if (!format.test(String(req.body.vals[0]))) {
-    client.query(
-      `INSERT INTO Destinations 
-			VALUES (${Number(req.body.vals[0])}, ${req.body.vals[1]},1);`,
-      (err: Error, response: any) => {
-        if (err) throw err;
-        res.send(response);
-      }
-    );
-  } else {
-    res.send("SQLi? how about no");
-  }
+  console.log(req);
+  console.log(res);
+  client.query(
+    `INSERT INTO Destinations
+  	VALUES (${Number(req.body.vals[0])}, ${req.body.vals[1]},1);`,
+    (err: Error, response: any) => {
+      if (err) throw err;
+      res.send(response);
+    }
+  );
 });
 
 const port = process.env.PORT || 4000;

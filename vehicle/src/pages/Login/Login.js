@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Myimage from "../../pictures/Logo_Hatzerim.jpg";
 import "./Login.scss";
+import MainMenu from "../MainMenu/Main_menu";
 
 export default function Login() {
   const [users, setUser] = useState();

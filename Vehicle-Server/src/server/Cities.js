@@ -8,14 +8,39 @@ axios
     // handle success
     let data = response.data.result.records;
 
-    data.forEach((des) => {
+    data.forEach(async (des) => {
       if (
         des.שם_מועצה === "בני שמעון" ||
         des.לשכה === "באר שבע                  "
       ) {
         console.log(des._id, des.שם_ישוב_לועזי, 1);
+        await axios
+          .post("https://vehicle-hatzerim.herokuapp.com/Destionaion_Data", {
+            id: des.id,
+            name: des.שם_ישוב_לועזי,
+            score: 1,
+          })
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       } else {
-        console.log(des._id, des.שם_ישוב_לועזי, 2);
+        await axios
+          .post("https://vehicle-hatzerim.herokuapp.com/Destionaion_Data", {
+            data: {
+              id: des.id,
+              name: des.שם_ישוב_לועזי,
+              score: 2,
+            },
+          })
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       }
     });
   })
