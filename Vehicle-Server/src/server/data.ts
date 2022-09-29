@@ -12,7 +12,7 @@ export const client = new Client({
 
 client.connect();
 
-async function initDb() {
+export async function initDb() {
   await client.query(
     `CREATE TABLE IF NOT EXISTS Users(
           User_Id SERIAL PRIMARY KEY,
@@ -55,6 +55,13 @@ async function initDb() {
           Size_Capacity INTEGER NOT NULL
           );`
   );
+
+  // await client.query(
+  //   `CREATE TABLE IF NOT EXISTS Vehicle_Company(
+  //     Company_ID SERIAL PRIMARY KEY,
+  //     Company_Name TEXT NOT NULL);`
+  // );
+
   await client.query(
     `CREATE TABLE IF NOT EXISTS Vehicles(
                   Vehicle_Plate_Num SERIAL PRIMARY KEY,
@@ -69,8 +76,8 @@ async function initDb() {
   await client.query(
     `CREATE TABLE IF NOT EXISTS Ride(
                           Ride_Id SERIAL PRIMARY KEY,
-                          Starting_Date DATE NOT NULL,
-                          Finishing_Date DATE NOT NULL,
+                          Starting_Date TIMESTAMP NOT NULL,
+                          Finishing_Date TIMESTAMP NOT NULL,
                           Will_Take_Riders BOOLEAN NOT NULL,
                           Vehicle_Plate_Num INTEGER NOT NULL,
                           User_ID INTEGER NOT NULL,

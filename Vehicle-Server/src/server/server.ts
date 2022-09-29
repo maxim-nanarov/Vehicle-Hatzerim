@@ -3,6 +3,7 @@ import express, { Express } from "express";
 import cors from "cors";
 import { json } from "body-parser";
 import { client } from "./data";
+import { initDb } from "./data";
 
 const app: Express = express();
 app.use(cors());
@@ -87,25 +88,21 @@ app.post("/User_data", (req, res) => {
 });
 
 app.post("/Ride_data", (req, res) => {
-  var format = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
-  if (!format.test(String(req.body.vals[0]))) {
-    client.query(
-      `INSERT INTO Ride 
-			VALUES ('${Number(req.body.vals[0])}', ${req.body.vals[1]}, ${
-        req.body.vals[2]
-      }, '${req.body.vals[3]}', ${Boolean(req.body.vals[4])}, ${Number(
-        req.body.vals[5]
-      )}, ${Number(req.body.vals[6])}, ${Number(req.body.vals[7])}, ${Number(
-        req.body.vals[8]
-      )});`,
-      (err: Error, response: any) => {
-        if (err) throw err;
-        res.send(response);
-      }
-    );
-  } else {
-    res.send("SQLi? how about no");
-  }
+  const data = req.body.formData;
+  console.log(data);
+  res.send(data);
+  // var format = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+  // if (!format.test(String(req.body.vals[0]))) {
+  //   client.query(
+  //     `INSERT INTO ride VALUES ('1','2022-09-29','2022-09-29','false','0','0','0','0');`,
+  //     (err: Error, response: any) => {
+  //       if (err) throw err;
+  //       res.send(response);
+  //     }
+  //   );
+  // } else {
+  //   res.send("SQLi? how about no");
+  // }
 });
 
 app.post("/Destionaion_Data", (req, res) => {
@@ -123,5 +120,6 @@ app.post("/Destionaion_Data", (req, res) => {
 
 const port = process.env.PORT || 4000;
 app.listen(port, () => {
+  initDb();
   console.log("Hosted: http://localhost:" + port);
 });

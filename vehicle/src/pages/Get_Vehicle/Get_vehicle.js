@@ -162,6 +162,11 @@ export default function GetVehicle() {
       formData.Take_Riders = true;
     }
     //To Do: put form Data to an post request to the Rides server
+    axios
+      .post("https://vehicle-hatzerim.herokuapp.com/Ride_data", { formData })
+      .then((res) => {
+        console.log(res.data);
+      });
     console.log(formData);
   }
 }
