@@ -11,9 +11,10 @@ export const client = new Client({
 });
 
 client.connect();
-
+//The data base started acting out and
+//
 export async function initDb() {
-  await client.query(`DROP database de3gc06a5r5flh`);
+  // await client.query(`DROP database de3gc06a5r5flh`);
 
   await client.query(
     `CREATE TABLE IF NOT EXISTS Users(
@@ -74,8 +75,8 @@ export async function initDb() {
                   REFERENCES Type_Vehicle(Type_ID),
                   CONSTRAINT fk_Size FOREIGN KEY (Size_ID)
                   REFERENCES Vehicle_Size(Size_ID),
-                  CONSTRAINT fk_Size FOREIGN KEY (Company_ID)
-                  REFERENCES Vehicle_Size(Company_ID)
+                  CONSTRAINT fk_Company FOREIGN KEY (Company_ID)
+                  REFERENCES Vehicle_Company(Company_ID)
                   );`
   );
   await client.query(
