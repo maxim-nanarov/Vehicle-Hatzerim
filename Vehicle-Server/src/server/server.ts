@@ -129,7 +129,16 @@ app.post("/Destionaion_Data", (req, res) => {
   );
 });
 
-const port = process.env.PORT || 4000;
+app.post("/Add_Vehicle", (req, res) => {
+  console.log(req.body.data);
+  let data = req.body.data;
+  client.query(
+    `INSERT INTO vehicles Values (DEFAULT,${data.Company},${data.Size},${data.Type});`
+  );
+  res.send("req");
+});
+
+const port = process.env.PORT || 4002;
 app.listen(port, () => {
   initDb();
   console.log("Hosted: http://localhost:" + port);

@@ -13,6 +13,8 @@ export const client = new Client({
 client.connect();
 
 export async function initDb() {
+  await client.query(`DROP database de3gc06a5r5flh`);
+
   await client.query(
     `CREATE TABLE IF NOT EXISTS Users(
           User_Id SERIAL PRIMARY KEY,

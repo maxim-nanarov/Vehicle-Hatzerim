@@ -73,9 +73,41 @@ export default function AddVehicle() {
 
   return (
     <div>
-      <select>{SelectCompany}</select>
-      <select>{SelectType}</select>
-      <select>{SelectSize}</select>
+      <form id="AddForm" onSubmit={onSubmit}>
+        <select id="Company" name="Company">
+          {SelectCompany}
+        </select>
+        <select id="Type" name="Type">
+          {SelectType}
+        </select>
+        <select id="Size" name="Size">
+          {SelectSize}
+        </select>
+        <button form="AddForm" type="submit" value="Submit">
+          Submit
+        </button>
+      </form>
     </div>
   );
+
+  function onSubmit(e) {
+    e.preventDefault();
+    let formData = new FormData(e.target);
+    formData = Object.fromEntries(formData);
+    console.log(formData);
+
+    axios
+      .post("http://localhost:4000/Add_Vehicle", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: JSON.stringify(formData),
+      })
+      .then((res) => {
+        console.log("then => ", res);
+      })
+      .catch((err) => {
+        console.log("error => ", err);
+      });
+  }
 }
