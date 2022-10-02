@@ -56,21 +56,24 @@ export async function initDb() {
           );`
   );
 
-  // await client.query(
-  //   `CREATE TABLE IF NOT EXISTS Vehicle_Company(
-  //     Company_ID SERIAL PRIMARY KEY,
-  //     Company_Name TEXT NOT NULL);`
-  // );
+  await client.query(
+    `CREATE TABLE IF NOT EXISTS Vehicle_Company(
+      Company_ID SERIAL PRIMARY KEY,
+      Company_Name TEXT NOT NULL);`
+  );
 
   await client.query(
     `CREATE TABLE IF NOT EXISTS Vehicles(
                   Vehicle_Plate_Num SERIAL PRIMARY KEY,
                   Type_ID INTEGER NOT NULL,
                   Size_ID INTEGER NOT NULL,
+                  Company_ID INTEGER NOT NULL,
                   CONSTRAINT fk_Type FOREIGN KEY (Type_ID)
                   REFERENCES Type_Vehicle(Type_ID),
                   CONSTRAINT fk_Size FOREIGN KEY (Size_ID)
-                  REFERENCES Vehicle_Size(Size_ID)
+                  REFERENCES Vehicle_Size(Size_ID),
+                  CONSTRAINT fk_Size FOREIGN KEY (Company_ID)
+                  REFERENCES Vehicle_Size(Company_ID)
                   );`
   );
   await client.query(

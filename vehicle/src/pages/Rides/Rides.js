@@ -30,12 +30,14 @@ export default function Rides() {
   return (
     <div>
       <div className="RidesDiv">
-        <tr className="Card">
-          <th>vehicle plate number</th>
-          <th>type id</th>
-          <th>veh.vehicle_plate_num</th>
-        </tr>
-        {a}
+        <table>
+          <tr className="Card">
+            <th>vehicle plate number</th>
+            <th>type id</th>
+            <th>veh.vehicle_plate_num</th>
+          </tr>
+          {a}
+        </table>
       </div>
     </div>
   );

@@ -32,6 +32,7 @@ export default function MainMenu() {
             Vehicle Schedule
           </Link>
           <Link to={`/Main_Menu/${id}/Rides${search}`}>Rides</Link>
+          <Link to={`/Main_Menu/${id}/Add_Vehicle${search}`}>Add Vehicle</Link>
         </nav>
 
         <Outlet />

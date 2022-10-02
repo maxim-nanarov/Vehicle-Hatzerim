@@ -5,6 +5,7 @@ import "./pages/Login/Login.scss";
 import GetVehicle from "./pages/Get_Vehicle/Get_vehicle";
 import VehicleSchedule from "./pages/Vehicle_Schedule/Vehicle_Schedule";
 import Rides from "./pages/Rides/Rides";
+import AddVehicle from "./pages/Add_Vehicle/AddVehicle";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="Get_vehicle" element={<GetVehicle />} />
           <Route path="Vehicle_Schedule" element={<VehicleSchedule />} />
           <Route path="Rides" element={<Rides />} />
+          <Route path="Add_Vehicle" element={<AddVehicle />} />
         </Route>
       </Routes>
     </>

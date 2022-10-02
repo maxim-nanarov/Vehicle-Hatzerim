@@ -51,6 +51,16 @@ app.get("/type_vehicle", (_req, res) => {
   });
 });
 
+app.get("/vehicle_Company", (_req, res) => {
+  client.query(
+    "select * from vehicle_company;",
+    (err: Error, response: any) => {
+      if (err) throw err;
+      res.status(200).json(response.rows);
+    }
+  );
+});
+
 app.get("/vehicle_size", (_req, res) => {
   client.query("SELECT * FROM vehicle_size;", (err: Error, response: any) => {
     if (err) throw err;
