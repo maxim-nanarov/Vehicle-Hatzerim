@@ -91,18 +91,19 @@ app.post("/Ride_data", (req, res) => {
   const data = req.body.formData;
   console.log(data);
   res.send(data);
-  // var format = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
-  // if (!format.test(String(req.body.vals[0]))) {
-  //   client.query(
-  //     `INSERT INTO ride VALUES ('1','2022-09-29','2022-09-29','false','0','0','0','0');`,
-  //     (err: Error, response: any) => {
-  //       if (err) throw err;
-  //       res.send(response);
-  //     }
-  //   );
-  // } else {
-  //   res.send("SQLi? how about no");
-  // }
+  //insert into ride values ('1','2022-09-29 05:40:35','2022-09-29 13:30:00','f',0,0,0,0);
+  var format = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+  if (!format.test(String(req.body.vals[0]))) {
+    client.query(
+      `INSERT INTO ride VALUES (DEFAULT,'${req.body.StartingDate}','${req.body.EndingDate}','${data.Will_Take_Riders}','0','0','0','0');`,
+      (err: Error, response: any) => {
+        if (err) throw err;
+        res.send(response);
+      }
+    );
+  } else {
+    res.send("SQLi? how about no");
+  }
 });
 
 app.post("/Destionaion_Data", (req, res) => {
