@@ -95,13 +95,26 @@ export default function AddVehicle() {
     let formData = new FormData(e.target);
     formData = Object.fromEntries(formData);
     console.log(formData);
+    let TypeID = findTheID(Type, formData.Type);
+    let CompanyID = findTheID(Compnay, formData.Company);
+    let SizeID = findTheID(Size, formData.Size);
 
+    //TO DO:
+    // to every data sent i need to convert it back to its
+    // id form so that'll enter the data base.
+    // implemented the idea, and now check it if it works.
+
+    //See if it works.
     axios
       .post("http://localhost:4000/Add_Vehicle", {
         headers: {
           "Content-Type": "application/json",
         },
-        data: JSON.stringify(formData),
+        data: {
+          Type_Id: TypeID,
+          Company_Id: CompanyID,
+          Size_Id: SizeID,
+        },
       })
       .then((res) => {
         console.log("then => ", res);
@@ -109,5 +122,13 @@ export default function AddVehicle() {
       .catch((err) => {
         console.log("error => ", err);
       });
+  }
+}
+
+function findTheID(Arr, index) {
+  for (let i = 0; i < Arr.lenght; i++) {
+    if (Arr[i][1] === index) {
+      return Arr[i][0];
+    }
   }
 }
