@@ -53,16 +53,16 @@ export default function GetVehicle() {
     count++;
     return (
       <>
-        <option>{Destination.destination_name}</option>
+        <option key={count}>{Destination.destination_name}</option>
       </>
     );
   });
-
+  count = 0;
   let b = Reasons.map((Reason) => {
     count++;
     return (
       <>
-        <option>{Reason.reason_name}</option>
+        <option key={count}>{Reason.reason_name}</option>
       </>
     );
   });
@@ -128,7 +128,7 @@ export default function GetVehicle() {
               </div>
               <div>
                 <label>Reason</label>
-                <select name="cars" id="cars">
+                <select name="Reason" id="Reason">
                   {b}
                 </select>
               </div>
@@ -162,8 +162,16 @@ export default function GetVehicle() {
       formData.Take_Riders = true;
     }
     //To Do: put form Data to an post request to the Rides server
+    let new_StartingDate =
+      formData.Starting_Date + " " + formData.Starting_Hour;
+    let new_EndingDate = formData.Ending_Date + " " + formData.Ending_Hour;
+    console.log(formData);
     axios
-      .post("https://vehicle-hatzerim.herokuapp.com/Ride_data", { formData })
+      .post("https://vehicle-hatzerim.herokuapp.com/Ride_data", {
+        Data: formData,
+        StartingDate: new_StartingDate,
+        EndingDate: new_EndingDate,
+      })
       .then((res) => {
         console.log(res.data);
       });
