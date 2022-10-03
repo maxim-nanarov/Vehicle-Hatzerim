@@ -133,9 +133,9 @@ app.post("/Add_Vehicle", (req, res) => {
   console.log(req.body.data);
   let data = req.body.data;
   client.query(
-    `INSERT INTO vehicles Values (DEFAULT,${data.Type_Id},${data.Size_Id},${data.Company_Id});`
+    `INSERT INTO vehicles Values ('${data.Type_Id}','${data.Size_Id}','${data.Company_Id}');`
   );
-  res.send("req");
+  res.send("it worked!!!");
 });
 
 const port = process.env.PORT || 4002;

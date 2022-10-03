@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 export default function AddVehicle() {
   const [Type, setType] = useState([]);
-  const [Compnay, setCompany] = useState([]);
+  const [Company, setCompany] = useState([]);
   const [Size, setSize] = useState([]);
   useEffect(() => {
     axios
@@ -39,8 +39,6 @@ export default function AddVehicle() {
         setCompany(res.data);
       });
   }, []);
-  console.log("hello?");
-  console.log(Type, Compnay, Size);
 
   let count1 = 0;
   let SelectType = Type.map((type) => {
@@ -52,7 +50,7 @@ export default function AddVehicle() {
     );
   });
   let count = 0;
-  let SelectCompany = Compnay.map((comp) => {
+  let SelectCompany = Company.map((comp) => {
     count++;
     return (
       <>
@@ -94,10 +92,32 @@ export default function AddVehicle() {
     e.preventDefault();
     let formData = new FormData(e.target);
     formData = Object.fromEntries(formData);
-    console.log(formData);
-    let TypeID = findTheID(Type, formData.Type);
-    let CompanyID = findTheID(Compnay, formData.Company);
-    let SizeID = findTheID(Size, formData.Size);
+    console.log(formData.Type, formData.Size, formData.Company);
+    let TypeID = 0;
+    let CompanyID = 0;
+    let SizeID = 0;
+
+    Size.forEach((size) => {
+      if (size.size_name === formData.Size) {
+        SizeID = size.size_id;
+      }
+    });
+
+    Company.forEach((comp) => {
+      if (comp.company_name === formData.Company) {
+        CompanyID = comp.company_id;
+      }
+    });
+
+    Type.forEach((type) => {
+      if (type.type_name === formData.Type) {
+        TypeID = type.type_id;
+      }
+    });
+
+    console.log("Type id: ", TypeID);
+    console.log("Company id: ", CompanyID);
+    console.log("Size id: ", SizeID);
 
     //TO DO:
     // to every data sent i need to convert it back to its
@@ -106,7 +126,7 @@ export default function AddVehicle() {
 
     //See if it works.
     axios
-      .post("http://localhost:4000/Add_Vehicle", {
+      .post("https://vehicle-hatzerim.herokuapp.com/Add_Vehicle", {
         headers: {
           "Content-Type": "application/json",
         },
@@ -122,13 +142,5 @@ export default function AddVehicle() {
       .catch((err) => {
         console.log("error => ", err);
       });
-  }
-}
-
-function findTheID(Arr, index) {
-  for (let i = 0; i < Arr.lenght; i++) {
-    if (Arr[i][1] === index) {
-      return Arr[i][0];
-    }
   }
 }
