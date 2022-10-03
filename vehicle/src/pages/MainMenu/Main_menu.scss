@@ -4,30 +4,43 @@
   background-color: rgba(245, 222, 179, 0.374);
 }
 
+img {
+  border-right: 1px solid black;
+  width: 5%;
+}
+
 .header {
+  background-color: rgb(247, 161, 0);
   display: flex;
+  font-size: xx-large;
   align-items: center;
   justify-content: space-between;
 }
 .topnav {
-  background-color: rgb(255, 255, 255);
+  background-color: rgb(255, 203, 106);
   overflow: hidden;
   display: flex;
-
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
   justify-content: center;
   align-items: center;
+  transition: 1s;
+  &:hover {
+    background-color: rgba(153, 105, 0, 0.503);
+  }
+
   a {
     float: left;
     color: #000000;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
-    font-size: 17px;
+    font-size: xx-large;
     transition: 0.5s;
     border-left: 1px solid black;
     border-right: 1px solid black;
     &:hover {
-      background-color: #ddd;
+      background-color: rgb(246, 181, 61);
       color: black;
     }
   }

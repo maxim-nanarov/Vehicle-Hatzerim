@@ -84,39 +84,47 @@ export default function GetVehicle() {
             <div className="dateDiv">
               <label>Start: </label>
               <div>
-                <input
-                  id="Starting_Date"
-                  name="Starting_Date"
-                  value={currentDate}
-                  type="date"
-                  onChange={(e) => setStartingDate(e.target.value)}
-                />
-                <input
-                  id="Starting_Hour"
-                  name="Starting_Hour"
-                  type="time"
-                  value={startingHour}
-                  onChange={(e) => setStartingHour(e.target.value)}
-                />
+                <div className="Seperator">
+                  <input
+                    id="Starting_Date"
+                    name="Starting_Date"
+                    value={currentDate}
+                    type="date"
+                    onChange={(e) => setStartingDate(e.target.value)}
+                  />
+                </div>
+                <div className="Seperator">
+                  <input
+                    id="Starting_Hour"
+                    name="Starting_Hour"
+                    type="time"
+                    value={startingHour}
+                    onChange={(e) => setStartingHour(e.target.value)}
+                  />
+                </div>
               </div>
             </div>
             <div className="dateDiv">
               <label>finish: </label>
               <div>
-                <input
-                  id="Ending_Date"
-                  name="Ending_Date"
-                  type="date"
-                  onChange={(e) => setEndingDate(e.target.value)}
-                  value={currentDate}
-                />
-                <input
-                  id="Ending_Hour"
-                  name="Ending_Hour"
-                  type="time"
-                  value={EndingHour}
-                  onChange={(e) => setEndingHour(e.target.value)}
-                />
+                <div className="Seperator">
+                  <input
+                    id="Ending_Date"
+                    name="Ending_Date"
+                    type="date"
+                    onChange={(e) => setEndingDate(e.target.value)}
+                    value={currentDate}
+                  />
+                </div>
+                <div className="Seperator">
+                  <input
+                    id="Ending_Hour"
+                    name="Ending_Hour"
+                    type="time"
+                    value={EndingHour}
+                    onChange={(e) => setEndingHour(e.target.value)}
+                  />
+                </div>
               </div>
             </div>
             <div className="ChooseTypeVhicle">
@@ -127,25 +135,31 @@ export default function GetVehicle() {
                 </select>
               </div>
               <div>
-                <label>Reason</label>
+                <label>Reason: </label>
                 <select name="Reason" id="Reason">
                   {b}
                 </select>
               </div>
             </div>
             <div>
-              <label>Will you take riders?</label>
+              <label>Will you take Hitch hickers?</label>
               <input
+                className="CheckBoxHitchhickers"
                 name="Take_Riders"
                 id="Take_Riders"
                 type="checkBox"
               ></input>
             </div>
-          </div>
-          <div>
-            <button form="AddForm" type="submit" value="Submit">
-              Submit
-            </button>
+            <div className="innerDiv">
+              <button
+                className="submitButton"
+                form="AddForm"
+                type="submit"
+                value="Submit"
+              >
+                Submit
+              </button>
+            </div>
           </div>
         </form>
       </div>

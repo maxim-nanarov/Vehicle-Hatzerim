@@ -1,6 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { useEffect, useState } from "react";
+import "./Add_Vehicle.scss";
 
 export default function AddVehicle() {
   const [Type, setType] = useState([]);
@@ -68,24 +69,40 @@ export default function AddVehicle() {
       </>
     );
   });
-
+  //To do: Add to the vehicle Table Plate number
+  //and add to the Data Base an plate number coulumn.
   return (
-    <div>
-      <form id="AddForm" onSubmit={onSubmit}>
-        <select id="Company" name="Company">
-          {SelectCompany}
-        </select>
-        <select id="Type" name="Type">
-          {SelectType}
-        </select>
-        <select id="Size" name="Size">
-          {SelectSize}
-        </select>
-        <button form="AddForm" type="submit" value="Submit">
-          Submit
-        </button>
-      </form>
-    </div>
+    <>
+      <div className="MainAddVehicleDiv">
+        <div className="explenation">
+          <p>
+            Welcome to the Admin Area, this page is the Add vehicle page, if you
+            want to add any new vehicle you're more than welcome to add one
+            here.
+          </p>
+        </div>
+        <div className="custom-select">
+          <form id="AddForm" onSubmit={onSubmit}>
+            <input
+              className="Add_Vehicle_Plate_number"
+              placeholder="Plate number: "
+            ></input>
+            <select className="Add_Vehicle_select" id="Company" name="Company">
+              {SelectCompany}
+            </select>
+            <select className="Add_Vehicle_select" id="Type" name="Type">
+              {SelectType}
+            </select>
+            <select className="Add_Vehicle_select" id="Size" name="Size">
+              {SelectSize}
+            </select>
+            <button form="AddForm" type="submit" value="Submit">
+              Submit
+            </button>
+          </form>
+        </div>
+      </div>
+    </>
   );
 
   function onSubmit(e) {
@@ -93,6 +110,7 @@ export default function AddVehicle() {
     let formData = new FormData(e.target);
     formData = Object.fromEntries(formData);
     console.log(formData.Type, formData.Size, formData.Company);
+
     let TypeID = 0;
     let CompanyID = 0;
     let SizeID = 0;
@@ -119,12 +137,6 @@ export default function AddVehicle() {
     console.log("Company id: ", CompanyID);
     console.log("Size id: ", SizeID);
 
-    //TO DO:
-    // to every data sent i need to convert it back to its
-    // id form so that'll enter the data base.
-    // implemented the idea, and now check it if it works.
-
-    //See if it works.
     axios
       .post("https://vehicle-hatzerim.herokuapp.com/Add_Vehicle", {
         headers: {

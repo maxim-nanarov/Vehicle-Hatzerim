@@ -24,7 +24,6 @@ export default function MainMenu() {
         <div className="header">
           <img src={Myimage} alt="Logo"></img>
           <div>{date.toLocaleString()}</div>
-          <label>Hello </label>
         </div>
         <nav className="topnav">
           <Link to={`/Main_Menu/${id}/Get_vehicle${search}`}>Get Vehicle</Link>
