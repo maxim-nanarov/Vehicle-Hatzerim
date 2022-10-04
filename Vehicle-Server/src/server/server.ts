@@ -117,11 +117,11 @@ app.post("/Ride_data", (req, res) => {
 });
 
 app.post("/Destionaion_Data", (req, res) => {
-  console.log(req);
-  console.log(res);
+  console.log(req.body.Data);
+
   client.query(
-    `INSERT INTO Destinations
-  	VALUES (${Number(req.body.vals[0])}, ${req.body.vals[1]},1);`,
+    `INSERT INTO destinations
+  	VALUES ('${req.body.Data.id}','${req.body.Data.name}','${req.body.Data.score}');`,
     (err: Error, response: any) => {
       if (err) throw err;
       res.send(response);
