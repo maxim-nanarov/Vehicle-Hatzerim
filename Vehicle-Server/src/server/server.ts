@@ -118,15 +118,21 @@ app.post("/Ride_data", (req, res) => {
 
 app.post("/Destionaion_Data", (req, res) => {
   console.log(req.body.Data);
-
+  // if (SQLI_Checker(req.body.Data.name)) {
   client.query(
-    `INSERT INTO destinations
-  	VALUES ('${req.body.Data.id}','${req.body.Data.name}','${req.body.Data.score}');`,
+    `INSERT INTO destinations (destination_id,destination_name,destination_score) VALUES (DEFAULT,'${req.body.Data.name}','${req.body.Data.score}');`,
     (err: Error, response: any) => {
       if (err) throw err;
-      res.send(response);
+      {
+        console.log("it worked??? ");
+        console.log(response);
+        res.send(response);
+      }
     }
   );
+  // } else {
+  //   res.send("No SQLI");
+  // }
 });
 
 app.post("/Add_Vehicle", (req, res) => {
@@ -143,3 +149,8 @@ app.listen(port, () => {
   initDb();
   console.log("Hosted: http://localhost:" + port);
 });
+
+// function SQLI_Checker(Value: any) {
+//   var format = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+//   return format.test(String(Value));
+// }

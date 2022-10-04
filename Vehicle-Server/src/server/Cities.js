@@ -15,8 +15,8 @@ axios
         des.לשכה === "באר שבע                  "
       ) {
         console.log(des._id, des.שם_ישוב_לועזי, 1);
-        let Name = des.שם_ישוב_לועזי.split("'");
-        Name = Name.join("");
+        let Name = des.שם_ישוב_לועזי;
+        let newName = Name.replace("'", "");
         await axios
           .post("http://localhost:4002/Destionaion_Data", {
             headers: {
@@ -25,12 +25,12 @@ axios
             Data: {
               id: des._id,
 
-              name: Name,
+              name: newName,
               score: 1,
             },
           })
           .then((res) => {
-            console.log("Worked V");
+            console.log("Worked V 1");
           })
           .catch((error) => {
             console.log("error =>");
@@ -50,7 +50,7 @@ axios
             },
           })
           .then((res) => {
-            console.log("Hello there");
+            console.log("Worked V 2");
           })
           .catch((error) => {
             console.log(error);

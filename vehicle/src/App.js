@@ -6,6 +6,7 @@ import GetVehicle from "./pages/Get_Vehicle/Get_vehicle";
 import VehicleSchedule from "./pages/Vehicle_Schedule/Vehicle_Schedule";
 import Rides from "./pages/Rides/Rides";
 import AddVehicle from "./pages/Add_Vehicle/AddVehicle";
+import AddDestination from "./pages/AddDest/AddDestination";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="Vehicle_Schedule" element={<VehicleSchedule />} />
           <Route path="Rides" element={<Rides />} />
           <Route path="Add_Vehicle" element={<AddVehicle />} />
+          <Route path="Add_Dest" element={<AddDestination />} />
         </Route>
       </Routes>
     </>
