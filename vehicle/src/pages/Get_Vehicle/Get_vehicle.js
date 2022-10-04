@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Get_vehicle.scss";
 import axios from "axios";
-
+//To Do: Add an Edit and Delete table.
 export default function GetVehicle() {
   const [startingDate, setStartingDate] = useState();
   const [EndingDate, setEndingDate] = useState();
@@ -12,19 +12,6 @@ export default function GetVehicle() {
   const [citys, setCity] = useState([]);
 
   useEffect(() => {
-    // axios
-    //   .get(
-    //     "https://data.gov.il/api/3/action/datastore_search?resource_id=d4901968-dad3-4845-a9b0-a57d027f11ab&limit=10000"
-    //   )
-    //   .then(function (response) {
-    //     // handle success
-    //     setCity(response.data.result);
-    //   })
-    //   .catch(function (error) {
-    //     console.log("handle error");
-    //     console.log(error);
-    //   });
-
     axios
       .get("https://vehicle-hatzerim.herokuapp.com/Destinations", {
         headers: {
