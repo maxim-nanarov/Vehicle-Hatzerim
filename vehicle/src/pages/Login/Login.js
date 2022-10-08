@@ -50,7 +50,7 @@ export default function Login() {
       <div className="SubmitLogin">
         <img className="LoginImage" src={Myimage} alt="Logo"></img>
 
-        <form onSubmit={Submit} id="addForm">
+        <form className="LoginForm" onSubmit={Submit} id="addForm">
           <div className="LoginDiv">
             <label>Login: </label>
             <input

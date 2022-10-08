@@ -1,6 +1,7 @@
 .MainMenuDiv {
   height: 100%;
   width: 100%;
+
   background-color: rgba(245, 222, 179, 0.374);
 }
 
@@ -45,4 +46,10 @@
       color: black;
     }
   }
+}
+
+.TheRestOfTheSite {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

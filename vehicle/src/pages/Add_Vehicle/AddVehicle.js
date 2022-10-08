@@ -82,7 +82,7 @@ export default function AddVehicle() {
           </p>
         </div>
         <div className="custom-select">
-          <form id="AddForm" onSubmit={onSubmit}>
+          <form id="AddForm" className="Add_Vehicle_From" onSubmit={onSubmit}>
             <input
               className="Add_Vehicle_Plate_number"
               placeholder="Plate number: "
@@ -150,9 +150,11 @@ export default function AddVehicle() {
       })
       .then((res) => {
         console.log("then => ", res);
+        alert("Success");
       })
       .catch((err) => {
         console.log("error => ", err);
+        alert("Please contact me at 058-5599369");
       });
   }
 }

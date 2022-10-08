@@ -35,7 +35,7 @@ function onSubmit(e) {
     alert("you have to put a number in the score");
   } else {
     axios
-      .post("http://localhost:4002/Destionaion_Data", {
+      .post("https://vehicle-hatzerim.herokuapp.com/Destionaion_Data", {
         headers: {
           "Content-Type": "application/json",
         },
@@ -47,6 +47,7 @@ function onSubmit(e) {
       .then((res) => {
         console.log("Worked V 1");
         console.log(res);
+        alert("Success");
       })
       .catch((error) => {
         console.log("error =>");
