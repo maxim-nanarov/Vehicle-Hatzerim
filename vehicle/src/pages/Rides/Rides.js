@@ -8,7 +8,9 @@ export default function Rides() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4002/Vehicles_And_Its_Relevent_Element")
+      .get(
+        "https://vehicle-hatzerim.herokuapp.com/Vehicles_And_Its_Relevent_Element"
+      )
       .then(function (res) {
         setVehiclesData(res.data);
         console.log(res.data);

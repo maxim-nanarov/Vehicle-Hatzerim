@@ -75,12 +75,15 @@ app.get("/vehicles", (_req, res) => {
   });
 });
 //TO DO: 4 table join request
-//SELECT * FROM vehicles JOIN vehicle_company,vhicle_size,type_vhicle ON vehicles.company_id = vehicle_company.company_id, vehicles.type_id = type_vehicle.type_id, vehicles.size_id = vehicle_size.size_id;
+//SELECT * FROM ((vehicles INNER JOIN vehicle_company ON vehicles.company_id = vehicle_company.company_id) INNER JOIN type_vehicle ON vehicles.type_id = type_vehicle.type_id ) INNER JOIN vehicle_size ON vehicles.size_id = vehicle_size.size_id;
 app.get("/Vehicles_And_Its_Relevent_Element", (_req, res) => {
-  client.query("SELECT * FROM vehicles;", (err: Error, response: any) => {
-    if (err) throw err;
-    res.status(200).json(response.rows);
-  });
+  client.query(
+    "SELECT * FROM ((vehicles INNER JOIN vehicle_company ON vehicles.company_id = vehicle_company.company_id) INNER JOIN type_vehicle ON vehicles.type_id = type_vehicle.type_id ) INNER JOIN vehicle_size ON vehicles.size_id = vehicle_size.size_id;",
+    (err: Error, response: any) => {
+      if (err) throw err;
+      res.status(200).json(response.rows);
+    }
+  );
 });
 //
 app.post("/User_data", (req, res) => {
