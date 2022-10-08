@@ -22,7 +22,7 @@ export default function MainMenu() {
     <>
       <div className="MainMenuDiv">
         <div className="header">
-          <img src={Myimage} alt="Logo"></img>
+          <img className="MainMenuIMG" src={Myimage} alt="Logo"></img>
           <div>{date.toLocaleString()}</div>
         </div>
         <nav className="topnav">

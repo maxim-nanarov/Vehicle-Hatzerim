@@ -5,11 +5,11 @@
   justify-content: center;
   background-color: rgb(249, 158, 67);
   box-shadow: 5px 10px 8px #888888;
+  margin: 0 auto;
+  width: 24%;
   padding: 4% 2%;
   button {
     padding: 2% 5%;
-  }
-  input {
   }
 }
 
@@ -27,4 +27,17 @@ input {
 }
 button {
   margin-top: 3%;
+}
+
+.explenation {
+  float: left;
+
+  width: 30%;
+  height: 40%;
+  p {
+    background-color: rgba(254, 177, 35, 0.091);
+    font-size: xx-large;
+    padding: 1%;
+    border: 3px rgba(0, 0, 0, 0.232) solid;
+  }
 }

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Myimage from "../../pictures/Logo_Hatzerim.jpg";
 import "./Login.scss";
-import MainMenu from "../MainMenu/Main_menu";
+// import MainMenu from "../MainMenu/Main_menu";
 
 export default function Login() {
   const [users, setUser] = useState();
@@ -47,23 +47,24 @@ export default function Login() {
   console.log(users);
   return (
     <div className="MainDiv">
-      <form onSubmit={Submit} id="addForm">
-        <div className="PictureDiv">
-          <img src={Myimage} alt="Logo"></img>
-        </div>
-        <div className="LoginDiv">
-          <label>Login: </label>
-          <input
-            type="Number"
-            name="password"
-            placeholder="Password please"
-            id="password"
-          />
-        </div>
-      </form>
-      <button className="Button" type="submit" value="Submit" form="addForm">
-        Enter
-      </button>
+      <div className="SubmitLogin">
+        <img className="LoginImage" src={Myimage} alt="Logo"></img>
+
+        <form onSubmit={Submit} id="addForm">
+          <div className="LoginDiv">
+            <label>Login: </label>
+            <input
+              type="Number"
+              name="password"
+              placeholder="Password please"
+              id="password"
+            />
+          </div>
+        </form>
+        <button className="Button" type="submit" value="Submit" form="addForm">
+          Enter
+        </button>
+      </div>
     </div>
   );
 }

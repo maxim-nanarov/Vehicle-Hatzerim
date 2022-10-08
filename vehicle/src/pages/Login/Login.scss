@@ -9,45 +9,78 @@
   height: 100%;
   width: 100%;
 }
-
-form {
-  width: 50%;
+.SubmitLogin {
   display: flex;
-  // justify-content: center;
+  justify-content: center;
   align-items: center;
   flex-direction: column;
+  height: 40%;
+  width: 30%;
+  background-color: rgba(255, 205, 112, 0.711);
+  box-shadow: 10px 15px 15px rgba(100, 100, 100, 0.48);
+}
+form {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
 }
 
 .LoginDiv {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  Label {
+    font-size: xx-large;
+  }
   input {
-    width: 100%;
+    width: 80%;
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+    transition: 0.1s;
   }
+  input:hover {
+    border-top-left-radius: 5%;
+    border-bottom-right-radius: 5%;
+    background-color: rgb(254, 190, 70);
+  }
+
   input:focus {
     border: 1px rgb(0, 0, 0) solid;
   }
 }
 .Button {
-  background-color: #4caf50; /* Green */
+  background-color: rgb(255, 136, 0); /* Green */
   border: none;
   color: white;
-  padding: 15px 32px;
+  padding: 2% 5% 2% 5%;
+  margin-top: 5%;
+  margin-bottom: 10%;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
   transition: 0.25s;
   &:hover {
+    border-top-left-radius: 15%;
+    border-bottom-right-radius: 15%;
     cursor: pointer;
-    border-radius: 15px;
-    background-color: #4caf4f75;
+    background-color: rgba(255, 136, 0, 0.389);
   }
+}
+// .PictureDiv {
+//   width: 100%;
+//   height: 100px;
+// }
+.LoginImage {
+  padding-top: 3%;
+  width: 30%;
+  height: 40%;
 }

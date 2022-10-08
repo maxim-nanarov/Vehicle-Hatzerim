@@ -5,6 +5,12 @@ import axios from "axios";
 export default function AddDestination() {
   return (
     <div className="MainDivDestinaion">
+      <div className="explenation">
+        <p>
+          Welcome to the Admin Area, this page is the Add vehicle page, if you
+          want to add any new vehicle you're more than welcome to add one here.
+        </p>
+      </div>
       <div className="Submit-div">
         <form id="AddForm" onSubmit={onSubmit}>
           <h1>Add Destionaion: </h1>
