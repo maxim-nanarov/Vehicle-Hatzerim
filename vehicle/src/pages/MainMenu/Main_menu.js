@@ -19,7 +19,7 @@ export default function MainMenu() {
           `https://vehicle-hatzerim.herokuapp.com/get_specific_user/?id=${id}`
         )
         .then((res) => {
-          setUser(res);
+          setUser(res.data[0]);
         })
         .catch((err) => {
           console.log(err);
@@ -27,6 +27,7 @@ export default function MainMenu() {
         });
     };
     user();
+    console.log(User);
   }, [User]);
   useEffect(() => {
     const Da = new Date();
@@ -37,28 +38,59 @@ export default function MainMenu() {
     let da = new Date();
     setDate(da.toLocaleString());
   }, 1000);
-
-  return (
-    <>
-      <div className="MainMenuDiv">
-        <div className="header">
-          <img className="MainMenuIMG" src={Myimage} alt="Logo"></img>
-          <div>{date.toLocaleString()}</div>
+  if (User.is_admin) {
+    console.log("What is up?");
+    return (
+      <>
+        <div className="MainMenuDiv">
+          <div className="header">
+            <img className="MainMenuIMG" src={Myimage} alt="Logo"></img>
+            <div>{date.toLocaleString()}</div>
+          </div>
+          <nav className="topnav">
+            <Link to={`/Main_Menu/${id}/Get_vehicle${search}`}>
+              Get Vehicle
+            </Link>
+            <Link to={`/Main_Menu/${id}/Vehicle_Schedule${search}`}>
+              Vehicle Schedule
+            </Link>
+            <Link to={`/Main_Menu/${id}/Rides${search}`}>Rides</Link>
+            <Link to={`/Main_Menu/${id}/Add_Vehicle${search}`}>
+              Add Vehicle
+            </Link>
+            <Link to={`/Main_Menu/${id}/Add_Dest${search}`}>
+              Add Destionaion
+            </Link>
+            <Link to={`/Main_Menu/${id}/Add_User${search}`}>Add User</Link>
+          </nav>
+          <div className="TheRestOfTheSite">
+            <Outlet />
+          </div>
         </div>
-        <nav className="topnav">
-          <Link to={`/Main_Menu/${id}/Get_vehicle${search}`}>Get Vehicle</Link>
-          <Link to={`/Main_Menu/${id}/Vehicle_Schedule${search}`}>
-            Vehicle Schedule
-          </Link>
-          <Link to={`/Main_Menu/${id}/Rides${search}`}>Rides</Link>
-          <Link to={`/Main_Menu/${id}/Add_Vehicle${search}`}>Add Vehicle</Link>
-          <Link to={`/Main_Menu/${id}/Add_Dest${search}`}>Add Destionaion</Link>
-          <Link to={`/Main_Menu/${id}/Add_User${search}`}>Add User</Link>
-        </nav>
-        <div className="TheRestOfTheSite">
-          <Outlet />
+      </>
+    );
+  } else {
+    return (
+      <>
+        <div className="MainMenuDiv">
+          <div className="header">
+            <img className="MainMenuIMG" src={Myimage} alt="Logo"></img>
+            <div>{date.toLocaleString()}</div>
+          </div>
+          <nav className="topnav">
+            <Link to={`/Main_Menu/${id}/Get_vehicle${search}`}>
+              Get Vehicle
+            </Link>
+            <Link to={`/Main_Menu/${id}/Vehicle_Schedule${search}`}>
+              Vehicle Schedule
+            </Link>
+            <Link to={`/Main_Menu/${id}/Rides${search}`}>Rides</Link>
+          </nav>
+          <div className="TheRestOfTheSite">
+            <Outlet />
+          </div>
         </div>
-      </div>
-    </>
-  );
+      </>
+    );
+  }
 }
