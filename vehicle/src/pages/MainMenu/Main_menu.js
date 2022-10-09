@@ -2,12 +2,28 @@ import React, { useEffect, useState } from "react";
 import Myimage from "../../pictures/Logo_Hatzerim.jpg";
 import { useParams, Link, Outlet, useLocation } from "react-router-dom";
 import "./Main_menu.scss";
+import axios from "axios";
+
 export default function MainMenu() {
   let { id } = useParams();
   const { search } = useLocation();
   const Da = new Date();
   const [date, setDate] = useState(Da);
+  const [User, setUser] = useState([]);
 
+  useEffect(() => {
+    axios
+      .get("http://localhost:4002/get_specific_user", { data: id })
+      .then((res) => {
+        console.log("WORKED");
+        setUser(res);
+      })
+      .catch((err) => {
+        alert(err);
+        alert("contact me at 058-5599369");
+      });
+  }, [User]);
+  console.log(User);
   useEffect(() => {
     const Da = new Date();
     setDate(Da.toLocaleString());
@@ -33,6 +49,7 @@ export default function MainMenu() {
           <Link to={`/Main_Menu/${id}/Rides${search}`}>Rides</Link>
           <Link to={`/Main_Menu/${id}/Add_Vehicle${search}`}>Add Vehicle</Link>
           <Link to={`/Main_Menu/${id}/Add_Dest${search}`}>Add Destionaion</Link>
+          <Link to={`/Main_Menu/${id}/Add_User${search}`}>Add User</Link>
         </nav>
         <div className="TheRestOfTheSite">
           <Outlet />

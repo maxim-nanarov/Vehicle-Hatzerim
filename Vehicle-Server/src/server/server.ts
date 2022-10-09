@@ -23,6 +23,17 @@ app.get("/Users", (_req, res) => {
   });
 });
 
+app.get("/get_specific_user", (req, res) => {
+  let data = req.body.data;
+  client.query(
+    `SELECT * FROM Users WHERE user_id = ${data};`,
+    (err: Error, response: any) => {
+      if (err) throw err;
+      res.status(200).json(response.rows);
+    }
+  );
+});
+
 app.get("/Rides", (_req, res) => {
   client.query("SELECT * FROM ride;", (err: Error, response: any) => {
     if (err) throw err;
@@ -88,16 +99,14 @@ app.get("/Vehicles_And_Its_Relevent_Element", (_req, res) => {
 //
 app.post("/User_data", (req, res) => {
   var format = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
-  if (!format.test(String(req.body.vals[0]))) {
+  let data = req.body.data;
+  console.log(data);
+  if (
+    !format.test(String(req.body.data.username)) &&
+    !format.test(String(req.body.data.surname))
+  ) {
     client.query(
-      `INSERT INTO Users (user_id, user_name, user_surname, user_home_phone, user_work_phone, user_personal_phone, is_admin)
-			VALUES ('${Number(req.body.vals[0]) /*User ID*/}', '${
-        req.body.vals[1] /*User name*/
-      }', '${req.body.vals[2] /*User surname*/}', '${Number(
-        req.body.vals[3] /*User phone number*/
-      )}', ${Number(req.body.vals[4]) /*User work number*/}, ${Number(
-        req.body.vals[5] /*User personal number*/
-      )},${Boolean(req.body.vals[6])});`,
+      `INSERT INTO users VALUES(DEFAULT, '${data.username}','${data.surname}',${data.PersonalPhone},${data.WorkPhone},${data.HomePhone},'${data.IsAdmin}');`,
       (err: Error, response: any) => {
         if (err) throw err;
         res.send(response);
