@@ -24,7 +24,8 @@ app.get("/Users", (_req, res) => {
 });
 
 app.get("/get_specific_user", (req, res) => {
-  let data = req.body.data;
+  let data = req;
+  console.log("data => ", req.params);
   client.query(
     `SELECT * FROM Users WHERE user_id = ${data};`,
     (err: Error, response: any) => {
@@ -85,8 +86,7 @@ app.get("/vehicles", (_req, res) => {
     res.status(200).json(response.rows);
   });
 });
-//TO DO: 4 table join request
-//SELECT * FROM ((vehicles INNER JOIN vehicle_company ON vehicles.company_id = vehicle_company.company_id) INNER JOIN type_vehicle ON vehicles.type_id = type_vehicle.type_id ) INNER JOIN vehicle_size ON vehicles.size_id = vehicle_size.size_id;
+
 app.get("/Vehicles_And_Its_Relevent_Element", (_req, res) => {
   client.query(
     "SELECT * FROM ((vehicles INNER JOIN vehicle_company ON vehicles.company_id = vehicle_company.company_id) INNER JOIN type_vehicle ON vehicles.type_id = type_vehicle.type_id ) INNER JOIN vehicle_size ON vehicles.size_id = vehicle_size.size_id;",

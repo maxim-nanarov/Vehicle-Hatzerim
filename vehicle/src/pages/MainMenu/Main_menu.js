@@ -11,18 +11,24 @@ export default function MainMenu() {
   const [date, setDate] = useState(Da);
   const [User, setUser] = useState([]);
 
+  console.log(id);
+
   useEffect(() => {
     axios
-      .get("http://localhost:4002/get_specific_user", { data: id })
+      .get("http://localhost:4002/get_specific_user", {
+        params: {
+          id: id,
+        },
+      })
       .then((res) => {
         console.log("WORKED");
         setUser(res);
       })
       .catch((err) => {
         alert(err);
-        alert("contact me at 058-5599369");
+        // alert("contact me at 058-5599369");
       });
-  }, [User]);
+  }, [User, id]);
   console.log(User);
   useEffect(() => {
     const Da = new Date();
