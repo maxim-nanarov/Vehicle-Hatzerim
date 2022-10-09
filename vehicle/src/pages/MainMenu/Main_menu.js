@@ -15,7 +15,9 @@ export default function MainMenu() {
     // let DATAid = JSON.stringify(id);
     let user = async function () {
       await axios
-        .get(`http://localhost:4002/get_specific_user`)
+        .get(
+          `https://vehicle-hatzerim.herokuapp.com/get_specific_user/?id=${id}`
+        )
         .then((res) => {
           setUser(res);
         })
