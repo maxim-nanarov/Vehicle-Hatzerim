@@ -22,13 +22,11 @@ export default function MainMenu() {
           setUser(res.data[0]);
         })
         .catch((err) => {
-          console.log(err);
-          // alert("contact me at 058-5599369");
+          alert("contact me at 058-5599369");
         });
     };
     user();
-    console.log(User);
-  }, [User]);
+  }, [User, id]);
   useEffect(() => {
     const Da = new Date();
     setDate(Da.toLocaleString());
@@ -39,7 +37,6 @@ export default function MainMenu() {
     setDate(da.toLocaleString());
   }, 1000);
   if (User.is_admin) {
-    console.log("What is up?");
     return (
       <>
         <div className="MainMenuDiv">

@@ -166,16 +166,16 @@ export default function GetVehicle() {
     let new_StartingDate =
       formData.Starting_Date + " " + formData.Starting_Hour;
     let new_EndingDate = formData.Ending_Date + " " + formData.Ending_Hour;
-    console.log(formData);
-    axios
-      .post("https://vehicle-hatzerim.herokuapp.com/Ride_data", {
-        Data: formData,
-        StartingDate: new_StartingDate,
-        EndingDate: new_EndingDate,
-      })
-      .then((res) => {
-        console.log(res.data);
-      });
-    console.log(formData);
+    console.log(formData); //https://vehicle-hatzerim.herokuapp.com
+    // axios
+    //   .post("http://localhost:4002/Ride_data", {
+    //     Data: formData,
+    //     StartingDate: new_StartingDate,
+    //     EndingDate: new_EndingDate,
+    //   })
+    //   .then((res) => {
+    //     console.log(res.data);
+    //   });
+    // console.log(formData);
   }
 }
