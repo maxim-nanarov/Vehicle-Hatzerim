@@ -11,29 +11,25 @@ export default function MainMenu() {
   const [date, setDate] = useState(Da);
   const [User, setUser] = useState([]);
 
-  console.log(id);
-
   useEffect(() => {
-    axios
-      .get("http://localhost:4002/get_specific_user", {
-        params: {
-          id: id,
-        },
-      })
-      .then((res) => {
-        console.log("WORKED");
-        setUser(res);
-      })
-      .catch((err) => {
-        alert(err);
-        // alert("contact me at 058-5599369");
-      });
-  }, [User, id]);
-  console.log(User);
+    // let DATAid = JSON.stringify(id);
+    let user = async function () {
+      await axios
+        .get(`http://localhost:4002/get_specific_user`)
+        .then((res) => {
+          setUser(res);
+        })
+        .catch((err) => {
+          console.log(err);
+          // alert("contact me at 058-5599369");
+        });
+    };
+    user();
+  }, [User]);
   useEffect(() => {
     const Da = new Date();
     setDate(Da.toLocaleString());
-  }, [date]);
+  });
 
   setInterval(function () {
     let da = new Date();

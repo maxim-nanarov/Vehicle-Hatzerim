@@ -24,10 +24,10 @@ app.get("/Users", (_req, res) => {
 });
 
 app.get("/get_specific_user", (req, res) => {
-  let data = req;
-  console.log("data => ", req.params);
+  let data = req.query;
+  // console.log("data => ", req.params.id);
   client.query(
-    `SELECT * FROM Users WHERE user_id = ${data};`,
+    `SELECT * FROM Users WHERE user_id = ${data.id};`,
     (err: Error, response: any) => {
       if (err) throw err;
       res.status(200).json(response.rows);
