@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import "./Get_vehicle.scss";
 import axios from "axios";
 //To Do: Add an Edit and Delete table.
 export default function GetVehicle() {
-  const [startingDate, setStartingDate] = useState();
-  const [EndingDate, setEndingDate] = useState();
-  const [startingHour, setStartingHour] = useState();
-  const [EndingHour, setEndingHour] = useState();
+  let { id } = useParams();
+  // const [startingDate, setStartingDate] = useState();
+  // const [EndingDate, setEndingDate] = useState();
+  // const [startingHour, setStartingHour] = useState();
+  // const [EndingHour, setEndingHour] = useState();
   const [Destinations, setDestinations] = useState([]);
   const [Reasons, setReasons] = useState([]);
-  const [citys, setCity] = useState([]);
-
+  const [Rides, setRides] = useState([]);
   useEffect(() => {
     axios
       .get("https://vehicle-hatzerim.herokuapp.com/Destinations", {
@@ -21,6 +22,17 @@ export default function GetVehicle() {
       })
       .then((res) => {
         setDestinations(res.data);
+      });
+
+    axios
+      .get("https://vehicle-hatzerim.herokuapp.com/vehicles", {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        setRides(res.data);
       });
 
     axios
@@ -54,14 +66,15 @@ export default function GetVehicle() {
     );
   });
   let currentDate = new Date().toISOString().split("T")[0];
-
-  useEffect(() => {
-    let time = new Date();
-    setStartingDate(new Date().toDateString());
-    setStartingHour(new Date().toTimeString().slice(0, 8));
-    setEndingDate(new Date().toDateString());
-    setEndingHour(new Date().toTimeString().slice(0, 8));
-  }, [startingDate, startingHour]);
+  let currentTime = new Date().toISOString().split("T")[1].split(".")[0];
+  console.log(currentDate + " " + currentTime);
+  // useEffect(() => {
+  //   let time = new Date();
+  //   setStartingDate(new Date().toDateString());
+  //   setStartingHour(new Date().toTimeString().slice(0, 8));
+  //   setEndingDate(new Date().toDateString());
+  //   setEndingHour(new Date().toTimeString().slice(0, 8));
+  // });
 
   return (
     <>
@@ -77,7 +90,7 @@ export default function GetVehicle() {
                     name="Starting_Date"
                     value={currentDate}
                     type="date"
-                    onChange={(e) => setStartingDate(e.target.value)}
+                    // onChange={(e) => setStartingDate(e.target.value)}
                   />
                 </div>
                 <div className="Seperator">
@@ -85,8 +98,8 @@ export default function GetVehicle() {
                     id="Starting_Hour"
                     name="Starting_Hour"
                     type="time"
-                    value={startingHour}
-                    onChange={(e) => setStartingHour(e.target.value)}
+                    value={currentTime}
+                    // onChange={(e) => setStartingHour(e.target.value)}
                   />
                 </div>
               </div>
@@ -99,7 +112,9 @@ export default function GetVehicle() {
                     id="Ending_Date"
                     name="Ending_Date"
                     type="date"
-                    onChange={(e) => setEndingDate(e.target.value)}
+                    ata-date=""
+                    data-date-format="DD MMMM YYYY"
+                    // onChange={(e) => setEndingDate(e.target.value)}
                     value={currentDate}
                   />
                 </div>
@@ -108,8 +123,8 @@ export default function GetVehicle() {
                     id="Ending_Hour"
                     name="Ending_Hour"
                     type="time"
-                    value={EndingHour}
-                    onChange={(e) => setEndingHour(e.target.value)}
+                    value={currentTime}
+                    // onChange={(e) => setEndingHour(e.target.value)}
                   />
                 </div>
               </div>
@@ -166,10 +181,24 @@ export default function GetVehicle() {
     let new_StartingDate =
       formData.Starting_Date + " " + formData.Starting_Hour;
     let new_EndingDate = formData.Ending_Date + " " + formData.Ending_Hour;
-    console.log(formData); //https://vehicle-hatzerim.herokuapp.com
+    console.log(formData); //https://vehicle-hatzerim.herokuapp.com\
+    let date1 = new Date(new_StartingDate);
+    let date2 = new Date(new_EndingDate);
+    let vehicle_plate_num = availabeVehicle(Rides, date1, date2);
+    if (vehicle_plate_num !== false) {
+      console.log(vehicle_plate_num, "it worked?");
+    } else {
+      alert(
+        vehicle_plate_num +
+          "   theres no vehicle availabe at this time, try at different date"
+      );
+    }
+    // I need to enter these next things: user data
+
     // axios
     //   .post("http://localhost:4002/Ride_data", {
     //     Data: formData,
+    //     id: id,
     //     StartingDate: new_StartingDate,
     //     EndingDate: new_EndingDate,
     //   })
@@ -178,4 +207,16 @@ export default function GetVehicle() {
     //   });
     // console.log(formData);
   }
+}
+function availabeVehicle(Rides, Starting_date_new, finnishing_date_new) {
+  console.log(Rides);
+  Rides.forEach((Ride) => {
+    if (
+      (Ride.Starting_Date - finnishing_date_new > 0) ^
+      (Ride.finnishing_date_new - Starting_date_new > 0)
+    ) {
+      return Ride.vehicle_plate_num;
+    }
+  });
+  return false;
 }
