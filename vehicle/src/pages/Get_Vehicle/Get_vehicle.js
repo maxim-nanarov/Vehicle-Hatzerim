@@ -186,12 +186,21 @@ export default function GetVehicle() {
     // console.log(formData);
   }
 }
+
+//the main function of the submit button makes
+//the calculations of findings the right ride.
+//It will return a vehicle based on the client score.
+//age (optionally in the future)
+//reason
+//destination
+//if there's an availabe vehicle at all
 function availabeVehicle(
   vehicles,
   Rides,
   Starting_date_new,
   finnishing_date_new
 ) {
+  console.log("availabe vehicle function");
   let vehiclePlateNum = VehicleThatIsntInUse(vehicles, Rides);
   if (vehiclePlateNum !== undefined) {
     return vehiclePlateNum;
@@ -210,15 +219,31 @@ function availabeVehicle(
   return false;
 }
 
+//checks if there's a vehcile that
+//isnt used at all in the main ride table.
 function VehicleThatIsntInUse(vehicles, Rides) {
+  console.log("Vehcile that isnt in use function");
   for (let j = 0; j < vehicles.length; j++) {
-    for (let i = 0; i < Rides.length; i++) {
-      if (!(Rides[i].vehicle_plate_num === vehicles[j].vehicle_plate_num)) {
-        console.log(
-          "The vehicle plate number : " + vehicles[j].vehicle_plate_num
-        );
-        return vehicles[j].vehicle_plate_num;
-      }
+    if (!ifExist(Rides, vehicles[j].vehicle_plate_num)) {
+      return vehicles[j].vehicle_plate_num;
+    } else {
+      console.log("this vehicle is used");
     }
   }
+  return "nothing was availabe entierly, find in ";
+}
+
+//checks if the plate number of the given vehicle exist in
+//the main rides table.
+function ifExist(array, number) {
+  let flag = false;
+  console.log("if exist funciton");
+  array.forEach((num) => {
+    console.log(num.vehicle_plate_num);
+    if (num.vehicle_plate_num === number) {
+      flag = true;
+    }
+  });
+  console.log("what?");
+  return flag;
 }
