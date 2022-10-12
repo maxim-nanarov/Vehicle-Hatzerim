@@ -5,13 +5,10 @@ import axios from "axios";
 //To Do: Add an Edit and Delete table.
 export default function GetVehicle() {
   let { id } = useParams();
-  // const [startingDate, setStartingDate] = useState();
-  // const [EndingDate, setEndingDate] = useState();
-  // const [startingHour, setStartingHour] = useState();
-  // const [EndingHour, setEndingHour] = useState();
   const [Destinations, setDestinations] = useState([]);
   const [Reasons, setReasons] = useState([]);
   const [Rides, setRides] = useState([]);
+  const [Vehicles, setVehicles] = useState([]);
   useEffect(() => {
     axios
       .get("https://vehicle-hatzerim.herokuapp.com/Destinations", {
@@ -25,7 +22,7 @@ export default function GetVehicle() {
       });
 
     axios
-      .get("https://vehicle-hatzerim.herokuapp.com/vehicles", {
+      .get("https://vehicle-hatzerim.herokuapp.com/Rides", {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -33,6 +30,17 @@ export default function GetVehicle() {
       })
       .then((res) => {
         setRides(res.data);
+      });
+
+    axios
+      .get("https://vehicle-hatzerim.herokuapp.com/vehicles", {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        setVehicles(res.data);
       });
 
     axios
@@ -65,16 +73,6 @@ export default function GetVehicle() {
       </>
     );
   });
-  let currentDate = new Date().toISOString().split("T")[0];
-  let currentTime = new Date().toISOString().split("T")[1].split(".")[0];
-  console.log(currentDate + " " + currentTime);
-  // useEffect(() => {
-  //   let time = new Date();
-  //   setStartingDate(new Date().toDateString());
-  //   setStartingHour(new Date().toTimeString().slice(0, 8));
-  //   setEndingDate(new Date().toDateString());
-  //   setEndingHour(new Date().toTimeString().slice(0, 8));
-  // });
 
   return (
     <>
@@ -85,22 +83,10 @@ export default function GetVehicle() {
               <label>Start: </label>
               <div>
                 <div className="Seperator">
-                  <input
-                    id="Starting_Date"
-                    name="Starting_Date"
-                    value={currentDate}
-                    type="date"
-                    // onChange={(e) => setStartingDate(e.target.value)}
-                  />
+                  <input id="Starting_Date" name="Starting_Date" type="date" />
                 </div>
                 <div className="Seperator">
-                  <input
-                    id="Starting_Hour"
-                    name="Starting_Hour"
-                    type="time"
-                    value={currentTime}
-                    // onChange={(e) => setStartingHour(e.target.value)}
-                  />
+                  <input id="Starting_Hour" name="Starting_Hour" type="time" />
                 </div>
               </div>
             </div>
@@ -114,18 +100,10 @@ export default function GetVehicle() {
                     type="date"
                     ata-date=""
                     data-date-format="DD MMMM YYYY"
-                    // onChange={(e) => setEndingDate(e.target.value)}
-                    value={currentDate}
                   />
                 </div>
                 <div className="Seperator">
-                  <input
-                    id="Ending_Hour"
-                    name="Ending_Hour"
-                    type="time"
-                    value={currentTime}
-                    // onChange={(e) => setEndingHour(e.target.value)}
-                  />
+                  <input id="Ending_Hour" name="Ending_Hour" type="time" />
                 </div>
               </div>
             </div>
@@ -178,13 +156,13 @@ export default function GetVehicle() {
       formData.Take_Riders = true;
     }
     //To Do: put form Data to an post request to the Rides server
-    let new_StartingDate =
-      formData.Starting_Date + " " + formData.Starting_Hour;
-    let new_EndingDate = formData.Ending_Date + " " + formData.Ending_Hour;
-    console.log(formData); //https://vehicle-hatzerim.herokuapp.com\
-    let date1 = new Date(new_StartingDate);
-    let date2 = new Date(new_EndingDate);
-    let vehicle_plate_num = availabeVehicle(Rides, date1, date2);
+    //https://vehicle-hatzerim.herokuapp.com\
+    let currentDate = new Date().toISOString().split("T")[0];
+    let currentTime = new Date().toISOString().split("T")[1].split(".")[0];
+    let Ride_Table = Rides;
+    let date1 = currentDate + " " + currentTime;
+    let date2 = date1;
+    let vehicle_plate_num = availabeVehicle(Vehicles, Ride_Table, date1, date2);
     if (vehicle_plate_num !== false) {
       console.log(vehicle_plate_num, "it worked?");
     } else {
@@ -193,7 +171,7 @@ export default function GetVehicle() {
           "   theres no vehicle availabe at this time, try at different date"
       );
     }
-    // I need to enter these next things: user data
+    // I need to enter these next things: user id
 
     // axios
     //   .post("http://localhost:4002/Ride_data", {
@@ -208,15 +186,39 @@ export default function GetVehicle() {
     // console.log(formData);
   }
 }
-function availabeVehicle(Rides, Starting_date_new, finnishing_date_new) {
-  console.log(Rides);
+function availabeVehicle(
+  vehicles,
+  Rides,
+  Starting_date_new,
+  finnishing_date_new
+) {
+  let vehiclePlateNum = VehicleThatIsntInUse(vehicles, Rides);
+  if (vehiclePlateNum !== undefined) {
+    return vehiclePlateNum;
+  }
+  if (Rides === []) {
+    return "there isn't any rides";
+  }
   Rides.forEach((Ride) => {
     if (
-      (Ride.Starting_Date - finnishing_date_new > 0) ^
-      (Ride.finnishing_date_new - Starting_date_new > 0)
+      Ride.Starting_Date >= finnishing_date_new ||
+      Ride.finnishing_date <= Starting_date_new
     ) {
       return Ride.vehicle_plate_num;
     }
   });
   return false;
+}
+
+function VehicleThatIsntInUse(vehicles, Rides) {
+  for (let j = 0; j < vehicles.length; j++) {
+    for (let i = 0; i < Rides.length; i++) {
+      if (!(Rides[i].vehicle_plate_num === vehicles[j].vehicle_plate_num)) {
+        console.log(
+          "The vehicle plate number : " + vehicles[j].vehicle_plate_num
+        );
+        return vehicles[j].vehicle_plate_num;
+      }
+    }
+  }
 }

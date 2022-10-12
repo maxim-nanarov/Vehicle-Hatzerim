@@ -121,7 +121,7 @@ app.post("/Ride_data", (req, res) => {
   const data = req.body.formData;
   console.log(data);
   res.send(data);
-  //insert into ride values ('1','2022-09-29 05:40:35','2022-09-29 13:30:00','f',0,0,0,0);
+  //insert into ride values ('2','2022-10-12 09:40:35','2022-10-12 13:30:00','f',0,0,0,0);
   var format = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
   if (!format.test(String(req.body.vals[0]))) {
     client.query(
