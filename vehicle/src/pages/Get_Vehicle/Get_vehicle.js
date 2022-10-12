@@ -157,10 +157,10 @@ export default function GetVehicle() {
     }
     //To Do: put form Data to an post request to the Rides server
     //https://vehicle-hatzerim.herokuapp.com\
-    let currentDate = new Date().toISOString().split("T")[0];
-    let currentTime = new Date().toISOString().split("T")[1].split(".")[0];
+    let currentDate = new Date().toISOString();
+    // let currentTime = new Date().toISOString().split("T")[1].split(".")[0];
     let Ride_Table = Rides;
-    let date1 = currentDate + " " + currentTime;
+    let date1 = currentDate;
     let date2 = date1;
     let vehicle_plate_num = availabeVehicle(Vehicles, Ride_Table, date1, date2);
     if (vehicle_plate_num !== false) {
@@ -201,17 +201,30 @@ function availabeVehicle(
   finnishing_date_new
 ) {
   console.log("availabe vehicle function");
-  let vehiclePlateNum = VehicleThatIsntInUse(vehicles, Rides);
-  if (vehiclePlateNum !== undefined) {
-    return vehiclePlateNum;
-  }
-  if (Rides === []) {
-    return "there isn't any rides";
-  }
+  // let vehiclePlateNum = VehicleThatIsntInUse(vehicles, Rides);
+  // if (vehiclePlateNum !== undefined) {
+  //   return vehiclePlateNum;
+  // }
+  // if (Rides === []) {
+  //   return "there isn't any rides";
+  // }
+  //check if the
+
+  //ToDo: need to seperate this function.
   Rides.forEach((Ride) => {
+    let startingDate = new Date(Ride.startingDate);
+    let finishing_date = new Date(Ride.finishing_date);
+    let starting_date_new = new Date(Starting_date_new);
+    let finishing_date_new = new Date(finnishing_date_new);
+    console.log(
+      "why you not work? " + startingDate,
+      finishing_date,
+      starting_date_new,
+      finishing_date_new
+    );
     if (
-      Ride.Starting_Date >= finnishing_date_new ||
-      Ride.finnishing_date <= Starting_date_new
+      startingDate >= finnishing_date_new ||
+      finishing_date <= Starting_date_new
     ) {
       return Ride.vehicle_plate_num;
     }
