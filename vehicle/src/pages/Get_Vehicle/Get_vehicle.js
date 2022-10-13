@@ -195,12 +195,12 @@ export default function GetVehicle() {
 //destination
 //if there's an availabe vehicle at all
 function availabeVehicle(
-  vehicles,
+  // vehicles,
   Rides,
   Starting_date_new,
   finnishing_date_new
 ) {
-  console.log("availabe vehicle function");
+  // console.log("availabe vehicle function");
   // let vehiclePlateNum = VehicleThatIsntInUse(vehicles, Rides);
   // if (vehiclePlateNum !== undefined) {
   //   return vehiclePlateNum;
@@ -208,28 +208,33 @@ function availabeVehicle(
   // if (Rides === []) {
   //   return "there isn't any rides";
   // }
-  //check if the
 
-  //ToDo: need to seperate this function.
+  // ToDo: need to seperate this function.
+  let flag = false;
   Rides.forEach((Ride) => {
-    let startingDate = new Date(Ride.startingDate);
-    let finishing_date = new Date(Ride.finishing_date);
-    let starting_date_new = new Date(Starting_date_new);
-    let finishing_date_new = new Date(finnishing_date_new);
-    console.log(
-      "why you not work? " + startingDate,
-      finishing_date,
-      starting_date_new,
-      finishing_date_new
-    );
+    console.log("hello date " + Ride.starting_date);
+    console.log(Ride.finishing_date);
+    console.log(Starting_date_new);
+    console.log(finnishing_date_new);
     if (
-      startingDate >= finnishing_date_new ||
-      finishing_date <= Starting_date_new
+      Ride.starting_date >= finnishing_date_new ||
+      Ride.finishing_date <= Starting_date_new
     ) {
-      return Ride.vehicle_plate_num;
+      //05:00:00 - 19:00:00 | 11:00:00 - 13:00:00
+      console.log(
+        Ride.startingDate >= finnishing_date_new ||
+          Ride.finishing_date <= Starting_date_new
+      );
+      flag = Ride.vehicle_plate_num;
+    } else {
+      console.log(
+        "Cant use " +
+          Ride.vehicle_plate_num +
+          " because its already used in that time"
+      );
     }
   });
-  return false;
+  return flag;
 }
 
 //checks if there's a vehcile that
