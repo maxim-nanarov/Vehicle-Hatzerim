@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./Get_vehicle.scss";
 import axios from "axios";
+import If_In_Range from "./Get_Vehicle_InRange";
 //To Do: Add an Edit and Delete table.
 export default function GetVehicle() {
   let { id } = useParams();
@@ -210,31 +211,31 @@ function availabeVehicle(
   // }
 
   // ToDo: need to seperate this function.
+  let Availabe_Vehicles = [];
   let flag = false;
   Rides.forEach((Ride) => {
-    console.log("hello date " + Ride.starting_date);
-    console.log(Ride.finishing_date);
-    console.log(Starting_date_new);
-    console.log(finnishing_date_new);
     if (
-      Ride.starting_date >= finnishing_date_new ||
-      Ride.finishing_date <= Starting_date_new
+      If_In_Range(
+        Ride.starting_date,
+        Ride.finishing_date,
+        finnishing_date_new
+      ) &&
+      If_In_Range(Ride.starting_date, Ride.finishing_date, Starting_date_new)
     ) {
-      //05:00:00 - 19:00:00 | 11:00:00 - 13:00:00
-      console.log(
-        Ride.startingDate >= finnishing_date_new ||
-          Ride.finishing_date <= Starting_date_new
-      );
-      flag = Ride.vehicle_plate_num;
+      Availabe_Vehicles.push(Ride.vehicle_plate_num);
     } else {
-      console.log(
-        "Cant use " +
-          Ride.vehicle_plate_num +
-          " because its already used in that time"
-      );
+      for (let i = 0; i < possible_Vehicles.length; i++) {
+        if (ride.vehicle_plate_num === possible_Vehicles[i]) {
+          possible_Vehicles[i].pop();
+        }
+      }
     }
   });
-  return flag;
+  if (possible_Vehicles[0] !== undefined) {
+    return possible_Vehicles[0];
+  } else {
+    console.alert("There aint no vehicles availabe now");
+  }
 }
 
 //checks if there's a vehcile that
@@ -264,4 +265,8 @@ function ifExist(array, number) {
   });
   console.log("what?");
   return flag;
+}
+
+function DateInRange(start, finish, date) {
+  return !(date > start && date < finish);
 }
