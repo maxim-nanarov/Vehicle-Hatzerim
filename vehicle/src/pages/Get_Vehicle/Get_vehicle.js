@@ -60,7 +60,12 @@ export default function GetVehicle() {
     count++;
     return (
       <>
-        <option key={count}>{Destination.destination_name}</option>
+        <option
+          key={Destination.destination_id}
+          value={Destination.destination_id}
+        >
+          {Destination.destination_name}
+        </option>
       </>
     );
   });
@@ -69,7 +74,9 @@ export default function GetVehicle() {
     count++;
     return (
       <>
-        <option key={count}>{Reason.reason_name}</option>
+        <option key={count} value={Reason.reason_id}>
+          {Reason.reason_name}
+        </option>
       </>
     );
   });
@@ -157,14 +164,12 @@ export default function GetVehicle() {
     }
     //To Do: put form Data to an post request to the Rides server
     //https://vehicle-hatzerim.herokuapp.com\
-    let currentDate = new Date().toISOString();
     // let currentTime = new Date().toISOString().split("T")[1].split(".")[0];
     let Ride_Table = Rides;
-    let date1 = currentDate;
-    let date2 = date1;
+    let date1 = formData.Starting_Date + " " + formData.Starting_Hour + ":00";
+    let date2 = formData.Ending_Date + " " + formData.Ending_Hour + ":00";
     let vehicle_plate_num = availabeVehicle(Vehicles, Ride_Table, date1, date2);
     if (vehicle_plate_num !== false) {
-      console.log(vehicle_plate_num, "it worked?");
     } else {
       alert(
         vehicle_plate_num +
@@ -172,18 +177,21 @@ export default function GetVehicle() {
       );
     }
     // I need to enter these next things: user id
-
-    // axios
-    //   .post("http://localhost:4002/Ride_data", {
-    //     Data: formData,
-    //     id: id,
-    //     StartingDate: new_StartingDate,
-    //     EndingDate: new_EndingDate,
-    //   })
-    //   .then((res) => {
-    //     console.log(res.data);
-    //   });
-    // console.log(formData);
+    console.log(id, date1, date2);
+    axios
+      .post("http://localhost:4002/Ride_data", {
+        data: {
+          Data: formData,
+          id: id,
+          StartingDate: new Date(date1),
+          EndingDate: new Date(date2),
+          plateNum: vehicle_plate_num,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+      });
+    console.log(formData);
   }
 }
 
@@ -195,19 +203,18 @@ export default function GetVehicle() {
 //destination
 //if there's an availabe vehicle at all
 function availabeVehicle(
-  // vehicles,
+  vehicles,
   Rides,
   Starting_date_new,
   finnishing_date_new
 ) {
-  // console.log("availabe vehicle function");
-  // let vehiclePlateNum = VehicleThatIsntInUse(vehicles, Rides);
-  // if (vehiclePlateNum !== undefined) {
-  //   return vehiclePlateNum;
-  // }
-  // if (Rides === []) {
-  //   return "there isn't any rides";
-  // }
+  let vehiclePlateNum = VehicleThatIsntInUse(vehicles, Rides);
+  if (vehiclePlateNum !== undefined) {
+    return vehiclePlateNum;
+  }
+  if (Rides === []) {
+    return "there isn't any rides";
+  }
 
   // ToDo: need to seperate this function.
   let Availabe_Vehicles = [];
@@ -222,52 +229,58 @@ function availabeVehicle(
     ) {
       Availabe_Vehicles.push(Ride.vehicle_plate_num);
     } else {
-      for (let i = 0; i < Availabe_Vehicles.length; i++) {
-        if (Ride.vehicle_plate_num === Availabe_Vehicles[i]) {
-          Availabe_Vehicles[i].pop();
-        }
-      }
+      Availabe_Vehicles = RemoveUsedVehicle(
+        Availabe_Vehicles,
+        Ride.vehiclePlateNum
+      );
     }
   });
   if (Availabe_Vehicles[0] !== undefined) {
-    console.log(Availabe_Vehicles);
     return Availabe_Vehicles[0];
   } else {
     console.alert("There aint no vehicles availabe now");
   }
 }
+
+//if the date is between the start and finish date, then
+//false.
 export function If_In_Range(start, finish, date) {
   return !(date >= start && date <= finish);
 }
 //checks if there's a vehcile that
 //isnt used at all in the main ride table.
 function VehicleThatIsntInUse(vehicles, Rides) {
-  console.log("Vehcile that isnt in use function");
   for (let j = 0; j < vehicles.length; j++) {
     if (!ifExist(Rides, vehicles[j].vehicle_plate_num)) {
       return vehicles[j].vehicle_plate_num;
     } else {
-      console.log("this vehicle is used");
+      console.log("this vehicle is used" + vehicles[j].vehicle_plate_num);
     }
   }
   return "nothing was availabe entierly, find in ";
+}
+
+//helps in the main function, to
+//remove the vehicle which one of their
+//rides is in between the relevent
+//date and time.
+function RemoveUsedVehicle(Availabe_Vehicles, plateNum) {
+  for (let i = 0; i < Availabe_Vehicles.length; i++) {
+    if (plateNum === Availabe_Vehicles[i]) {
+      Availabe_Vehicles[i].pop();
+    }
+  }
+  return Availabe_Vehicles;
 }
 
 //checks if the plate number of the given vehicle exist in
 //the main rides table.
 function ifExist(array, number) {
   let flag = false;
-  console.log("if exist funciton");
   array.forEach((num) => {
-    console.log(num.vehicle_plate_num);
     if (num.vehicle_plate_num === number) {
       flag = true;
     }
   });
-  console.log("what?");
   return flag;
-}
-
-function DateInRange(start, finish, date) {
-  return !(date > start && date < finish);
 }

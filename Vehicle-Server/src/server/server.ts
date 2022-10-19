@@ -118,22 +118,20 @@ app.post("/User_data", (req, res) => {
 });
 
 app.post("/Ride_data", (req, res) => {
-  const data = req.body.formData;
-  console.log(data);
-  res.send(data);
-  //insert into ride values ('2','2022-10-12 09:40:35','2022-10-12 13:30:00','f',0,0,0,0);
-  var format = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
-  if (!format.test(String(req.body.vals[0]))) {
-    client.query(
-      `INSERT INTO ride VALUES (DEFAULT,'${req.body.StartingDate}','${req.body.EndingDate}','${data.Will_Take_Riders}','0','0','0','0');`,
-      (err: Error, response: any) => {
-        if (err) throw err;
-        res.send(response);
-      }
-    );
-  } else {
-    res.send("SQLi? how about no");
-  }
+  const data = req.body.data;
+  const dataS = req.body.data.Data;
+  const SD = data.StartingDate;
+  const ED = data.EndingDate;
+  const plateNum = data.plateNum;
+  const ID = data.id;
+
+  client.query(
+    `INSERT INTO ride (ride_id,starting_date,finishing_date, will_take_riders, vehicle_plate_num,user_id,destination_id,reason_id) VALUES (DEFAULT,'${SD}','${ED}','${dataS.Take_Riders}','${plateNum}','${ID}','${dataS.Destination}','${dataS.Reason}');`,
+    (err: Error, response: any) => {
+      if (err) throw err;
+      res.send(response);
+    }
+  );
 });
 
 app.post("/Destionaion_Data", (req, res) => {
