@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./Get_vehicle.scss";
 import axios from "axios";
-import If_In_Range from "./Get_Vehicle_InRange";
 //To Do: Add an Edit and Delete table.
 export default function GetVehicle() {
   let { id } = useParams();
@@ -212,7 +211,6 @@ function availabeVehicle(
 
   // ToDo: need to seperate this function.
   let Availabe_Vehicles = [];
-  let flag = false;
   Rides.forEach((Ride) => {
     if (
       If_In_Range(
@@ -224,20 +222,23 @@ function availabeVehicle(
     ) {
       Availabe_Vehicles.push(Ride.vehicle_plate_num);
     } else {
-      for (let i = 0; i < possible_Vehicles.length; i++) {
-        if (ride.vehicle_plate_num === possible_Vehicles[i]) {
-          possible_Vehicles[i].pop();
+      for (let i = 0; i < Availabe_Vehicles.length; i++) {
+        if (Ride.vehicle_plate_num === Availabe_Vehicles[i]) {
+          Availabe_Vehicles[i].pop();
         }
       }
     }
   });
-  if (possible_Vehicles[0] !== undefined) {
-    return possible_Vehicles[0];
+  if (Availabe_Vehicles[0] !== undefined) {
+    console.log(Availabe_Vehicles);
+    return Availabe_Vehicles[0];
   } else {
     console.alert("There aint no vehicles availabe now");
   }
 }
-
+export function If_In_Range(start, finish, date) {
+  return !(date >= start && date <= finish);
+}
 //checks if there's a vehcile that
 //isnt used at all in the main ride table.
 function VehicleThatIsntInUse(vehicles, Rides) {
