@@ -15,12 +15,6 @@ export default function Rides() {
         setVehiclesData(res.data);
         console.log(res.data);
       });
-
-    // axios
-    //   .get("https://vehicle-hatzerim.herokuapp.com/vehicles")
-    //   .then(function (res) {
-    //     setVehicles(res.data);
-    //   });
   }, []);
 
   let a = VehiclesData.map((veh) => {
