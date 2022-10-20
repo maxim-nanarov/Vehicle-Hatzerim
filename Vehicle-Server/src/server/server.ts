@@ -87,6 +87,16 @@ app.get("/vehicles", (_req, res) => {
   });
 });
 
+app.get("/Get_Ride_data", (_req, res) => {
+  client.query(
+    "SELECT * FROM ((((((ride JOIN users ON ride.user_id = users.user_id) JOIN destinations ON ride.destination_id = destinations.destination_id) JOIN reasons ON ride.reason_id = reasons.reason_id) JOIN vehicles ON ride.vehicle_plate_num = vehicles.vehicle_plate_num)JOIN vehicle_company ON vehicles.company_id = vehicle_company.company_id)JOIN type_vehicle ON vehicles.type_id = type_vehicle.type_id)INNER JOIN vehicle_size ON vehicles.size_id = vehicle_size.size_id;",
+    (err: Error, response: any) => {
+      if (err) throw err;
+      res.status(200).json(response.rows);
+    }
+  );
+});
+
 app.get("/Vehicles_And_Its_Relevent_Element", (_req, res) => {
   client.query(
     "SELECT * FROM ((vehicles INNER JOIN vehicle_company ON vehicles.company_id = vehicle_company.company_id) INNER JOIN type_vehicle ON vehicles.type_id = type_vehicle.type_id ) INNER JOIN vehicle_size ON vehicles.size_id = vehicle_size.size_id;",
@@ -161,7 +171,7 @@ app.post("/Add_Vehicle", (req, res) => {
   );
   res.send("it worked!!!");
 });
-
+//http://localhost:4002/Get_Ride_data
 const port = process.env.PORT || 4002;
 app.listen(port, () => {
   initDb();

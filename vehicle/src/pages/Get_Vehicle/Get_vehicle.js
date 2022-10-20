@@ -169,8 +169,7 @@ export default function GetVehicle() {
     let date1 = formData.Starting_Date + " " + formData.Starting_Hour + ":00";
     let date2 = formData.Ending_Date + " " + formData.Ending_Hour + ":00";
     let vehicle_plate_num = availabeVehicle(Vehicles, Ride_Table, date1, date2);
-    if (vehicle_plate_num !== false) {
-    } else {
+    if (vehicle_plate_num === undefined) {
       alert(
         vehicle_plate_num +
           "   theres no vehicle availabe at this time, try at different date"
@@ -179,7 +178,7 @@ export default function GetVehicle() {
     // I need to enter these next things: user id
     console.log(id, date1, date2);
     axios
-      .post("http://localhost:4002/Ride_data", {
+      .post("https://vehicle-hatzerim.herokuapp.com/Ride_data", {
         data: {
           Data: formData,
           id: id,
@@ -202,6 +201,8 @@ export default function GetVehicle() {
 //reason
 //destination
 //if there's an availabe vehicle at all
+//IF vehicle exist return number
+//ELSE return undefined.
 function availabeVehicle(
   vehicles,
   Rides,
@@ -213,7 +214,7 @@ function availabeVehicle(
     return vehiclePlateNum;
   }
   if (Rides === []) {
-    return "there isn't any rides";
+    return undefined;
   }
 
   // ToDo: need to seperate this function.
@@ -238,7 +239,7 @@ function availabeVehicle(
   if (Availabe_Vehicles[0] !== undefined) {
     return Availabe_Vehicles[0];
   } else {
-    console.alert("There aint no vehicles availabe now");
+    return undefined;
   }
 }
 
