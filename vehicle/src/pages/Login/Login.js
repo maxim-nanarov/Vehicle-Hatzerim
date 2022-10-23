@@ -20,6 +20,7 @@ export default function Login() {
   }, []);
 
   const Submit = (e) => {
+    console.log(users);
     e.preventDefault();
     let formData = new FormData(e.target);
     formData = Object.fromEntries(formData);
@@ -45,26 +46,35 @@ export default function Login() {
   };
 
   console.log(users);
-  return (
-    <div className="MainDiv">
-      <div className="SubmitLogin">
-        <img className="LoginImage" src={Myimage} alt="Logo"></img>
+  if (users !== undefined) {
+    return (
+      <div className="MainDiv">
+        <div className="SubmitLogin">
+          <img className="LoginImage" src={Myimage} alt="Logo"></img>
 
-        <form className="LoginForm" onSubmit={Submit} id="addForm">
-          <div className="LoginDiv">
-            <label>Login: </label>
-            <input
-              type="Number"
-              name="password"
-              placeholder="Password please"
-              id="password"
-            />
-          </div>
-        </form>
-        <button className="Button" type="submit" value="Submit" form="addForm">
-          Enter
-        </button>
+          <form className="LoginForm" onSubmit={Submit} id="addForm">
+            <div className="LoginDiv">
+              <label>Login: </label>
+              <input
+                type="Number"
+                name="password"
+                placeholder="Password please"
+                id="password"
+              />
+            </div>
+          </form>
+          <button
+            className="Button"
+            type="submit"
+            value="Submit"
+            form="addForm"
+          >
+            Enter
+          </button>
+        </div>
       </div>
-    </div>
-  );
+    );
+  } else {
+    return <div>Loading...</div>;
+  }
 }

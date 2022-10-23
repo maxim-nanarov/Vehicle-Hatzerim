@@ -132,9 +132,10 @@ app.post("/Ride_data", (req, res) => {
   const dataS = req.body.data.Data;
   const SD = data.StartingDate;
   const ED = data.EndingDate;
-  const plateNum = data.plateNum;
-  const ID = data.id;
-
+  const plateNum: number = data.plateNum;
+  const ID: number = data.id;
+  console.log(data);
+  console.log("plateNum: ", plateNum);
   client.query(
     `INSERT INTO ride (ride_id,starting_date,finishing_date, will_take_riders, vehicle_plate_num,user_id,destination_id,reason_id) VALUES (DEFAULT,'${SD}','${ED}','${dataS.Take_Riders}','${plateNum}','${ID}','${dataS.Destination}','${dataS.Reason}');`,
     (err: Error, response: any) => {

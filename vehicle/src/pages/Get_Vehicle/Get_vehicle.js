@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import "./Get_vehicle.scss";
 import axios from "axios";
 //To Do: Add an Edit and Delete table.
@@ -165,32 +165,42 @@ export default function GetVehicle() {
     //To Do: put form Data to an post request to the Rides server
     //https://vehicle-hatzerim.herokuapp.com\
     // let currentTime = new Date().toISOString().split("T")[1].split(".")[0];
+    console.log(Rides);
     let Ride_Table = Rides;
     let date1 = formData.Starting_Date + " " + formData.Starting_Hour + ":00";
     let date2 = formData.Ending_Date + " " + formData.Ending_Hour + ":00";
     let vehicle_plate_num = availabeVehicle(Vehicles, Ride_Table, date1, date2);
+    console.log("the chosen vehicle: " + vehicle_plate_num);
     if (vehicle_plate_num === undefined) {
       alert(
         vehicle_plate_num +
           "   theres no vehicle availabe at this time, try at different date"
       );
     }
-    // I need to enter these next things: user id
     console.log(id, date1, date2);
-    axios
-      .post("https://vehicle-hatzerim.herokuapp.com/Ride_data", {
-        data: {
-          Data: formData,
-          id: id,
-          StartingDate: new Date(date1),
-          EndingDate: new Date(date2),
-          plateNum: vehicle_plate_num,
-        },
-      })
-      .then((res) => {
-        console.log(res.data);
-      });
-    console.log(formData);
+    if (vehicle_plate_num !== undefined) {
+      axios
+        .post("http://localhost:4002/Ride_data", {
+          data: {
+            Data: formData,
+            id: id,
+            StartingDate: new Date(date1),
+            EndingDate: new Date(date2),
+            plateNum: vehicle_plate_num,
+          },
+        })
+        .then((res) => {
+          console.log(res.data);
+          window.location.href += `/Selected_Vehicles?Data=${formData}&StartingDate=${new Date(
+            date1
+          )}&EndingDate=${new Date(
+            date2
+          )}&vehicle_plate_num=${vehicle_plate_num}`;
+        });
+      console.log(formData);
+    } else {
+      alert("There are no vehicles availabe at this time.");
+    }
   }
 }
 
@@ -255,10 +265,10 @@ function VehicleThatIsntInUse(vehicles, Rides) {
     if (!ifExist(Rides, vehicles[j].vehicle_plate_num)) {
       return vehicles[j].vehicle_plate_num;
     } else {
-      console.log("this vehicle is used" + vehicles[j].vehicle_plate_num);
+      console.log("this vehicle is used once" + vehicles[j].vehicle_plate_num);
     }
   }
-  return "nothing was availabe entierly, find in ";
+  return undefined;
 }
 
 //helps in the main function, to
