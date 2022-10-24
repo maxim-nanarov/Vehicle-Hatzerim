@@ -6,10 +6,10 @@ import DatePicker from "react-datepicker";
 
 export default function VehicleSchedule() {
   const [Rides, setRides] = useState([]);
-  const [startDate, setStartDate] = useState();
+  const [DateFilter, setDateFilter] = useState();
   const [Data, setData] = useState([]);
   useEffect(() => {
-    setStartDate(new Date());
+    setDateFilter(new Date());
     axios
       .get("https://vehicle-hatzerim.herokuapp.com/Rides", {
         headers: {
@@ -66,12 +66,15 @@ export default function VehicleSchedule() {
 
   return (
     <div className="MainDivRides">
+      <div className="Headline">
+        <h1>Vehicle Schedual</h1>
+      </div>
       <div>
         <div className="filter-nav">
           <input
             type="date"
             defaultValue={date}
-            value={(startDate) => setStartDate(startDate)}
+            value={(startDate) => setDateFilter(startDate)}
             data-date-format="DD MMMM YYYY"
           />
           <input

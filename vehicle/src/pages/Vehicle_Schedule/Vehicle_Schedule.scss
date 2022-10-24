@@ -1,6 +1,7 @@
 table,
 th,
 td {
+  font-size: larger;
   border: 1px solid;
   padding: 15px;
   text-align: left;
@@ -21,6 +22,10 @@ table {
 th {
   background-color: rgba(245, 222, 179, 0.647);
   color: rgb(0, 0, 0);
+  transition: 0.3s;
+  &:hover {
+    background-color: rgba(255, 166, 0, 0.649);
+  }
 }
 tr:hover {
   cursor: pointer;
@@ -36,5 +41,16 @@ tr:hover {
       cursor: pointer;
       background-color: rgb(255, 188, 64);
     }
+    &:focus {
+      background-color: rgb(255, 166, 0);
+      color: rgb(0, 0, 0);
+    }
   }
+}
+
+.Headline {
+  font-size: xx-large;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
