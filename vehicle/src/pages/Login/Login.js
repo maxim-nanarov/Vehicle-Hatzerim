@@ -75,6 +75,15 @@ export default function Login() {
       </div>
     );
   } else {
-    return <div>Loading...</div>;
+    return (
+      <div className="rotating">
+        Loading
+        <div className="first">
+          <div className="second">
+            <div className="third"></div>
+          </div>
+        </div>
+      </div>
+    );
   }
 }
