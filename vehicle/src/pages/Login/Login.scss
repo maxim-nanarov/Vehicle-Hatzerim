@@ -95,6 +95,10 @@
   justify-content: center;
   transform-origin: 50% 50%;
   font-size: larger;
+  padding: 5px;
+  label {
+    margin: 20px;
+  }
 }
 .first {
   width: 100px;

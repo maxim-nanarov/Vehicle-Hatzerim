@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import Login from "./pages/Login/Login";
 import MainMenu from "./pages/MainMenu/Main_menu";
 import "./pages/Login/Login.scss";
@@ -17,13 +17,21 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="Main_Menu/:id/*" element={<MainMenu />}>
           <Route path="Get_vehicle" element={<GetVehicle />} />
-          <Route path="Vehicle_Schedule" element={<VehicleSchedule />} />
+          <Route path="" element={<VehicleSchedule />} />
           <Route path="Rides" element={<Rides />} />
           <Route path="Add_Vehicle" element={<AddVehicle />} />
           <Route path="Add_Dest" element={<AddDestination />} />
           <Route path="Add_User" element={<AddUser />} />
           <Route path="Selected_Vehicles" element={<Selected_Vehicles />} />
         </Route>
+        <Route
+          path="*"
+          element={
+            <div>
+              <h2>404 Page not found</h2>
+            </div>
+          }
+        />
       </Routes>
     </>
   );
