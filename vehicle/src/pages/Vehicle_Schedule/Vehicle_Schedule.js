@@ -2,11 +2,14 @@ import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "./Vehicle_Schedule.scss";
+import DatePicker from "react-datepicker";
 
 export default function VehicleSchedule() {
   const [Rides, setRides] = useState([]);
+  const [startDate, setStartDate] = useState();
   const [Data, setData] = useState([]);
   useEffect(() => {
+    setStartDate(new Date());
     axios
       .get("https://vehicle-hatzerim.herokuapp.com/Rides", {
         headers: {
@@ -60,10 +63,27 @@ export default function VehicleSchedule() {
       );
     }
   });
+
   return (
     <div className="MainDivRides">
+      <div>
+        <div className="filter-nav">
+          <input
+            type="date"
+            defaultValue={date}
+            value={(startDate) => setStartDate(startDate)}
+            data-date-format="DD MMMM YYYY"
+          />
+          <input
+            type="text"
+            id="Destination"
+            name="Destination"
+            placeholder="Destination filter"
+          ></input>
+          <input id="user" name="user" placeholder="user filter"></input>
+        </div>
+      </div>
       <table>
-        {" "}
         <tr className="Card" key={count}>
           <th>Id</th>
           <th>vehicle plate number</th>

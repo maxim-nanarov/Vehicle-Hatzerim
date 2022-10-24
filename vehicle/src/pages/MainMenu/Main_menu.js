@@ -48,9 +48,7 @@ export default function MainMenu() {
             <Link to={`/Main_Menu/${id}/Get_vehicle${search}`}>
               Get Vehicle
             </Link>
-            <Link to={`/Main_Menu/${id}/Vehicle_Schedule${search}`}>
-              Vehicle Schedule
-            </Link>
+            <Link to={`/Main_Menu/${id}${search}`}>Vehicle Schedule</Link>
             <Link to={`/Main_Menu/${id}/Rides${search}`}>Rides</Link>
             <Link to={`/Main_Menu/${id}/Add_Vehicle${search}`}>
               Add Vehicle

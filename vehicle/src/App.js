@@ -16,8 +16,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="Main_Menu/:id/*" element={<MainMenu />}>
-          <Route path="Get_vehicle" element={<GetVehicle />} />
           <Route path="" element={<VehicleSchedule />} />
+          <Route path="Get_vehicle" element={<GetVehicle />} />
           <Route path="Rides" element={<Rides />} />
           <Route path="Add_Vehicle" element={<AddVehicle />} />
           <Route path="Add_Dest" element={<AddDestination />} />

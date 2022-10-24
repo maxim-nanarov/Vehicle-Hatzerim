@@ -80,7 +80,7 @@ export default function GetVehicle() {
       </>
     );
   });
-
+  let date = new Date();
   return (
     <>
       <div className="MainDivGetV">
@@ -90,10 +90,20 @@ export default function GetVehicle() {
               <label>Start: </label>
               <div>
                 <div className="Seperator">
-                  <input id="Starting_Date" name="Starting_Date" type="date" />
+                  <input
+                    id="Starting_Date"
+                    defaultValue={new Date().toISOString().split("T")[0]}
+                    name="Starting_Date"
+                    type="date"
+                  />
                 </div>
                 <div className="Seperator">
-                  <input id="Starting_Hour" name="Starting_Hour" type="time" />
+                  <input
+                    id="Starting_Hour"
+                    defaultValue={date.getHours() + ":" + date.getMinutes()}
+                    name="Starting_Hour"
+                    type="time"
+                  />
                 </div>
               </div>
             </div>
@@ -105,12 +115,18 @@ export default function GetVehicle() {
                     id="Ending_Date"
                     name="Ending_Date"
                     type="date"
+                    defaultValue={new Date().toISOString().split("T")[0]}
                     ata-date=""
                     data-date-format="DD MMMM YYYY"
                   />
                 </div>
                 <div className="Seperator">
-                  <input id="Ending_Hour" name="Ending_Hour" type="time" />
+                  <input
+                    id="Ending_Hour"
+                    defaultValue={date.getHours() + ":" + date.getMinutes()}
+                    name="Ending_Hour"
+                    type="time"
+                  />
                 </div>
               </div>
             </div>
