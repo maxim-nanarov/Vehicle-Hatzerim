@@ -73,8 +73,9 @@ export default function VehicleSchedule() {
         <div className="filter-nav">
           <input
             type="date"
-            defaultValue={date}
-            value={(startDate) => setDateFilter(startDate)}
+            defaultValue={new Date().toISOString().split("T")[0]}
+            value={(DateFilter) => setDateFilter(DateFilter)}
+            ata-date=""
             data-date-format="DD MMMM YYYY"
           />
           <input
