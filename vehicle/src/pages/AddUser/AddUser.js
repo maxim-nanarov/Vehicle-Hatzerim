@@ -26,6 +26,7 @@ export default function AddUser() {
   return (
     <div className="UserOutlineDiv">
       <div className="UserInsertionDiv">
+        <h1>Register Users</h1>
         <form onSubmit={Submit} id="addForm">
           <input
             id="UserName"
@@ -57,13 +58,15 @@ export default function AddUser() {
             type={"number"}
             placeholder="Home phone number: "
           ></input>
-          <label>Is the user going to be admin?</label>
-          <input
-            id="IsAdmin"
-            name="IsAdmin"
-            type={"checkbox"}
-            placeholder="is the user is admin? "
-          ></input>
+          <div>
+            <h2>Is the user going to be admin?</h2>
+            <input
+              id="IsAdmin"
+              name="IsAdmin"
+              type={"checkbox"}
+              placeholder="is the user is admin? "
+            ></input>
+          </div>
           <button type="submit" value="Submit" form="addForm">
             Submit
           </button>

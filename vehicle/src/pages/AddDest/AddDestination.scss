@@ -1,12 +1,11 @@
 .Submit-div {
   display: flex;
-
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-  background-color: rgb(249, 158, 67);
+  background-color: rgb(255, 149, 0);
   box-shadow: 5px 10px 8px #888888;
   margin: 0 auto;
-  width: 24%;
   padding: 4% 2%;
   button {
     padding: 2% 5%;
@@ -40,4 +39,8 @@ button {
     padding: 1%;
     border: 3px rgba(0, 0, 0, 0.232) solid;
   }
+}
+#AddForm {
+  display: flex;
+  flex-direction: column;
 }

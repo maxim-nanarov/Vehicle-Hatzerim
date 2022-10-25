@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import "./Vehicle_Schedule.scss";
 import DateRange from "../extraComponents/DateRangeC";
+import MyCalender from "../extraComponents/Calander";
 
 export default function VehicleSchedule() {
   const [Rides, setRides] = useState([]);
@@ -71,8 +72,14 @@ export default function VehicleSchedule() {
       </div>
       <div>
         <div className="filter-nav">
-          <DateRange />
+          <MyCalender />
           <div className="filter-notdate">
+            <input
+              type="text"
+              id="PlateNumber"
+              name="PlateNumber"
+              placeholder="serial number of the vehicle"
+            ></input>
             <input
               type="text"
               id="Destination"
