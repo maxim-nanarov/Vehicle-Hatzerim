@@ -54,3 +54,12 @@ tr:hover {
   justify-content: center;
   align-items: center;
 }
+.filter-notdate {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  input {
+    width: 60%;
+  }
+}

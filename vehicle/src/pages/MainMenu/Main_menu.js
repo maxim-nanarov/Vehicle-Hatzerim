@@ -76,9 +76,7 @@ export default function MainMenu() {
             <Link to={`/Main_Menu/${id}/Get_vehicle${search}`}>
               Get Vehicle
             </Link>
-            <Link to={`/Main_Menu/${id}/Vehicle_Schedule${search}`}>
-              Vehicle Schedule
-            </Link>
+            <Link to={`/Main_Menu/${id}`}>Vehicle Schedule</Link>
             <Link to={`/Main_Menu/${id}/Rides${search}`}>Rides</Link>
           </nav>
           <div className="TheRestOfTheSite">

@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "./Vehicle_Schedule.scss";
-import DatePicker from "react-datepicker";
+import DateRange from "../extraComponents/calander";
 
 export default function VehicleSchedule() {
   const [Rides, setRides] = useState([]);
@@ -71,20 +71,16 @@ export default function VehicleSchedule() {
       </div>
       <div>
         <div className="filter-nav">
-          <input
-            type="date"
-            defaultValue={new Date().toISOString().split("T")[0]}
-            value={(DateFilter) => setDateFilter(DateFilter)}
-            ata-date=""
-            data-date-format="DD MMMM YYYY"
-          />
-          <input
-            type="text"
-            id="Destination"
-            name="Destination"
-            placeholder="Destination filter"
-          ></input>
-          <input id="user" name="user" placeholder="user filter"></input>
+          <DateRange />
+          <div className="filter-notdate">
+            <input
+              type="text"
+              id="Destination"
+              name="Destination"
+              placeholder="Destination filter"
+            ></input>
+            <input id="user" name="user" placeholder="user filter"></input>
+          </div>
         </div>
       </div>
       <table>
