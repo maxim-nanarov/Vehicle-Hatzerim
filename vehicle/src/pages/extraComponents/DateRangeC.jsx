@@ -3,7 +3,7 @@ import "react-date-range/dist/theme/default.css"; // theme css file
 import React, { useState } from "react";
 import { DateRange } from "react-date-range";
 
-export default function Calander() {
+export default function DateRangeC() {
   const [state, setState] = useState([
     {
       startDate: new Date(),

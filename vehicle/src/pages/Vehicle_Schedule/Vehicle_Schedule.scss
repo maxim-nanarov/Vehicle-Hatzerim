@@ -1,3 +1,21 @@
+@media only screen and (min-width: 1200px) {
+  .MainDivRides {
+    flex-direction: column;
+  }
+  .filter-notdate {
+    flex-direction: column;
+  }
+}
+
+@media only screen and (max-width: 1199px) {
+  .MainDivRides {
+    flex-direction: column;
+  }
+  .filter-nav {
+    flex-direction: column;
+  }
+}
+
 table,
 th,
 td {
@@ -10,13 +28,14 @@ tr {
   transition: 1s;
 }
 table {
+  margin-top: 5%;
+  margin-bottom: 5%;
   border-collapse: collapse;
   border: 0.1 solid black;
 }
 .MainDivRides {
   margin-top: 5%;
   display: flex;
-  flex-direction: column;
   justify-content: center;
 }
 th {
@@ -32,10 +51,26 @@ tr:hover {
   background-color: rgb(255, 194, 79);
 }
 .filter-nav {
+  background-color: rgb(255, 196, 87);
+  padding: 17px;
+  box-shadow: 15px 10px 8px #888888;
   display: flex;
   justify-content: space-evenly;
+}
+
+.Headline {
+  font-size: xx-large;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.filter-notdate {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: flex-start;
   input {
-    width: 25%;
+    width: 90%;
     transition: 0.6s;
     &:hover {
       cursor: pointer;
@@ -47,19 +82,8 @@ tr:hover {
     }
   }
 }
-
-.Headline {
-  font-size: xx-large;
+.filter-button {
   display: flex;
-  justify-content: center;
+  justify-items: center;
   align-items: center;
-}
-.filter-notdate {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  input {
-    width: 60%;
-  }
 }

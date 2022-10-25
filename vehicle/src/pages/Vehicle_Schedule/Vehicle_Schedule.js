@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "./Vehicle_Schedule.scss";
-import DateRange from "../extraComponents/calander";
+import DateRange from "../extraComponents/DateRangeC";
 
 export default function VehicleSchedule() {
   const [Rides, setRides] = useState([]);
@@ -80,6 +80,14 @@ export default function VehicleSchedule() {
               placeholder="Destination filter"
             ></input>
             <input id="user" name="user" placeholder="user filter"></input>
+            <input
+              id="Reason"
+              name="Reason"
+              placeholder="Reason filter"
+            ></input>
+            <div className="filter-button">
+              <button>Submit</button>
+            </div>
           </div>
         </div>
       </div>
