@@ -77,7 +77,7 @@ export default function Login() {
   } else {
     return (
       <div className="rotating">
-        <label>Loading...</label>
+        <h1>Loading...</h1>
         <div className="first">
           <div className="second">
             <div className="third"></div>

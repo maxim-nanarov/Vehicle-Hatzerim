@@ -28,6 +28,7 @@ export default function MyCalender() {
     hu: "Hungarian",
     hy: "Armenian",
     id: "Indonesian",
+    il: "Israel",
     is: "Icelandic",
     it: "Italian",
     ja: "Japanese",
@@ -65,22 +66,7 @@ export default function MyCalender() {
 
   return (
     <div style={{ display: "flex", flexFlow: "column nowrap" }}>
-      <select
-        style={{ margin: "20px auto" }}
-        onChange={(e) => setLocale(e.target.value)}
-        value={locale}
-      >
-        {localeOptions.map((option, i) => (
-          <option value={option.value} key={i}>
-            {option.label}
-          </option>
-        ))}
-      </select>
-      <Calendar
-        onChange={(item) => setDate(item)}
-        locale={locales[locale]}
-        date={date}
-      />
+      <Calendar onChange={(item) => setDate(item)} date={date} />
     </div>
   );
 }
