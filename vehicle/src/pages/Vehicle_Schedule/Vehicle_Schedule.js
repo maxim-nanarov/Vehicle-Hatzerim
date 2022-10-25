@@ -36,7 +36,12 @@ export default function VehicleSchedule() {
       });
   }, []);
   let count = 0;
-  let date = new Date().toISOString().split("T")[0];
+  let date;
+  if (DateFilter !== undefined) {
+    date = DateFilter.toISOString().split("T")[0];
+  } else {
+    date = new Date().toISOString().split("T")[0];
+  }
   console.log(date);
   let a = Data.map((Ride) => {
     count++;
