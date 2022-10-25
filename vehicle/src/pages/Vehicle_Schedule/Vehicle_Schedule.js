@@ -2,8 +2,10 @@ import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "./Vehicle_Schedule.scss";
-import DateRange from "../extraComponents/DateRangeC";
-import MyCalender from "../extraComponents/Calander";
+import { Calendar } from "react-date-range";
+import * as locales from "react-date-range/dist/locale";
+import "react-date-range/dist/styles.css"; // main css file
+import "react-date-range/dist/theme/default.css"; // theme css file
 
 export default function VehicleSchedule() {
   const [Rides, setRides] = useState([]);
@@ -64,7 +66,7 @@ export default function VehicleSchedule() {
       );
     }
   });
-
+  console.log(DateFilter);
   return (
     <div className="MainDivRides">
       <div className="Headline">
@@ -72,7 +74,9 @@ export default function VehicleSchedule() {
       </div>
       <div>
         <div className="filter-nav">
-          <MyCalender />
+          <div style={{ display: "flex", flexFlow: "column nowrap" }}>
+            <Calendar onChange={(item) => setDateFilter(item)} />
+          </div>
           <div className="filter-notdate">
             <input
               type="text"
