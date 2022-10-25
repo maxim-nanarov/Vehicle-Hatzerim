@@ -294,7 +294,7 @@ function VehicleThatIsntInUse(vehicles, Rides) {
 function RemoveUsedVehicle(Availabe_Vehicles, plateNum) {
   for (let i = 0; i < Availabe_Vehicles.length; i++) {
     if (plateNum === Availabe_Vehicles[i]) {
-      Availabe_Vehicles[i].pop();
+      console.log("The Vehicle is in the table: " + Availabe_Vehicles[i].pop());
     }
   }
   return Availabe_Vehicles;
