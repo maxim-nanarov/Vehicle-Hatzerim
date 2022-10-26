@@ -178,45 +178,39 @@ export default function GetVehicle() {
     } else {
       formData.Take_Riders = true;
     }
-    //To Do: put form Data to an post request to the Rides server
-    //https://vehicle-hatzerim.herokuapp.com\
+
     // let currentTime = new Date().toISOString().split("T")[1].split(".")[0];
-    console.log(Rides);
+
     let Ride_Table = Rides;
     let date1 = formData.Starting_Date + " " + formData.Starting_Hour + ":00";
     let date2 = formData.Ending_Date + " " + formData.Ending_Hour + ":00";
     let vehicle_plate_num = availabeVehicle(Vehicles, Ride_Table, date1, date2);
-    console.log("the chosen vehicle: " + vehicle_plate_num);
+    console.log("the first chosen vehicle is: " + vehicle_plate_num);
     if (vehicle_plate_num === undefined) {
       alert(
         vehicle_plate_num +
           "   theres no vehicle availabe at this time, try at different date"
       );
     }
-    console.log(id, date1, date2);
-    if (vehicle_plate_num !== undefined) {
-      axios
-        .post("https://vehicle-hatzerim.herokuapp.com/Ride_data", {
-          data: {
-            Data: formData,
-            id: id,
-            StartingDate: new Date(date1),
-            EndingDate: new Date(date2),
-            plateNum: vehicle_plate_num,
-          },
-        })
-        .then((res) => {
-          console.log(res.data);
-          window.location.href += `/Selected_Vehicles?Data=${formData}&StartingDate=${new Date(
-            date1
-          )}&EndingDate=${new Date(
-            date2
-          )}&vehicle_plate_num=${vehicle_plate_num}`;
-        });
-      console.log(formData);
-    } else {
-      alert("There are no vehicles availabe at this time.");
-    }
+    console.log(id, date1, date2, vehicle_plate_num);
+    // if (vehicle_plate_num !== undefined) {
+    //   axios
+    //     .post("https://vehicle-hatzerim.herokuapp.com/Ride_data", {
+    //       data: {
+    //         Data: formData,
+    //         id: id,
+    //         StartingDate: new Date(date1),
+    //         EndingDate: new Date(date2),
+    //         plateNum: vehicle_plate_num,
+    //       },
+    //     })
+    //     .then((res) => {
+    //       console.log(res.data);
+    //     });
+    //   console.log(formData);
+    // } else {
+    //   alert("There are no vehicles availabe at this time.");
+    // }
   }
 }
 
@@ -242,8 +236,41 @@ function availabeVehicle(
   if (Rides === []) {
     return undefined;
   }
-
-  // ToDo: need to seperate this function.
+  let Availabe_Vehicles = IfisinRangeCompiler(
+    Rides,
+    Starting_date_new,
+    finnishing_date_new
+  );
+  if (Availabe_Vehicles === undefined) {
+    return undefined;
+  } else if (Availabe_Vehicles[0] !== undefined) {
+    return Availabe_Vehicles[0];
+  }
+  function VehicleThatIsntInUse(vehicles, Rides) {
+    for (let j = 0; j < vehicles.length; j++) {
+      if (!ifExist(Rides, vehicles[j].vehicle_plate_num)) {
+        return vehicles[j].vehicle_plate_num;
+      } else {
+        console.log(
+          "this vehicle is used once: " + vehicles[j].vehicle_plate_num
+        );
+      }
+    }
+    return undefined;
+  }
+  //checks if the plate number of the given vehicle exist in
+  //the main rides table.
+  function ifExist(array, number) {
+    let flag = false;
+    array.forEach((num) => {
+      if (num.vehicle_plate_num === number) {
+        flag = true;
+      }
+    });
+    return flag;
+  }
+}
+function IfisinRangeCompiler(Rides, Starting_date_new, finnishing_date_new) {
   let Availabe_Vehicles = [];
   Rides.forEach((Ride) => {
     if (
@@ -258,15 +285,10 @@ function availabeVehicle(
     } else {
       Availabe_Vehicles = RemoveUsedVehicle(
         Availabe_Vehicles,
-        Ride.vehiclePlateNum
+        Ride.vehicle_plate_num
       );
     }
   });
-  if (Availabe_Vehicles[0] !== undefined) {
-    return Availabe_Vehicles[0];
-  } else {
-    return undefined;
-  }
 }
 
 //if the date is between the start and finish date, then
@@ -276,16 +298,6 @@ export function If_In_Range(start, finish, date) {
 }
 //checks if there's a vehcile that
 //isnt used at all in the main ride table.
-function VehicleThatIsntInUse(vehicles, Rides) {
-  for (let j = 0; j < vehicles.length; j++) {
-    if (!ifExist(Rides, vehicles[j].vehicle_plate_num)) {
-      return vehicles[j].vehicle_plate_num;
-    } else {
-      console.log("this vehicle is used once" + vehicles[j].vehicle_plate_num);
-    }
-  }
-  return undefined;
-}
 
 //helps in the main function, to
 //remove the vehicle which one of their
@@ -298,16 +310,4 @@ function RemoveUsedVehicle(Availabe_Vehicles, plateNum) {
     }
   }
   return Availabe_Vehicles;
-}
-
-//checks if the plate number of the given vehicle exist in
-//the main rides table.
-function ifExist(array, number) {
-  let flag = false;
-  array.forEach((num) => {
-    if (num.vehicle_plate_num === number) {
-      flag = true;
-    }
-  });
-  return flag;
 }
