@@ -9,6 +9,7 @@ import "react-date-range/dist/theme/default.css"; // theme css file
 export default function VehicleSchedule() {
   const [Rides, setRides] = useState([]);
   const [DateFilter, setDateFilter] = useState();
+  const [DestinationFilter, setDestinationFilter] = useState();
   const [plateNum, setPlateNum] = useState();
   const [Data, setData] = useState([]);
   useEffect(() => {
@@ -39,7 +40,6 @@ export default function VehicleSchedule() {
   let date;
   if (DateFilter !== undefined) {
     date = DateFilter.toLocaleString().split(",")[0];
-    console.log("Date filter: " + DateFilter.toLocaleString().split(",")[0]);
   } else {
     date = new Date().toLocaleString().split(",")[0];
   }
@@ -47,11 +47,12 @@ export default function VehicleSchedule() {
     count++;
     let sDate = new Date(Ride.starting_date).toLocaleString().split(",")[0];
     let fDate = new Date(Ride.finishing_date).toLocaleString().split(",")[0];
-    console.log(sDate === date || fDate === date);
-    console.log(sDate + " " + date + " " + fDate);
     if (sDate === date || fDate === date) {
-      console.log("welp that worked");
-      if (plateNum === undefined) {
+      if (
+        plateNum === undefined ||
+        DestinationFilter === undefined ||
+        plateNum === ""
+      ) {
         return (
           <tr className="Card" key={count}>
             <th>{Ride.ride_id}</th>
@@ -71,7 +72,12 @@ export default function VehicleSchedule() {
             <th>{prettyDate2(Ride.finishing_date)} </th>
           </tr>
         );
-      } else if (plateNum === Ride.vehicle_plate_num) {
+      } else if (
+        plateNum === Ride.vehicle_plate_num &&
+        Ride.destination_name.indexOf(DestinationFilter) > -1
+      ) {
+        console.log(plateNum, DestinationFilter);
+
         return (
           <tr className="Card" key={count}>
             <th>{Ride.ride_id}</th>
@@ -96,7 +102,6 @@ export default function VehicleSchedule() {
       return <div></div>;
     }
   });
-  console.log(plateNum);
   return (
     <div className="MainDivRides">
       <div className="Headline">
@@ -119,9 +124,16 @@ export default function VehicleSchedule() {
                 id="PlateNumber"
                 name="PlateNumber"
                 placeholder="Vehicle number filter"
+                value={plateNum}
                 onChange={(num) => setPlateNum(Number(num.nativeEvent.data))}
               ></input>
-              <button onClick={() => setPlateNum(undefined)}>X</button>
+              <button
+                onClick={() => {
+                  setPlateNum("");
+                }}
+              >
+                X
+              </button>
             </div>
             <div className="SpecificInput">
               <input
@@ -129,8 +141,10 @@ export default function VehicleSchedule() {
                 id="Destination"
                 name="Destination"
                 placeholder="Destination filter"
+                onChange={(des) => setDestinationFilter(des.target.value)}
+                value={DestinationFilter}
               ></input>
-              <button onClick={() => setPlateNum(undefined)}>X</button>
+              <button onClick={() => setDestinationFilter("")}>X</button>
             </div>
             <div className="SpecificInput">
               <input id="user" name="user" placeholder="user filter"></input>
@@ -174,3 +188,5 @@ function prettyDate2(time) {
   let dateString = date[0] + " " + hours[0];
   return hours[0];
 }
+
+//To Do: Filters functions that seperated from the main code.

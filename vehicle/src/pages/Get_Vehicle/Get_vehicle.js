@@ -196,7 +196,7 @@ export default function GetVehicle() {
     console.log(id, date1, date2);
     if (vehicle_plate_num !== undefined) {
       axios
-        .post("http://localhost:4002/Ride_data", {
+        .post("https://vehicle-hatzerim.herokuapp.com/Ride_data", {
           data: {
             Data: formData,
             id: id,
