@@ -10,6 +10,7 @@ import "react-date-range/dist/theme/default.css"; // theme css file
 export default function VehicleSchedule() {
   const [Rides, setRides] = useState([]);
   const [DateFilter, setDateFilter] = useState();
+  const [plateNum, setPlateNum] = useState();
   const [Data, setData] = useState([]);
   useEffect(() => {
     setDateFilter(new Date());
@@ -49,29 +50,52 @@ export default function VehicleSchedule() {
     let fDate = Ride.finishing_date.split("T");
     if (sDate[0] === date || fDate[0] === date) {
       console.log("welp that worked");
-
-      return (
-        <tr className="Card" key={count}>
-          <th>{Ride.ride_id}</th>
-          <th>{Ride.vehicle_plate_num}</th>
-          <th>{Ride.destination_name}</th>
-          <th>{Ride.reason_name}</th>
-          <th>
-            {Ride.company_name +
-              " | " +
-              Ride.size_name +
-              " | " +
-              Ride.type_name}
-          </th>
-          <th>{Ride.user_name + "  " + Ride.user_surname} </th>
-          <th>{Ride.will_take_riders.toString()} </th>
-          <th>{prettyDate2(Ride.starting_date)} </th>
-          <th>{prettyDate2(Ride.finishing_date)} </th>
-        </tr>
-      );
+      if (plateNum === undefined) {
+        return (
+          <tr className="Card" key={count}>
+            <th>{Ride.ride_id}</th>
+            <th>{Ride.vehicle_plate_num}</th>
+            <th>{Ride.destination_name}</th>
+            <th>{Ride.reason_name}</th>
+            <th>
+              {Ride.company_name +
+                " | " +
+                Ride.size_name +
+                " | " +
+                Ride.type_name}
+            </th>
+            <th>{Ride.user_name + "  " + Ride.user_surname} </th>
+            <th>{Ride.will_take_riders.toString()} </th>
+            <th>{prettyDate2(Ride.starting_date)} </th>
+            <th>{prettyDate2(Ride.finishing_date)} </th>
+          </tr>
+        );
+      } else if (plateNum === Ride.vehicle_plate_num) {
+        return (
+          <tr className="Card" key={count}>
+            <th>{Ride.ride_id}</th>
+            <th>{Ride.vehicle_plate_num}</th>
+            <th>{Ride.destination_name}</th>
+            <th>{Ride.reason_name}</th>
+            <th>
+              {Ride.company_name +
+                " | " +
+                Ride.size_name +
+                " | " +
+                Ride.type_name}
+            </th>
+            <th>{Ride.user_name + "  " + Ride.user_surname} </th>
+            <th>{Ride.will_take_riders.toString()} </th>
+            <th>{prettyDate2(Ride.starting_date)} </th>
+            <th>{prettyDate2(Ride.finishing_date)} </th>
+          </tr>
+        );
+      }
+    } else {
+      return <div></div>;
     }
   });
-  console.log(DateFilter);
+  console.log(plateNum);
   return (
     <div className="MainDivRides">
       <div className="Headline">
@@ -79,15 +103,22 @@ export default function VehicleSchedule() {
       </div>
       <div>
         <div className="filter-nav">
-          <div style={{ display: "flex", flexFlow: "column nowrap" }}>
+          <div
+            style={{
+              display: "flex",
+
+              flexFlow: "column nowrap",
+            }}
+          >
             <Calendar onChange={(item) => setDateFilter(item)} />
           </div>
           <div className="filter-notdate">
             <input
-              type="text"
+              type="number"
               id="PlateNumber"
               name="PlateNumber"
               placeholder="serial number of the vehicle"
+              onChange={(num) => setPlateNum(Number(num.nativeEvent.data))}
             ></input>
             <input
               type="text"
