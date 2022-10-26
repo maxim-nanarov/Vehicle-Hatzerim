@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import "./Vehicle_Schedule.scss";
 import { Calendar } from "react-date-range";
-import * as locales from "react-date-range/dist/locale";
 import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
 
@@ -39,16 +38,18 @@ export default function VehicleSchedule() {
   let count = 0;
   let date;
   if (DateFilter !== undefined) {
-    date = DateFilter.toISOString().split("T")[0];
+    date = DateFilter.toLocaleString().split(",")[0];
+    console.log("Date filter: " + DateFilter.toLocaleString().split(",")[0]);
   } else {
-    date = new Date().toISOString().split("T")[0];
+    date = new Date().toLocaleString().split(",")[0];
   }
-  console.log(date);
   let a = Data.map((Ride) => {
     count++;
-    let sDate = Ride.starting_date.split("T");
-    let fDate = Ride.finishing_date.split("T");
-    if (sDate[0] === date || fDate[0] === date) {
+    let sDate = new Date(Ride.starting_date).toLocaleString().split(",")[0];
+    let fDate = new Date(Ride.finishing_date).toLocaleString().split(",")[0];
+    console.log(sDate === date || fDate === date);
+    console.log(sDate + " " + date + " " + fDate);
+    if (sDate === date || fDate === date) {
       console.log("welp that worked");
       if (plateNum === undefined) {
         return (
@@ -106,32 +107,43 @@ export default function VehicleSchedule() {
           <div
             style={{
               display: "flex",
-
               flexFlow: "column nowrap",
             }}
           >
             <Calendar onChange={(item) => setDateFilter(item)} />
           </div>
           <div className="filter-notdate">
-            <input
-              type="number"
-              id="PlateNumber"
-              name="PlateNumber"
-              placeholder="serial number of the vehicle"
-              onChange={(num) => setPlateNum(Number(num.nativeEvent.data))}
-            ></input>
-            <input
-              type="text"
-              id="Destination"
-              name="Destination"
-              placeholder="Destination filter"
-            ></input>
-            <input id="user" name="user" placeholder="user filter"></input>
-            <input
-              id="Reason"
-              name="Reason"
-              placeholder="Reason filter"
-            ></input>
+            <div className="SpecificInput">
+              <input
+                type="number"
+                id="PlateNumber"
+                name="PlateNumber"
+                placeholder="Vehicle number filter"
+                onChange={(num) => setPlateNum(Number(num.nativeEvent.data))}
+              ></input>
+              <button onClick={() => setPlateNum(undefined)}>X</button>
+            </div>
+            <div className="SpecificInput">
+              <input
+                type="text"
+                id="Destination"
+                name="Destination"
+                placeholder="Destination filter"
+              ></input>
+              <button onClick={() => setPlateNum(undefined)}>X</button>
+            </div>
+            <div className="SpecificInput">
+              <input id="user" name="user" placeholder="user filter"></input>
+              <button onClick={() => setPlateNum(undefined)}>X</button>
+            </div>
+            <div className="SpecificInput">
+              <input
+                id="Reason"
+                name="Reason"
+                placeholder="Reason filter"
+              ></input>
+              <button onClick={() => setPlateNum(undefined)}>X</button>
+            </div>
             <div className="filter-button">
               <button>Submit</button>
             </div>
