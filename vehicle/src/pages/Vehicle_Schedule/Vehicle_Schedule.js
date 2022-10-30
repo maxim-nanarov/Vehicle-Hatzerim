@@ -12,6 +12,7 @@ export default function VehicleSchedule() {
   const [DestinationFilter, setDestinationFilter] = useState();
   const [plateNum, setPlateNum] = useState();
   const [Data, setData] = useState([]);
+  const [FilterdArr, setFilterdArr] = useState();
   useEffect(() => {
     setDateFilter(new Date());
     axios
@@ -36,6 +37,13 @@ export default function VehicleSchedule() {
         setData(res.data);
       });
   }, []);
+
+  if (plateNum !== undefined) {
+    setFilterdArr(FilterVehicles(Data, FilterdArr, plateNum));
+  }
+  if (DestinationFilter !== undefined) {
+    setFilterdArr(FilterDestinations(Data, FilterdArr, DestinationFilter));
+  }
   let count = 0;
   let date;
   if (DateFilter !== undefined) {
@@ -43,65 +51,58 @@ export default function VehicleSchedule() {
   } else {
     date = new Date().toLocaleString().split(",")[0];
   }
-  let a = Data.map((Ride) => {
-    count++;
-    let sDate = new Date(Ride.starting_date).toLocaleString().split(",")[0];
-    let fDate = new Date(Ride.finishing_date).toLocaleString().split(",")[0];
-    if (sDate === date || fDate === date) {
-      if (
-        plateNum === undefined ||
-        DestinationFilter === undefined ||
-        plateNum === ""
-      ) {
-        return (
-          <tr className="Card" key={count}>
-            <th>{Ride.ride_id}</th>
-            <th>{Ride.vehicle_plate_num}</th>
-            <th>{Ride.destination_name}</th>
-            <th>{Ride.reason_name}</th>
-            <th>
-              {Ride.company_name +
-                " | " +
-                Ride.size_name +
-                " | " +
-                Ride.type_name}
-            </th>
-            <th>{Ride.user_name + "  " + Ride.user_surname} </th>
-            <th>{Ride.will_take_riders.toString()} </th>
-            <th>{prettyDate2(Ride.starting_date)} </th>
-            <th>{prettyDate2(Ride.finishing_date)} </th>
-          </tr>
-        );
-      } else if (
-        plateNum === Ride.vehicle_plate_num &&
-        Ride.destination_name.indexOf(DestinationFilter) > -1
-      ) {
-        console.log(plateNum, DestinationFilter);
+  let a;
+  if (FilterdArr !== undefined) {
+    console.log(FilterdArr);
+    a = FilterdArr.map((Ride) => {
+      count++;
+      let sDate = new Date(Ride.starting_date).toLocaleString().split(",")[0];
+      let fDate = new Date(Ride.finishing_date).toLocaleString().split(",")[0];
+      return (
+        <tr className="Card" key={count}>
+          <th>{Ride.vehicle_plate_num}</th>
+          <th>{Ride.destination_name}</th>
+          <th>{Ride.reason_name}</th>
+          <th>
+            {Ride.company_name +
+              " | " +
+              Ride.size_name +
+              " | " +
+              Ride.type_name}
+          </th>
+          <th>{Ride.user_name + "  " + Ride.user_surname} </th>
+          <th>{Ride.will_take_riders.toString()} </th>
+          <th>{prettyDate2(Ride.starting_date)} </th>
+          <th>{prettyDate2(Ride.finishing_date)} </th>
+        </tr>
+      );
+    });
+  } else {
+    a = Data.map((Ride) => {
+      count++;
+      let sDate = new Date(Ride.starting_date).toLocaleString().split(",")[0];
+      let fDate = new Date(Ride.finishing_date).toLocaleString().split(",")[0];
 
-        return (
-          <tr className="Card" key={count}>
-            <th>{Ride.ride_id}</th>
-            <th>{Ride.vehicle_plate_num}</th>
-            <th>{Ride.destination_name}</th>
-            <th>{Ride.reason_name}</th>
-            <th>
-              {Ride.company_name +
-                " | " +
-                Ride.size_name +
-                " | " +
-                Ride.type_name}
-            </th>
-            <th>{Ride.user_name + "  " + Ride.user_surname} </th>
-            <th>{Ride.will_take_riders.toString()} </th>
-            <th>{prettyDate2(Ride.starting_date)} </th>
-            <th>{prettyDate2(Ride.finishing_date)} </th>
-          </tr>
-        );
-      }
-    } else {
-      return <div></div>;
-    }
-  });
+      return (
+        <tr className="Card" key={count}>
+          <th>{Ride.vehicle_plate_num}</th>
+          <th>{Ride.destination_name}</th>
+          <th>{Ride.reason_name}</th>
+          <th>
+            {Ride.company_name +
+              " | " +
+              Ride.size_name +
+              " | " +
+              Ride.type_name}
+          </th>
+          <th>{Ride.user_name + "  " + Ride.user_surname} </th>
+          <th>{Ride.will_take_riders.toString()} </th>
+          <th>{prettyDate2(Ride.starting_date)} </th>
+          <th>{prettyDate2(Ride.finishing_date)} </th>
+        </tr>
+      );
+    });
+  }
   return (
     <div className="MainDivRides">
       <div className="Headline">
@@ -166,7 +167,6 @@ export default function VehicleSchedule() {
       </div>
       <table>
         <tr className="Card" key={count}>
-          <th>Id</th>
           <th>vehicle plate number</th>
           <th>Destination </th>
           <th>Reason </th>
@@ -190,3 +190,25 @@ function prettyDate2(time) {
 }
 
 //To Do: Filters functions that seperated from the main code.
+function FilterVehicles(Rides, FilterdArr, platenum) {
+  Rides.forEach((Ride) => {
+    if (platenum === Rides.vehicle_plate_num) {
+      FilterdArr.push(Ride);
+    }
+  });
+}
+function FilterDestinations(Rides, FilterdArr, destination_name) {
+  if (FilterdArr !== undefined) {
+    FilterdArr.forEach((Ride) => {
+      if (destination_name === FilterdArr.destination_name) {
+        FilterdArr.push(Ride);
+      }
+    });
+  } else {
+    Rides.forEach((Ride) => {
+      if (destination_name === Rides.destination_name) {
+        FilterdArr.push(Ride);
+      }
+    });
+  }
+}
