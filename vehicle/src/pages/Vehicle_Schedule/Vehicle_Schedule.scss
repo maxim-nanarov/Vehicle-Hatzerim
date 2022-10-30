@@ -25,7 +25,7 @@ td {
   text-align: left;
 }
 tr {
-  transition: 1s;
+  transition: 0.3s;
 }
 table {
   margin-top: 5%;
@@ -71,7 +71,7 @@ tr:hover {
   // align-items: flex-start;
   input {
     width: 90%;
-    transition: 0.6s;
+    transition: 0.3s;
     &:hover {
       cursor: pointer;
       background-color: rgb(255, 188, 64);

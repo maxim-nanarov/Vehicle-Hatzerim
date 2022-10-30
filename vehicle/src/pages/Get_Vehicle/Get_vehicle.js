@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import "./Get_vehicle.scss";
 import axios from "axios";
 //To Do: Add an Edit and Delete table.
@@ -53,7 +53,7 @@ export default function GetVehicle() {
       .then((res) => {
         setReasons(res.data);
       });
-  }, []);
+  }, [Rides]);
   let count = 0;
 
   let a = Destinations.map((Destination) => {
@@ -180,37 +180,41 @@ export default function GetVehicle() {
     }
 
     // let currentTime = new Date().toISOString().split("T")[1].split(".")[0];
-
-    let Ride_Table = Rides;
+    console.log(Rides);
     let date1 = formData.Starting_Date + " " + formData.Starting_Hour + ":00";
     let date2 = formData.Ending_Date + " " + formData.Ending_Hour + ":00";
+    let Ride_Table = ReleventTable(Rides, date1);
+    console.log("The first table" + Ride_Table);
+    if (date1 >= date2) {
+      alert("starting date cant be bigger then the finishing date.");
+      return undefined;
+    }
     let vehicle_plate_num = availabeVehicle(Vehicles, Ride_Table, date1, date2);
-    console.log("the first chosen vehicle is: " + vehicle_plate_num);
     if (vehicle_plate_num === undefined) {
       alert(
         vehicle_plate_num +
           "   theres no vehicle availabe at this time, try at different date"
       );
     }
-    console.log(id, date1, date2, vehicle_plate_num);
-    // if (vehicle_plate_num !== undefined) {
-    //   axios
-    //     .post("https://vehicle-hatzerim.herokuapp.com/Ride_data", {
-    //       data: {
-    //         Data: formData,
-    //         id: id,
-    //         StartingDate: new Date(date1),
-    //         EndingDate: new Date(date2),
-    //         plateNum: vehicle_plate_num,
-    //       },
-    //     })
-    //     .then((res) => {
-    //       console.log(res.data);
-    //     });
-    //   console.log(formData);
-    // } else {
-    //   alert("There are no vehicles availabe at this time.");
-    // }
+    console.log(Ride_Table, id, date1, date2, vehicle_plate_num);
+    if (vehicle_plate_num !== undefined) {
+      console.log("the chosen vehicle is: " + vehicle_plate_num);
+      axios
+        .post("https://vehicle-hatzerim.herokuapp.com/Ride_data", {
+          data: {
+            Data: formData,
+            id: id,
+            StartingDate: new Date(date1),
+            EndingDate: new Date(date2),
+            plateNum: vehicle_plate_num,
+          },
+        })
+        .then((res) => {
+          console.log(res.data);
+        });
+    } else {
+      alert("There are no vehicles availabe at this time.");
+    }
   }
 }
 
@@ -229,6 +233,8 @@ function availabeVehicle(
   Starting_date_new,
   finnishing_date_new
 ) {
+  console.log(Rides);
+
   let vehiclePlateNum = VehicleThatIsntInUse(vehicles, Rides);
   if (vehiclePlateNum !== undefined) {
     return vehiclePlateNum;
@@ -243,9 +249,11 @@ function availabeVehicle(
   );
   if (Availabe_Vehicles === undefined) {
     return undefined;
-  } else if (Availabe_Vehicles[0] !== undefined) {
-    return Availabe_Vehicles[0];
+  } else if (Availabe_Vehicles !== undefined) {
+    console.log(Availabe_Vehicles);
+    return Availabe_Vehicles;
   }
+
   function VehicleThatIsntInUse(vehicles, Rides) {
     for (let j = 0; j < vehicles.length; j++) {
       if (!ifExist(Rides, vehicles[j].vehicle_plate_num)) {
@@ -258,6 +266,7 @@ function availabeVehicle(
     }
     return undefined;
   }
+
   //checks if the plate number of the given vehicle exist in
   //the main rides table.
   function ifExist(array, number) {
@@ -270,44 +279,71 @@ function availabeVehicle(
     return flag;
   }
 }
+
 function IfisinRangeCompiler(Rides, Starting_date_new, finnishing_date_new) {
-  let Availabe_Vehicles = [];
-  Rides.forEach((Ride) => {
+  let ResultFlag = false;
+  for (let i = 0; i < Rides.length - 1; i++) {
     if (
-      If_In_Range(
-        Ride.starting_date,
-        Ride.finishing_date,
-        finnishing_date_new
+      !If_In_Range(
+        Rides[i].starting_date,
+        Rides[i].finishing_date,
+        Starting_date_new
       ) &&
-      If_In_Range(Ride.starting_date, Ride.finishing_date, Starting_date_new)
+      !If_In_Range(
+        Rides[i].starting_date,
+        Rides[i].finishing_date,
+        finnishing_date_new
+      )
     ) {
-      Availabe_Vehicles.push(Ride.vehicle_plate_num);
-    } else {
-      Availabe_Vehicles = RemoveUsedVehicle(
-        Availabe_Vehicles,
-        Ride.vehicle_plate_num
-      );
+      console.log("True");
+      ResultFlag = true;
     }
-  });
+    if (Rides[i].vehicle_plate_num !== Rides[i + 1].vehicle_plate_num) {
+      console.log(
+        "ifisinRangeCompiler function one if before the return. this is the Result flag that will decide to retun the chosed vehicle or not: " +
+          ResultFlag
+      );
+      console.log(
+        "Oh if i forgot here the vehicle serial number: " +
+          Rides[i].vehicle_plate_num
+      );
+      if (!ResultFlag) {
+        return Rides[i].vehicle_plate_num;
+      }
+    }
+  }
+  return undefined;
 }
 
 //if the date is between the start and finish date, then
 //false.
 export function If_In_Range(start, finish, date) {
-  return !(date >= start && date <= finish);
-}
-//checks if there's a vehcile that
-//isnt used at all in the main ride table.
-
-//helps in the main function, to
-//remove the vehicle which one of their
-//rides is in between the relevent
-//date and time.
-function RemoveUsedVehicle(Availabe_Vehicles, plateNum) {
-  for (let i = 0; i < Availabe_Vehicles.length; i++) {
-    if (plateNum === Availabe_Vehicles[i]) {
-      console.log("The Vehicle is in the table: " + Availabe_Vehicles[i].pop());
-    }
+  start = new Date(start).toLocaleString();
+  finish = new Date(finish).toLocaleString();
+  date = new Date(date).toLocaleString();
+  if (date >= start && date <= finish) {
+    return false;
+  } else {
+    return true;
   }
-  return Availabe_Vehicles;
 }
+
+//a table that's going to be relevent for today
+function ReleventTable(Ride_Table, SDate) {
+  let result = [];
+  Ride_Table.forEach((Ride) => {
+    if (Ride.starting_date >= SDate) {
+      result.push(Ride);
+    }
+  });
+  let Result = SortRideTable(result);
+  return Result;
+}
+
+function SortRideTable(Rides) {
+  console.log("Sort Ride Table function: " + Rides);
+  return Rides.sort(function (a, b) {
+    return a.vehicle_plate_num - b.vehicle_plate_num;
+  });
+}
+// first call to quick sort
