@@ -12,6 +12,7 @@ export default function VehicleSchedule() {
   const [DestinationFilter, setDestinationFilter] = useState();
   const [plateNum, setPlateNum] = useState();
   const [Data, setData] = useState([]);
+  const [Filter, setFilter] = useState([]);
   useEffect(() => {
     setDateFilter(new Date());
     axios
@@ -38,7 +39,15 @@ export default function VehicleSchedule() {
   }, []);
   useEffect(() => {
     console.log(plateNum, DestinationFilter);
-  });
+    //Filter
+    if (plateNum !== undefined) {
+      setFilter(FilterplateNum(Data, Filter, plateNum));
+    }
+    if (DestinationFilter !== undefined) {
+      setFilter(FilterDestination(Data, Filter, DestinationFilter));
+    }
+    console.log(Filter);
+  }, [plateNum, DestinationFilter, Filter]);
   let count = 0;
   let date;
   if (DateFilter !== undefined) {
@@ -193,3 +202,39 @@ function prettyDate2(time) {
 }
 
 //To Do: Filters functions that seperated from the main code.
+function FilterplateNum(Data, Filter, plateNum) {
+  if (Filter !== undefined) {
+    Filter = Filter.map((Ride) => {
+      if (Ride.vehicle_plate_num === plateNum) {
+        return Ride;
+      }
+      return undefined;
+    });
+  } else {
+    Filter = Data.map((Ride) => {
+      if (Ride.vehicle_plate_num === plateNum) {
+        return Ride;
+      }
+      return undefined;
+    });
+  }
+}
+
+function FilterDestination(Data, Filter, Destination) {
+  console.log(Data);
+  if (Filter !== undefined) {
+    Filter = Filter.map((Ride) => {
+      if (Ride.destination_name === Destination) {
+        return Ride;
+      }
+      return undefined;
+    });
+  } else {
+    Filter = Data.map((Ride) => {
+      if (Ride.destination_name === Destination) {
+        return Ride;
+      }
+      return undefined;
+    });
+  }
+}
