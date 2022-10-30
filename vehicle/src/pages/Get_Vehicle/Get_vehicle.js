@@ -283,13 +283,15 @@ function availabeVehicle(
 function IfisinRangeCompiler(Rides, Starting_date_new, finnishing_date_new) {
   let ResultFlag = false;
   for (let i = 0; i < Rides.length - 1; i++) {
+    //if this if is true, then there's no doubt about it
+    //the vehicle is used in the time given.
     if (
-      !If_In_Range(
+      If_In_Range(
         Rides[i].starting_date,
         Rides[i].finishing_date,
         Starting_date_new
-      ) &&
-      !If_In_Range(
+      ) ||
+      If_In_Range(
         Rides[i].starting_date,
         Rides[i].finishing_date,
         finnishing_date_new
@@ -298,6 +300,7 @@ function IfisinRangeCompiler(Rides, Starting_date_new, finnishing_date_new) {
       console.log("True");
       ResultFlag = true;
     }
+    console.log(i);
     if (Rides[i].vehicle_plate_num !== Rides[i + 1].vehicle_plate_num) {
       console.log(
         "ifisinRangeCompiler function one if before the return. this is the Result flag that will decide to retun the chosed vehicle or not: " +
@@ -309,6 +312,8 @@ function IfisinRangeCompiler(Rides, Starting_date_new, finnishing_date_new) {
       );
       if (!ResultFlag) {
         return Rides[i].vehicle_plate_num;
+      } else {
+        ResultFlag = false;
       }
     }
   }
@@ -316,16 +321,13 @@ function IfisinRangeCompiler(Rides, Starting_date_new, finnishing_date_new) {
 }
 
 //if the date is between the start and finish date, then
-//false.
+//true.
 export function If_In_Range(start, finish, date) {
   start = new Date(start).toLocaleString();
   finish = new Date(finish).toLocaleString();
   date = new Date(date).toLocaleString();
-  if (date >= start && date <= finish) {
-    return false;
-  } else {
-    return true;
-  }
+  console.log(start, finish, date);
+  return date >= start && date <= finish;
 }
 
 //a table that's going to be relevent for today
