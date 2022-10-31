@@ -39,7 +39,10 @@ export default function VehicleSchedule() {
   }, []);
   useEffect(() => {
     //Filter
-    if (plateNum !== "") {
+    if (plateNum !== "" && DestinationFilter !== "") {
+      setFilter(FilterplateNum(Data, Filter, plateNum));
+      setFilter(FilterDestination(Data, Filter, DestinationFilter));
+    } else if (plateNum !== "") {
       setFilter(FilterplateNum(Data, Filter, plateNum));
     } else if (DestinationFilter !== "") {
       setFilter(FilterDestination(Data, Filter, DestinationFilter));
@@ -47,7 +50,6 @@ export default function VehicleSchedule() {
       setFilter([]);
     }
   }, [plateNum, DestinationFilter]);
-  console.log(plateNum);
   let count = 0;
   let date;
   if (DateFilter !== undefined) {
@@ -64,7 +66,6 @@ export default function VehicleSchedule() {
       if (sDate === date || fDate === date) {
         return (
           <tr className="Card" key={count}>
-            <th>{Ride.ride_id}</th>
             <th>{Ride.vehicle_plate_num}</th>
             <th>{Ride.destination_name}</th>
             <th>{Ride.reason_name}</th>
@@ -93,7 +94,6 @@ export default function VehicleSchedule() {
       if (sDate === date || fDate === date) {
         return (
           <tr className="Card" key={count}>
-            <th>{Ride.ride_id}</th>
             <th>{Ride.vehicle_plate_num}</th>
             <th>{Ride.destination_name}</th>
             <th>{Ride.reason_name}</th>
@@ -180,7 +180,6 @@ export default function VehicleSchedule() {
       </div>
       <table>
         <tr className="Card" key={count}>
-          <th>Id</th>
           <th>vehicle plate number</th>
           <th>Destination </th>
           <th>Reason </th>
@@ -211,55 +210,32 @@ function FilterplateNum(Data, Filter, plateNum) {
       if (Filter[i].vehicle_plate_num === plateNum) {
         Result.push(Filter[i]);
       }
-      console.log("Vehicle Schedual: " + Filter[i]);
     }
   } else {
     for (let i = 0; i < Data.length; i++) {
       if (Data[i].vehicle_plate_num === Number(plateNum)) {
         Result.push(Data[i]);
-        console.log(
-          Data[i].vehicle_plate_num === Number(plateNum),
-          Data[i].vehicle_plate_num,
-          Number(plateNum)
-        );
       }
-      console.log("Vehicle Schedual: " + Data[i]);
     }
   }
-  if (Result.length > 0) {
-    console.log(Result);
-  }
-  console.log("vehicle plate num: " + plateNum);
+
   return Result;
 }
 
 function FilterDestination(Data, Filter, Destination) {
   let Result = [];
   if (Filter.length > 0) {
-    console.log(Destination);
     for (let i = 0; i < Filter.length; i++) {
-      console.log(
-        Filter[i].destination_name.includes(Destination),
-        Filter[i].destination_name,
-        Destination
-      );
       if (Filter[i].destination_name.includes(Destination)) {
         Result.push(Filter[i]);
       }
     }
   } else {
-    console.log(Destination);
     for (let i = 0; i < Data.length; i++) {
-      console.log(
-        Data[i].destination_name.includes(Destination),
-        Data[i].destination_name,
-        Destination
-      );
       if (Data[i].destination_name.includes(Destination)) {
         Result.push(Data[i]);
       }
     }
   }
-  console.log(Data[0].destination_name);
   return Result;
 }
