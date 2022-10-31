@@ -14,6 +14,8 @@ export default function VehicleSchedule() {
   const [Data, setData] = useState([]);
   const [Filter, setFilter] = useState([]);
   const [clickCounterPlate, setClickCounterPlate] = useState(0);
+  const [clickCounterStartingDate, setclickCounterStartingDate] = useState(0);
+  const [CounetrDateF, setCounetrDateF] = useState(0);
   useEffect(() => {
     setDateFilter(new Date());
     axios
@@ -199,25 +201,70 @@ export default function VehicleSchedule() {
           <th>Vehicle type</th>
           <th>User Name </th>
           <th>Will take riders</th>
-          <th>Starting</th>
-          <th>Finishing</th>
+          <th
+            onClick={() => {
+              if (clickCounterStartingDate % 2 === 0) {
+                setFilter(sortDates(Data));
+              } else {
+                setFilter(sortDatesDown(Data));
+              }
+              let index = clickCounterStartingDate + 1;
+              setclickCounterStartingDate(index);
+            }}
+          >
+            Starting
+          </th>
+          <th
+            onClick={() => {
+              if (CounetrDateF % 2 === 0) {
+                setFilter(sortDatesF(Data));
+              } else {
+                setFilter(sortDatesFDown(Data));
+              }
+              let index = CounetrDateF + 1;
+              setCounetrDateF(index);
+            }}
+          >
+            Finishing
+          </th>
         </tr>
         {a}
       </table>
     </div>
   );
 }
-
+//return (x === y)? 0 : x? -1 : 1;
 function sortPlateNum(data) {
-  console.log(data);
   return data.sort(function (a, b) {
     return a.vehicle_plate_num - b.vehicle_plate_num;
   });
 }
 function sortPlateNumDown(data) {
-  console.log(data);
   return data.sort(function (a, b) {
     return b.vehicle_plate_num - a.vehicle_plate_num;
+  });
+}
+function sortDates(data) {
+  console.log(data);
+  return data.sort(function (a, b) {
+    return new Date(a.starting_date) - new Date(b.starting_date);
+  });
+}
+function sortDatesDown(data) {
+  console.log();
+  return data.sort(function (a, b) {
+    return new Date(b.starting_date) - new Date(a.starting_date);
+  });
+}
+
+function sortDatesF(data) {
+  return data.sort(function (a, b) {
+    return new Date(a.finishing_date) - new Date(b.finishing_date);
+  });
+}
+function sortDatesFDown(data) {
+  return data.sort(function (a, b) {
+    return new Date(b.finishing_date) - new Date(a.finishing_date);
   });
 }
 
