@@ -250,7 +250,6 @@ function availabeVehicle(
   if (Availabe_Vehicles === undefined) {
     return undefined;
   } else if (Availabe_Vehicles !== undefined) {
-    console.log(Availabe_Vehicles);
     return Availabe_Vehicles;
   }
 
@@ -285,6 +284,7 @@ function IfisinRangeCompiler(Rides, Starting_date_new, finnishing_date_new) {
   for (let i = 0; i < Rides.length - 1; i++) {
     //if this if is true, then there's no doubt about it
     //the vehicle is used in the time given.
+    //true === the time is between used times.
     if (
       If_In_Range(
         Rides[i].starting_date,
@@ -297,10 +297,8 @@ function IfisinRangeCompiler(Rides, Starting_date_new, finnishing_date_new) {
         finnishing_date_new
       )
     ) {
-      console.log("True");
       ResultFlag = true;
     }
-    console.log(i);
     if (Rides[i].vehicle_plate_num !== Rides[i + 1].vehicle_plate_num) {
       console.log(
         "ifisinRangeCompiler function one if before the return. this is the Result flag that will decide to retun the chosed vehicle or not: " +
@@ -323,10 +321,9 @@ function IfisinRangeCompiler(Rides, Starting_date_new, finnishing_date_new) {
 //if the date is between the start and finish date, then
 //true.
 export function If_In_Range(start, finish, date) {
-  start = new Date(start).toLocaleString();
-  finish = new Date(finish).toLocaleString();
-  date = new Date(date).toLocaleString();
-  console.log(start, finish, date);
+  start = new Date(start);
+  finish = new Date(finish);
+  date = new Date(date);
   return date >= start && date <= finish;
 }
 
