@@ -13,6 +13,7 @@ export default function VehicleSchedule() {
   const [plateNum, setPlateNum] = useState("");
   const [Data, setData] = useState([]);
   const [Filter, setFilter] = useState([]);
+  const [clickCounterPlate, setClickCounterPlate] = useState(0);
   useEffect(() => {
     setDateFilter(new Date());
     axios
@@ -180,7 +181,19 @@ export default function VehicleSchedule() {
       </div>
       <table>
         <tr className="Card" key={count}>
-          <th>vehicle plate number</th>
+          <th
+            onClick={() => {
+              if (clickCounterPlate % 2 === 0) {
+                setFilter(sortPlateNum(Data));
+              } else {
+                setFilter(sortPlateNumDown(Data));
+              }
+              let index = clickCounterPlate + 1;
+              setClickCounterPlate(index);
+            }}
+          >
+            vehicle plate number
+          </th>
           <th>Destination </th>
           <th>Reason </th>
           <th>Vehicle type</th>
@@ -193,6 +206,19 @@ export default function VehicleSchedule() {
       </table>
     </div>
   );
+}
+
+function sortPlateNum(data) {
+  console.log(data);
+  return data.sort(function (a, b) {
+    return a.vehicle_plate_num - b.vehicle_plate_num;
+  });
+}
+function sortPlateNumDown(data) {
+  console.log(data);
+  return data.sort(function (a, b) {
+    return b.vehicle_plate_num - a.vehicle_plate_num;
+  });
 }
 
 function prettyDate2(time) {
