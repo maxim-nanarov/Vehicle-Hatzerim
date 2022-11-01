@@ -71,18 +71,7 @@ tr:hover {
   display: flex;
   justify-content: center;
   flex-direction: column;
-  .Calendar {
-    box-sizing: border-box;
-    background: wheat;
-    display: inline-flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-  }
+
   input {
     width: 90%;
     transition: 0.3s;
