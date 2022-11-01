@@ -10,13 +10,16 @@
   .mySwiper {
     width: 100%;
   }
+  .swiper-slide {
+    width: 10vh;
+  }
   .swiper-wrapper {
     width: 100%;
     align-items: center;
   }
   .topnav a {
-    font-size: x-large;
-    padding: 10px 10px;
+    font-size: large;
+    padding: 5px 5px;
     margin-left: 50px;
     margin-right: 50px;
     height: 7vh;

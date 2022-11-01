@@ -1,13 +1,54 @@
-// import { useParams } from "react";
-// import axios from "axios";
-import "./Selected_Vehicles.scss";
-
 import React from "react";
-import { useParams } from "react-router-dom";
+import Popup from "reactjs-popup";
 
-export default function Selected_Vehicles() {
-  let { Data, id, StartingDate, EndingDate, vehicle_plate_num } = useParams();
-  console.log(Data, id, StartingDate, EndingDate, vehicle_plate_num);
-
-  return <div>Selected Vehicles</div>;
-}
+export default () => (
+  <Popup
+    trigger={<button className="button"> Open Modal </button>}
+    modal
+    nested
+  >
+    {(close) => (
+      <div className="modal">
+        <button className="close" onClick={close}>
+          &times;
+        </button>
+        <div className="header"> Modal Title </div>
+        <div className="content">
+          {" "}
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, a
+          nostrum. Dolorem, repellat quidem ut, minima sint vel eveniet
+          quibusdam voluptates delectus doloremque, explicabo tempore dicta
+          adipisci fugit amet dignissimos?
+          <br />
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur
+          sit commodi beatae optio voluptatum sed eius cumque, delectus saepe
+          repudiandae explicabo nemo nam libero ad, doloribus, voluptas rem
+          alias. Vitae?
+        </div>
+        <div className="actions">
+          <Popup
+            trigger={<button className="button"> Trigger </button>}
+            position="top center"
+            nested
+          >
+            <span>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae
+              magni omnis delectus nemo, maxime molestiae dolorem numquam
+              mollitia, voluptate ea, accusamus excepturi deleniti ratione
+              sapiente! Laudantium, aperiam doloribus. Odit, aut.
+            </span>
+          </Popup>
+          <button
+            className="button"
+            onClick={() => {
+              console.log("modal closed ");
+              close();
+            }}
+          >
+            close modal
+          </button>
+        </div>
+      </div>
+    )}
+  </Popup>
+);

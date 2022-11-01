@@ -1,29 +1,37 @@
-@media only screen and (min-width: 1501px) {
+@media only screen and (min-width: 1001px) {
   .MainDivRides {
     flex-direction: column;
   }
   .filter-notdate {
     flex-direction: column;
   }
+  table,
+  th,
+  td {
+    font-size: larger;
+    border: 1px solid;
+    padding: 15px;
+    text-align: left;
+  }
 }
 
-@media only screen and (max-width: 1500px) {
+@media only screen and (max-width: 1000px) {
   .MainDivRides {
     flex-direction: column;
   }
   .filter-nav {
     flex-direction: column;
   }
+  table,
+  th,
+  td {
+    font-size: small;
+    border: 1px solid;
+    padding: 5px;
+    text-align: left;
+  }
 }
 
-table,
-th,
-td {
-  font-size: larger;
-  border: 1px solid;
-  padding: 15px;
-  text-align: left;
-}
 tr {
   transition: 0.3s;
 }
@@ -60,6 +68,31 @@ tr:hover {
   display: flex;
   justify-content: space-evenly;
 }
+.CalendarWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .rdrCalendarWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: wheat;
+    background-color: rgb(255, 217, 145);
+    .rdrMonthAndYearWrapper {
+      Button {
+        padding: 1px;
+        margin: 5px;
+        padding: 2vh 4vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgb(251, 180, 48);
+        height: 4vh;
+        width: 5vh;
+      }
+    }
+  }
+}
 
 .Headline {
   font-size: xx-large;
@@ -71,10 +104,14 @@ tr:hover {
   display: flex;
   justify-content: center;
   flex-direction: column;
-
+  margin-top: 10px;
+  margin-left: 10px;
   input {
     width: 90%;
     transition: 0.3s;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    background-color: wheat;
     &:hover {
       cursor: pointer;
       background-color: rgb(255, 188, 64);
@@ -85,25 +122,21 @@ tr:hover {
     }
   }
 }
-.rdrCalendarWrapper {
-  background-color: rgb(255, 196, 87);
-}
+
 .filter-button {
   display: flex;
   justify-content: center;
   justify-items: center;
   align-items: center;
 }
-.rdrCalendarWrapper {
-  color: #000000;
-  font-size: 30px;
-}
+
 .SpecificInput {
   display: flex;
   input {
     margin-right: 5%;
   }
   button {
+    margin: 5px 0px 5px 0px;
     height: 40px;
     width: 40px;
     display: flex;

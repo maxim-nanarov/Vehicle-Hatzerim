@@ -126,12 +126,7 @@ export default function VehicleSchedule() {
       </div>
       <div>
         <div className="filter-nav">
-          <div
-            style={{
-              display: "flex",
-              flexFlow: "column nowrap",
-            }}
-          >
+          <div className="CalendarWrapper">
             <Calendar
               className="Calendar"
               onChange={(item) => setDateFilter(item)}

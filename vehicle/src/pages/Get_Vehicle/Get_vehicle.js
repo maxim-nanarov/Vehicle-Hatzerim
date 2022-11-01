@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./Get_vehicle.scss";
 import axios from "axios";
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
 //To Do: Add an Edit and Delete table.
 export default function GetVehicle() {
   let { id } = useParams();
@@ -154,14 +156,18 @@ export default function GetVehicle() {
               ></input>
             </div>
             <div className="innerDiv">
-              <button
-                className="submitButton"
-                form="AddForm"
-                type="submit"
-                value="Submit"
-              >
-                Submit
-              </button>
+              <Popup trigger={<button className="button"> Continue </button>}>
+                {
+                  <button
+                    className="submitButton"
+                    form="AddForm"
+                    type="submit"
+                    value="Submit"
+                  >
+                    Submit
+                  </button>
+                }
+              </Popup>
             </div>
           </div>
         </form>

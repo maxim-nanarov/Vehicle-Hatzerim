@@ -7,9 +7,21 @@
   input {
     padding: 1% 2%;
     transition: 0.2s;
+    background-color: rgb(255, 228, 179);
+    margin: 10px 0px;
     &:hover {
       cursor: pointer;
-      background-color: rgba(255, 149, 0, 0.697);
+      background-color: rgb(255, 166, 0);
+    }
+  }
+  Button {
+    border: 0.1px solid black;
+    background-color: wheat;
+    padding: 3%;
+    transition: 0.6s;
+    &:hover {
+      cursor: pointer;
+      background-color: rgb(255, 166, 0);
     }
   }
   div {
