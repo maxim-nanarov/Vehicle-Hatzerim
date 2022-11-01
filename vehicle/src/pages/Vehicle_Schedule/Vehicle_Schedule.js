@@ -132,7 +132,10 @@ export default function VehicleSchedule() {
               flexFlow: "column nowrap",
             }}
           >
-            <Calendar onChange={(item) => setDateFilter(item)} />
+            <Calendar
+              className="Calendar"
+              onChange={(item) => setDateFilter(item)}
+            />
           </div>
           <div className="filter-notdate">
             <div className="SpecificInput">

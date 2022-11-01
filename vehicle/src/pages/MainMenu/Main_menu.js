@@ -26,7 +26,7 @@ export default function MainMenu() {
           setUser(res.data[0]);
         })
         .catch((err) => {
-          alert("contact me at 058-5599369");
+          alert("a Problome with the connection, contact me at 058-5599369");
         });
     };
     user();
@@ -34,7 +34,7 @@ export default function MainMenu() {
   useEffect(() => {
     const Da = new Date();
     setDate(Da.toLocaleString());
-  });
+  }, [date]);
 
   setInterval(function () {
     let da = new Date();
@@ -48,38 +48,44 @@ export default function MainMenu() {
             <img className="MainMenuIMG" src={Myimage} alt="Logo"></img>
             <div>{date.toLocaleString()}</div>
           </div>
-          <nav className="topnav">
-            <Swiper
-              navigation={true}
-              modules={[Navigation]}
-              className="mySwiper"
-            >
-              <SwiperSlide>
-                <Link to={`/Main_Menu/${id}/Get_vehicle${search}`}>
-                  Get Vehicle
-                </Link>
-              </SwiperSlide>
-              <SwiperSlide>
-                <Link to={`/Main_Menu/${id}${search}`}>Vehicle Schedule</Link>
-              </SwiperSlide>
-              <SwiperSlide>
-                <Link to={`/Main_Menu/${id}/Rides${search}`}>Rides</Link>
-              </SwiperSlide>
-              <SwiperSlide>
-                <Link to={`/Main_Menu/${id}/Add_Vehicle${search}`}>
-                  Add Vehicle
-                </Link>
-              </SwiperSlide>
-              <SwiperSlide>
-                <Link to={`/Main_Menu/${id}/Add_Dest${search}`}>
-                  Add Destionaion
-                </Link>
-              </SwiperSlide>
-              <SwiperSlide>
-                <Link to={`/Main_Menu/${id}/Add_User${search}`}>Add User</Link>
-              </SwiperSlide>
-            </Swiper>
-          </nav>
+          <div className="TheStaiblayzer">
+            <nav className="topnav">
+              <Swiper
+                slidesPerView={3}
+                spaceBetween={30}
+                navigation={true}
+                modules={[Navigation]}
+                className="mySwiper"
+              >
+                <SwiperSlide>
+                  <Link to={`/Main_Menu/${id}/Get_vehicle${search}`}>
+                    Get Vehicle
+                  </Link>
+                </SwiperSlide>
+                <SwiperSlide>
+                  <Link to={`/Main_Menu/${id}${search}`}>Vehicle Schedule</Link>
+                </SwiperSlide>
+                <SwiperSlide>
+                  <Link to={`/Main_Menu/${id}/Rides${search}`}>Rides</Link>
+                </SwiperSlide>
+                <SwiperSlide>
+                  <Link to={`/Main_Menu/${id}/Add_Vehicle${search}`}>
+                    Add Vehicle
+                  </Link>
+                </SwiperSlide>
+                <SwiperSlide>
+                  <Link to={`/Main_Menu/${id}/Add_Dest${search}`}>
+                    Add Destionaion
+                  </Link>
+                </SwiperSlide>
+                <SwiperSlide>
+                  <Link to={`/Main_Menu/${id}/Add_User${search}`}>
+                    Add User
+                  </Link>
+                </SwiperSlide>
+              </Swiper>
+            </nav>
+          </div>
           <div className="TheRestOfTheSite">
             <Outlet />
           </div>

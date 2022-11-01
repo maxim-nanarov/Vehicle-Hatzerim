@@ -1,3 +1,28 @@
+@media only screen and (min-width: 1001px) {
+  .topnav a {
+    font-size: xx-large;
+    padding: 10px 10px;
+    height: 7vh;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .mySwiper {
+    width: 100%;
+  }
+  .swiper-wrapper {
+    width: 100%;
+    align-items: center;
+  }
+  .topnav a {
+    font-size: x-large;
+    padding: 10px 10px;
+    margin-left: 50px;
+    margin-right: 50px;
+    height: 7vh;
+  }
+}
+
 .MainMenuDiv {
   height: 100%;
   width: 100%;
@@ -17,36 +42,51 @@
   align-items: center;
   justify-content: space-between;
 }
-.topnav {
-  background-color: rgb(255, 203, 106);
-  overflow: hidden;
+.TheStaiblayzer {
   display: flex;
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
   justify-content: center;
   align-items: center;
+  background-color: rgb(255, 203, 106);
+  overflow: hidden;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+
   transition: 1s;
   box-shadow: 0px 10px 8px #888888;
   &:hover {
     background-color: rgba(153, 105, 0, 0.503);
   }
-  .swiper-slide {
+  .topnav {
+    width: 60%;
+    background-color: rgb(255, 203, 106);
     display: flex;
+    transition: 1s;
+
     justify-content: center;
-  }
-  a {
-    float: left;
-    color: #000000;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: xx-large;
-    transition: 0.5s;
-    border-left: 1px solid black;
-    border-right: 1px solid black;
+    align-items: center;
+
     &:hover {
-      background-color: rgb(246, 181, 61);
-      color: black;
+      background-color: rgba(153, 105, 0, 0.503);
+    }
+    .swiper-slide {
+      display: flex;
+      justify-content: center;
+    }
+    a {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #000000;
+      text-align: center;
+      text-decoration: none;
+      transition: 0.5s;
+      border-left: 1px solid black;
+      border-right: 1px solid black;
+
+      &:hover {
+        background-color: rgb(246, 181, 61);
+        color: black;
+      }
     }
   }
 }
