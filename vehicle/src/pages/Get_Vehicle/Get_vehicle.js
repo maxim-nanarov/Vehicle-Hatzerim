@@ -183,6 +183,7 @@ export default function GetVehicle() {
     console.log(Rides);
     let date1 = formData.Starting_Date + " " + formData.Starting_Hour + ":00";
     let date2 = formData.Ending_Date + " " + formData.Ending_Hour + ":00";
+
     let Ride_Table = ReleventTable(Rides, date1);
     console.log("The first table" + Ride_Table);
     if (date1 >= date2) {

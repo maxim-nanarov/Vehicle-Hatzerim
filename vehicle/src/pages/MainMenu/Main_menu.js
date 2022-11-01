@@ -3,6 +3,10 @@ import Myimage from "../../pictures/Logo_Hatzerim.jpg";
 import { useParams, Link, Outlet, useLocation } from "react-router-dom";
 import "./Main_menu.scss";
 import axios from "axios";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import { Navigation } from "swiper";
 
 export default function MainMenu() {
   let { id } = useParams();
@@ -45,18 +49,36 @@ export default function MainMenu() {
             <div>{date.toLocaleString()}</div>
           </div>
           <nav className="topnav">
-            <Link to={`/Main_Menu/${id}/Get_vehicle${search}`}>
-              Get Vehicle
-            </Link>
-            <Link to={`/Main_Menu/${id}${search}`}>Vehicle Schedule</Link>
-            <Link to={`/Main_Menu/${id}/Rides${search}`}>Rides</Link>
-            <Link to={`/Main_Menu/${id}/Add_Vehicle${search}`}>
-              Add Vehicle
-            </Link>
-            <Link to={`/Main_Menu/${id}/Add_Dest${search}`}>
-              Add Destionaion
-            </Link>
-            <Link to={`/Main_Menu/${id}/Add_User${search}`}>Add User</Link>
+            <Swiper
+              navigation={true}
+              modules={[Navigation]}
+              className="mySwiper"
+            >
+              <SwiperSlide>
+                <Link to={`/Main_Menu/${id}/Get_vehicle${search}`}>
+                  Get Vehicle
+                </Link>
+              </SwiperSlide>
+              <SwiperSlide>
+                <Link to={`/Main_Menu/${id}${search}`}>Vehicle Schedule</Link>
+              </SwiperSlide>
+              <SwiperSlide>
+                <Link to={`/Main_Menu/${id}/Rides${search}`}>Rides</Link>
+              </SwiperSlide>
+              <SwiperSlide>
+                <Link to={`/Main_Menu/${id}/Add_Vehicle${search}`}>
+                  Add Vehicle
+                </Link>
+              </SwiperSlide>
+              <SwiperSlide>
+                <Link to={`/Main_Menu/${id}/Add_Dest${search}`}>
+                  Add Destionaion
+                </Link>
+              </SwiperSlide>
+              <SwiperSlide>
+                <Link to={`/Main_Menu/${id}/Add_User${search}`}>Add User</Link>
+              </SwiperSlide>
+            </Swiper>
           </nav>
           <div className="TheRestOfTheSite">
             <Outlet />
