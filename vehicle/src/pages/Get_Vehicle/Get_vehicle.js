@@ -11,6 +11,7 @@ export default function GetVehicle() {
   const [Reasons, setReasons] = useState([]);
   const [Rides, setRides] = useState([]);
   const [Vehicles, setVehicles] = useState([]);
+  const [open, setOpen] = useState(false);
   useEffect(() => {
     axios
       .get("https://vehicle-hatzerim.herokuapp.com/Destinations", {
@@ -156,16 +157,35 @@ export default function GetVehicle() {
               ></input>
             </div>
             <div className="innerDiv">
-              <Popup trigger={<button className="button"> Continue </button>}>
+              <button
+                type="button"
+                className="button"
+                onClick={() => setOpen((o) => !o)}
+              >
+                Continue
+              </button>
+              <Popup open={open}>
                 {
-                  <button
-                    className="submitButton"
-                    form="AddForm"
-                    type="submit"
-                    value="Submit"
-                  >
-                    Submit
-                  </button>
+                  <div className="PopUpBackground">
+                    <div className="InfoPopUp">
+                      <table>
+                        <tr>
+                          <th></th>
+                        </tr>
+                      </table>
+                    </div>
+                    <div className="ButtonDiv">
+                      <button
+                        className="submitButton"
+                        form="AddForm"
+                        type="submit"
+                        value="Submit"
+                      >
+                        Submit
+                      </button>
+                      <button className="submitButton">Cancle</button>
+                    </div>
+                  </div>
                 }
               </Popup>
             </div>
@@ -174,7 +194,7 @@ export default function GetVehicle() {
       </div>
     </>
   );
-
+  //To Do: try to get the vehicle which are availabe to the pop up message.
   function onSubmit(e) {
     e.preventDefault();
     let formData = new FormData(e.target);
@@ -205,20 +225,21 @@ export default function GetVehicle() {
     }
     console.log(Ride_Table, id, date1, date2, vehicle_plate_num);
     if (vehicle_plate_num !== undefined) {
-      console.log("the chosen vehicle is: " + vehicle_plate_num);
-      axios
-        .post("https://vehicle-hatzerim.herokuapp.com/Ride_data", {
-          data: {
-            Data: formData,
-            id: id,
-            StartingDate: new Date(date1),
-            EndingDate: new Date(date2),
-            plateNum: vehicle_plate_num,
-          },
-        })
-        .then((res) => {
-          console.log(res.data);
-        });
+      return vehicle_plate_num;
+      // console.log("the chosen vehicle is: " + vehicle_plate_num);
+      // axios
+      //   .post("https://vehicle-hatzerim.herokuapp.com/Ride_data", {
+      //     data: {
+      //       Data: formData,
+      //       id: id,
+      //       StartingDate: new Date(date1),
+      //       EndingDate: new Date(date2),
+      //       plateNum: vehicle_plate_num,
+      //     },
+      //   })
+      //   .then((res) => {
+      //     console.log(res.data);
+      //   });
     } else {
       alert("There are no vehicles availabe at this time.");
     }

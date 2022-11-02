@@ -173,9 +173,6 @@ export default function VehicleSchedule() {
               ></input>
               <button onClick={() => setPlateNum(undefined)}>X</button>
             </div>
-            <div className="filter-button">
-              <button>Submit</button>
-            </div>
           </div>
         </div>
       </div>

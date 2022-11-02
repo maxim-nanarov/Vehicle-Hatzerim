@@ -121,6 +121,19 @@ tr:hover {
       color: rgb(0, 0, 0);
     }
   }
+  .SpecificInput Button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 7%;
+    height: 80%;
+    background-color: wheat;
+    transition: 1s;
+    &:hover {
+      cursor: pointer;
+      background-color: rgba(245, 222, 179, 0.152);
+    }
+  }
 }
 
 .filter-button {
