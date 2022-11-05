@@ -103,3 +103,10 @@ select {
 .InfoPopUp {
   margin-top: 10px;
 }
+.Green-Row {
+  background-color: rgb(140, 255, 0);
+  transition: 0.5s;
+  &:hover {
+    background-color: greenyellow;
+  }
+}

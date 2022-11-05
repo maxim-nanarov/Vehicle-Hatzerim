@@ -109,6 +109,26 @@ export default function GetVehicle() {
       c = availabeVehicles.map((vehicle) => {
         if (aV.find((num) => num === vehicle.vehicle_plate_num) !== undefined) {
           count++;
+
+          if (SelectedVehicle === vehicle.vehicle_plate_num) {
+            console.log(SelectedVehicle);
+            return (
+              <>
+                <tr
+                  className="Green-Row"
+                  key={count}
+                  onClick={() => setSelectedVehicle(vehicle.vehicle_plate_num)}
+                >
+                  <th className="Green-Row">{vehicle.vehicle_plate_num}</th>
+                  <th className="Green-Row">{vehicle.company_name}</th>
+                  <th className="Green-Row">
+                    {vehicle.size_name} - {vehicle.size_capacity}
+                  </th>
+                  <th className="Green-Row">{vehicle.type_name}</th>
+                </tr>
+              </>
+            );
+          }
           return (
             <>
               <tr
@@ -238,7 +258,12 @@ export default function GetVehicle() {
                       >
                         Submit
                       </button>
-                      <button className="submitButton">Cancle</button>
+                      <button
+                        onClick={() => setOpen((o) => !o)}
+                        className="submitButton"
+                      >
+                        Cancle
+                      </button>
                     </div>
                   </div>
                 }
@@ -300,6 +325,10 @@ export default function GetVehicle() {
         .then((res) => {
           console.log(res.data);
         });
+      setOpen((o) => !o);
+
+      setSelectedVehicle(undefined);
+      window.location.reload();
     }
   }
 }
