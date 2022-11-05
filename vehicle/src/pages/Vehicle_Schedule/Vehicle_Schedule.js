@@ -21,6 +21,8 @@ export default function VehicleSchedule() {
   const [open, setOpen] = useState(false);
   const [ChosenRide, setChosenRide] = useState(undefined);
   const [DisplayChosenRide, setDisplayChosenRide] = useState(undefined);
+  const closeModal = () => setOpen(false);
+
   useEffect(() => {
     setDateFilter(new Date());
     axios
@@ -70,7 +72,7 @@ export default function VehicleSchedule() {
         .split(",")[0];
       c = (
         <>
-          <div key={newCount}>
+          <div className="Chosen-Display" key={newCount}>
             <table>
               <tr className="Card">
                 <th>Vehicle plate number</th>
@@ -305,7 +307,9 @@ export default function VehicleSchedule() {
           </tr>
           {a}
         </table>
-        <Popup open={open}>{DisplayChosenRide}</Popup>
+        <Popup open={open} closeOnDocumentClick onClose={closeModal}>
+          {DisplayChosenRide}
+        </Popup>
       </div>
     </div>
   );

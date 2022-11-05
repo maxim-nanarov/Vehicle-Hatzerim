@@ -16,6 +16,7 @@ export default function GetVehicle() {
   const [aV, setAv] = useState([]);
   const [availabeVehicleDisplay, setAvailabeVehicleDisplay] = useState();
   const [SelectedVehicle, setSelectedVehicle] = useState();
+  const closeModal = () => setOpen(false);
   useEffect(() => {
     axios
       .get("https://vehicle-hatzerim.herokuapp.com/Destinations", {
@@ -235,7 +236,7 @@ export default function GetVehicle() {
               >
                 Continue
               </button>
-              <Popup open={open}>
+              <Popup open={open} closeOnDocumentClick onClose={closeModal}>
                 {
                   <div className="PopUpBackground">
                     <div className="InfoPopUp">
