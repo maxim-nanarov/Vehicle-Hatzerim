@@ -8,7 +8,6 @@ import Rides from "./pages/Rides/Rides";
 import AddVehicle from "./pages/Add_Vehicle/AddVehicle";
 import AddDestination from "./pages/AddDest/AddDestination";
 import AddUser from "./pages/AddUser/AddUser";
-import Selected_Vehicles from "./pages/Selected_Vehicles/Selected_Vehicles";
 
 function App() {
   return (
@@ -22,7 +21,6 @@ function App() {
           <Route path="Add_Vehicle" element={<AddVehicle />} />
           <Route path="Add_Dest" element={<AddDestination />} />
           <Route path="Add_User" element={<AddUser />} />
-          <Route path="Selected_Vehicles" element={<Selected_Vehicles />} />
         </Route>
         <Route
           path="*"

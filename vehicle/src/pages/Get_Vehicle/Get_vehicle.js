@@ -12,6 +12,10 @@ export default function GetVehicle() {
   const [Rides, setRides] = useState([]);
   const [Vehicles, setVehicles] = useState([]);
   const [open, setOpen] = useState(false);
+  const [availabeVehicles, setAvailabelVehicles] = useState([]);
+  const [aV, setAv] = useState([]);
+  const [availabeVehicleDisplay, setAvailabeVehicleDisplay] = useState();
+  const [SelectedVehicle, setSelectedVehicle] = useState();
   useEffect(() => {
     axios
       .get("https://vehicle-hatzerim.herokuapp.com/Destinations", {
@@ -57,6 +61,22 @@ export default function GetVehicle() {
         setReasons(res.data);
       });
   }, [Rides]);
+
+  useEffect(() => {
+    axios
+      .get(
+        "https://vehicle-hatzerim.herokuapp.com/Vehicles_And_Its_Relevent_Element",
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((res) => {
+        setAvailabelVehicles(res.data);
+      });
+  }, [availabeVehicles]);
   let count = 0;
 
   let a = Destinations.map((Destination) => {
@@ -83,6 +103,35 @@ export default function GetVehicle() {
       </>
     );
   });
+  let c;
+  useEffect(() => {
+    if (aV.length > 0) {
+      c = availabeVehicles.map((vehicle) => {
+        if (aV.find((num) => num === vehicle.vehicle_plate_num) !== undefined) {
+          count++;
+          return (
+            <>
+              <tr
+                key={count}
+                onClick={() => setSelectedVehicle(vehicle.vehicle_plate_num)}
+              >
+                <th>{vehicle.vehicle_plate_num}</th>
+                <th>{vehicle.company_name}</th>
+                <th>
+                  {vehicle.size_name} - {vehicle.size_capacity}
+                </th>
+                <th>{vehicle.type_name}</th>
+              </tr>
+            </>
+          );
+        }
+      });
+    } else {
+      c = <div></div>;
+    }
+    setAvailabeVehicleDisplay(c);
+  }, [aV, availabeVehicles]);
+
   let date = new Date();
   return (
     <>
@@ -158,8 +207,10 @@ export default function GetVehicle() {
             </div>
             <div className="innerDiv">
               <button
-                type="button"
-                className="button"
+                className="submitButton"
+                form="AddForm"
+                type="submit"
+                value="Submit"
                 onClick={() => setOpen((o) => !o)}
               >
                 Continue
@@ -170,8 +221,12 @@ export default function GetVehicle() {
                     <div className="InfoPopUp">
                       <table>
                         <tr>
-                          <th></th>
+                          <th>Vehicle Number</th>
+                          <th>Company Name</th>
+                          <th>Size</th>
+                          <th>Type</th>
                         </tr>
+                        {availabeVehicleDisplay}
                       </table>
                     </div>
                     <div className="ButtonDiv">
@@ -206,42 +261,45 @@ export default function GetVehicle() {
     }
 
     // let currentTime = new Date().toISOString().split("T")[1].split(".")[0];
-    console.log(Rides);
     let date1 = formData.Starting_Date + " " + formData.Starting_Hour + ":00";
     let date2 = formData.Ending_Date + " " + formData.Ending_Hour + ":00";
 
     let Ride_Table = ReleventTable(Rides, date1);
-    console.log("The first table" + Ride_Table);
     if (date1 >= date2) {
       alert("starting date cant be bigger then the finishing date.");
       return undefined;
     }
-    let vehicle_plate_num = availabeVehicle(Vehicles, Ride_Table, date1, date2);
-    if (vehicle_plate_num === undefined) {
-      alert(
-        vehicle_plate_num +
-          "   theres no vehicle availabe at this time, try at different date"
+    if (SelectedVehicle === undefined) {
+      let vehicle_plate_num = availabeVehicle(
+        Vehicles,
+        Ride_Table,
+        date1,
+        date2
       );
-    }
-    console.log(Ride_Table, id, date1, date2, vehicle_plate_num);
-    if (vehicle_plate_num !== undefined) {
-      return vehicle_plate_num;
-      // console.log("the chosen vehicle is: " + vehicle_plate_num);
-      // axios
-      //   .post("https://vehicle-hatzerim.herokuapp.com/Ride_data", {
-      //     data: {
-      //       Data: formData,
-      //       id: id,
-      //       StartingDate: new Date(date1),
-      //       EndingDate: new Date(date2),
-      //       plateNum: vehicle_plate_num,
-      //     },
-      //   })
-      //   .then((res) => {
-      //     console.log(res.data);
-      //   });
+      if (vehicle_plate_num === undefined) {
+        alert("theres no vehicle availabe at this time, try at different date");
+      }
+      console.log("Availabe vehicles: " + vehicle_plate_num);
+      if (vehicle_plate_num !== undefined) {
+        setAv(vehicle_plate_num);
+      } else {
+        alert("There are no vehicles availabe at this time.");
+      }
     } else {
-      alert("There are no vehicles availabe at this time.");
+      console.log("the chosen vehicle is: " + SelectedVehicle);
+      axios
+        .post("https://vehicle-hatzerim.herokuapp.com/Ride_data", {
+          data: {
+            Data: formData,
+            id: id,
+            StartingDate: new Date(date1),
+            EndingDate: new Date(date2),
+            plateNum: SelectedVehicle,
+          },
+        })
+        .then((res) => {
+          console.log(res.data);
+        });
     }
   }
 }
@@ -261,8 +319,6 @@ function availabeVehicle(
   Starting_date_new,
   finnishing_date_new
 ) {
-  console.log(Rides);
-
   let vehiclePlateNum = VehicleThatIsntInUse(vehicles, Rides);
   if (vehiclePlateNum !== undefined) {
     return vehiclePlateNum;
@@ -282,14 +338,18 @@ function availabeVehicle(
   }
 
   function VehicleThatIsntInUse(vehicles, Rides) {
+    let result = [];
     for (let j = 0; j < vehicles.length; j++) {
       if (!ifExist(Rides, vehicles[j].vehicle_plate_num)) {
-        return vehicles[j].vehicle_plate_num;
+        result.push(vehicles[j].vehicle_plate_num);
       } else {
         console.log(
           "this vehicle is used once: " + vehicles[j].vehicle_plate_num
         );
       }
+    }
+    if (result.length > 0) {
+      return result;
     }
     return undefined;
   }
@@ -309,6 +369,7 @@ function availabeVehicle(
 
 function IfisinRangeCompiler(Rides, Starting_date_new, finnishing_date_new) {
   let ResultFlag = false;
+  let result = [];
   for (let i = 0; i < Rides.length - 1; i++) {
     //if this if is true, then there's no doubt about it
     //the vehicle is used in the time given.
@@ -337,11 +398,14 @@ function IfisinRangeCompiler(Rides, Starting_date_new, finnishing_date_new) {
           Rides[i].vehicle_plate_num
       );
       if (!ResultFlag) {
-        return Rides[i].vehicle_plate_num;
+        result.push(Rides[i].vehicle_plate_num);
       } else {
         ResultFlag = false;
       }
     }
+  }
+  if (result.length > 0) {
+    return result;
   }
   return undefined;
 }
@@ -368,9 +432,7 @@ function ReleventTable(Ride_Table, SDate) {
 }
 
 function SortRideTable(Rides) {
-  console.log("Sort Ride Table function: " + Rides);
   return Rides.sort(function (a, b) {
     return a.vehicle_plate_num - b.vehicle_plate_num;
   });
 }
-// first call to quick sort
