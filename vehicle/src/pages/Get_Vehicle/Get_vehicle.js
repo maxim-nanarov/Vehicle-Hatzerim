@@ -154,6 +154,7 @@ export default function GetVehicle() {
   }, [aV, availabeVehicles]);
 
   let date = new Date();
+
   return (
     <>
       <div className="MainDivGetV">

@@ -7,6 +7,7 @@ import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
+import LoadingScreen from "../extraComponents/LoadingScreen";
 
 export default function VehicleSchedule() {
   const [Rides, setRides] = useState([]);
@@ -47,6 +48,7 @@ export default function VehicleSchedule() {
         setData(res.data);
       });
   }, []);
+
   useEffect(() => {
     //Filter
     if (plateNum !== "" && DestinationFilter !== "") {
@@ -199,7 +201,13 @@ export default function VehicleSchedule() {
       }
     });
   }
-
+  if (!(Data.length > 0)) {
+    return (
+      <div className="LoadingDiv">
+        <LoadingScreen></LoadingScreen>
+      </div>
+    );
+  }
   return (
     <div className="MainDivRides">
       <div className="Headline">
