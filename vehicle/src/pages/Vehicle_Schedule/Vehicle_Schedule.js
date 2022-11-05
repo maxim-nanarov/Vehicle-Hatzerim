@@ -5,6 +5,8 @@ import "./Vehicle_Schedule.scss";
 import { Calendar } from "react-date-range";
 import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
 
 export default function VehicleSchedule() {
   const [Rides, setRides] = useState([]);
@@ -16,6 +18,9 @@ export default function VehicleSchedule() {
   const [clickCounterPlate, setClickCounterPlate] = useState(0);
   const [clickCounterStartingDate, setclickCounterStartingDate] = useState(0);
   const [CounetrDateF, setCounetrDateF] = useState(0);
+  const [open, setOpen] = useState(false);
+  const [ChosenRide, setChosenRide] = useState(undefined);
+  const [DisplayChosenRide, setDisplayChosenRide] = useState(undefined);
   useEffect(() => {
     setDateFilter(new Date());
     axios
@@ -53,6 +58,66 @@ export default function VehicleSchedule() {
       setFilter([]);
     }
   }, [plateNum, DestinationFilter]);
+  let c;
+  useEffect(() => {
+    let newCount = 0;
+    if (ChosenRide !== undefined) {
+      let sDate = new Date(ChosenRide.starting_date)
+        .toLocaleString()
+        .split(",")[0];
+      let fDate = new Date(ChosenRide.finishing_date)
+        .toLocaleString()
+        .split(",")[0];
+      c = (
+        <>
+          <div key={newCount}>
+            <table>
+              <tr className="Card">
+                <th>Vehicle plate number</th>
+                <th>Vehicle Type</th>
+                <th>Destination</th>
+                <th>will give rides </th>
+                <th>starting</th>
+                <th>finishing </th>
+              </tr>
+              <tr className="Card">
+                <th>{ChosenRide.vehicle_plate_num}</th>
+                <th>{ChosenRide.destination_name}</th>
+                {/* <th>{Ride.reason_name}</th> */}
+                <th>
+                  {ChosenRide.company_name +
+                    " | " +
+                    ChosenRide.size_name +
+                    " | " +
+                    ChosenRide.type_name}
+                </th>
+                <th>{ChosenRide.will_take_riders.toString()} </th>
+                <th>{prettyDate2(ChosenRide.starting_date)} </th>
+                <th>{prettyDate2(ChosenRide.finishing_date)} </th>
+              </tr>
+            </table>
+            <table>
+              <tr>
+                <th>User Name</th>
+                <th>User Personal Phone</th>
+                <th>User Work Phone</th>
+                <th>User Home Phone</th>
+              </tr>
+              <tr>
+                <th>
+                  {ChosenRide.user_name + "  " + ChosenRide.user_surname}{" "}
+                </th>
+                <th>{ChosenRide.user_personal_phone}</th>
+                <th>{ChosenRide.user_work_phone}</th>
+                <th>{ChosenRide.user_home_phone}</th>
+              </tr>
+            </table>
+          </div>
+        </>
+      );
+      setDisplayChosenRide(c);
+    }
+  }, [ChosenRide]);
   let count = 0;
   let date;
   if (DateFilter !== undefined) {
@@ -68,10 +133,17 @@ export default function VehicleSchedule() {
       let fDate = new Date(Ride.finishing_date).toLocaleString().split(",")[0];
       if (sDate === date || fDate === date) {
         return (
-          <tr className="Card" key={count}>
+          <tr
+            onClick={() => {
+              setChosenRide(Ride);
+              setOpen((o) => !o);
+            }}
+            className="Card"
+            key={count}
+          >
             <th>{Ride.vehicle_plate_num}</th>
             <th>{Ride.destination_name}</th>
-            <th>{Ride.reason_name}</th>
+            {/* <th>{Ride.reason_name}</th> */}
             <th>
               {Ride.company_name +
                 " | " +
@@ -79,8 +151,8 @@ export default function VehicleSchedule() {
                 " | " +
                 Ride.type_name}
             </th>
-            <th>{Ride.user_name + "  " + Ride.user_surname} </th>
-            <th>{Ride.will_take_riders.toString()} </th>
+            {/* <th>{Ride.user_name + "  " + Ride.user_surname} </th> */}
+            {/* <th>{Ride.will_take_riders.toString()} </th> */}
             <th>{prettyDate2(Ride.starting_date)} </th>
             <th>{prettyDate2(Ride.finishing_date)} </th>
           </tr>
@@ -96,10 +168,17 @@ export default function VehicleSchedule() {
       let fDate = new Date(Ride.finishing_date).toLocaleString().split(",")[0];
       if (sDate === date || fDate === date) {
         return (
-          <tr className="Card" key={count}>
+          <tr
+            onClick={() => {
+              setChosenRide(Ride);
+              setOpen((o) => !o);
+            }}
+            className="Card"
+            key={count}
+          >
             <th>{Ride.vehicle_plate_num}</th>
             <th>{Ride.destination_name}</th>
-            <th>{Ride.reason_name}</th>
+            {/* <th>{Ride.reason_name}</th> */}
             <th>
               {Ride.company_name +
                 " | " +
@@ -107,8 +186,8 @@ export default function VehicleSchedule() {
                 " | " +
                 Ride.type_name}
             </th>
-            <th>{Ride.user_name + "  " + Ride.user_surname} </th>
-            <th>{Ride.will_take_riders.toString()} </th>
+            {/* <th>{Ride.user_name + "  " + Ride.user_surname} </th> */}
+            {/* <th>{Ride.will_take_riders.toString()} </th> */}
             <th>{prettyDate2(Ride.starting_date)} </th>
             <th>{prettyDate2(Ride.finishing_date)} </th>
           </tr>
@@ -176,55 +255,58 @@ export default function VehicleSchedule() {
           </div>
         </div>
       </div>
-      <table>
-        <tr className="Card" key={count}>
-          <th
-            onClick={() => {
-              if (clickCounterPlate % 2 === 0) {
-                setFilter(sortPlateNum(Data));
-              } else {
-                setFilter(sortPlateNumDown(Data));
-              }
-              let index = clickCounterPlate + 1;
-              setClickCounterPlate(index);
-            }}
-          >
-            vehicle plate number
-          </th>
-          <th>Destination </th>
-          <th>Reason </th>
-          <th>Vehicle type</th>
-          <th>User Name </th>
-          <th>Will take riders</th>
-          <th
-            onClick={() => {
-              if (clickCounterStartingDate % 2 === 0) {
-                setFilter(sortDates(Data));
-              } else {
-                setFilter(sortDatesDown(Data));
-              }
-              let index = clickCounterStartingDate + 1;
-              setclickCounterStartingDate(index);
-            }}
-          >
-            Starting
-          </th>
-          <th
-            onClick={() => {
-              if (CounetrDateF % 2 === 0) {
-                setFilter(sortDatesF(Data));
-              } else {
-                setFilter(sortDatesFDown(Data));
-              }
-              let index = CounetrDateF + 1;
-              setCounetrDateF(index);
-            }}
-          >
-            Finishing
-          </th>
-        </tr>
-        {a}
-      </table>
+      <div>
+        <table>
+          <tr className="Card" key={count}>
+            <th
+              onClick={() => {
+                if (clickCounterPlate % 2 === 0) {
+                  setFilter(sortPlateNum(Data));
+                } else {
+                  setFilter(sortPlateNumDown(Data));
+                }
+                let index = clickCounterPlate + 1;
+                setClickCounterPlate(index);
+              }}
+            >
+              vehicle plate number
+            </th>
+            <th>Destination </th>
+            {/* <th>Reason </th> */}
+            <th>Vehicle type</th>
+            {/* <th>User Name </th> */}
+            {/* <th>Will take riders</th> */}
+            <th
+              onClick={() => {
+                if (clickCounterStartingDate % 2 === 0) {
+                  setFilter(sortDates(Data));
+                } else {
+                  setFilter(sortDatesDown(Data));
+                }
+                let index = clickCounterStartingDate + 1;
+                setclickCounterStartingDate(index);
+              }}
+            >
+              Starting
+            </th>
+            <th
+              onClick={() => {
+                if (CounetrDateF % 2 === 0) {
+                  setFilter(sortDatesF(Data));
+                } else {
+                  setFilter(sortDatesFDown(Data));
+                }
+                let index = CounetrDateF + 1;
+                setCounetrDateF(index);
+              }}
+            >
+              Finishing
+            </th>
+          </tr>
+          {a}
+        </table>
+        <Popup open={open}>{DisplayChosenRide}</Popup>
+      </div>
     </div>
   );
 }
