@@ -26,7 +26,6 @@ export default function Login() {
     formData = Object.fromEntries(formData);
 
     let password = formData.password;
-    console.log(password);
     let flag = false;
     let userFlag;
 

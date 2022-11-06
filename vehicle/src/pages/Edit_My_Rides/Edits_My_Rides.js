@@ -42,29 +42,37 @@ export default function EditMyRides() {
         if (Edit === ride.ride_id) {
           return (
             <tr key={count}>
-              <th>
-                <input value={ride.destination_name}></input>
-              </th>
-              <th>
-                <input value={ride.reason_name}></input>
-              </th>
-              <th>{ride.vehicle_plate_num}</th>
-              <th>
-                <input
-                  type="time"
-                  value={ride.starting_date.split("T")[1].split(":00.000Z")[0]}
-                ></input>
-              </th>
-              <th>
-                {/* {ride.finishing_date.split("T")[0] + */}
-                {/* " " + */}
-                {ride.finishing_date.split("T")[1].split(":00.000Z")[0]}
-              </th>
-              <th>{String(ride.will_take_riders)}</th>
+              <form className="EditForm" onSubmit={Submit} id="addForm">
+                <th>
+                  <input value={ride.destination_name}></input>
+                </th>
+                <th>
+                  <input value={ride.reason_name}></input>
+                </th>
+                <th>{ride.vehicle_plate_num}</th>
+                <th>
+                  <input
+                    type="time"
+                    value={
+                      ride.starting_date.split("T")[1].split(":00.000Z")[0]
+                    }
+                  ></input>
+                </th>
+                <th>
+                  {/* {ride.finishing_date.split("T")[0] + */}
+                  {/* " " + */}
+                  {ride.finishing_date.split("T")[1].split(":00.000Z")[0]}
+                </th>
+                <th>{String(ride.will_take_riders)}</th>
+              </form>
               <th
                 onClick={() => {
                   setEdit(ride.ride_id);
                 }}
+                className="Button"
+                type="submit"
+                value="Submit"
+                form="addForm"
               >
                 Submit
               </th>
@@ -121,6 +129,14 @@ export default function EditMyRides() {
     });
     setDisplayData(a);
   }, [Edit, Delete, Data]);
+
+  const Submit = (e) => {
+    e.preventDefault();
+    let formData = new FormData(e.target);
+    formData = Object.fromEntries(formData);
+    console.log("Please dont work");
+  };
+
   //the if that will return loading screen
   //if the main table isnt loaded yet from the server
   if (Data.length === 0) {

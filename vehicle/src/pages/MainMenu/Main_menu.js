@@ -105,13 +105,34 @@ export default function MainMenu() {
             <img className="MainMenuIMG" src={Myimage} alt="Logo"></img>
             <div>{date.toLocaleString()}</div>
           </div>
-          <nav className="topnav">
-            <Link to={`/Main_Menu/${id}/Get_vehicle${search}`}>
-              Get Vehicle
-            </Link>
-            <Link to={`/Main_Menu/${id}`}>Vehicle Schedule</Link>
-            <Link to={`/Main_Menu/${id}/Rides${search}`}>Rides</Link>
-          </nav>
+          <div className="TheStaiblayzer">
+            <nav className="topnav">
+              <Swiper
+                slidesPerView={3}
+                spaceBetween={30}
+                navigation={true}
+                modules={[Navigation]}
+                className="mySwiper"
+              >
+                <SwiperSlide>
+                  <Link to={`/Main_Menu/${id}/Get_vehicle${search}`}>
+                    Get Vehicle
+                  </Link>
+                </SwiperSlide>
+                <SwiperSlide>
+                  <Link to={`/Main_Menu/${id}${search}`}>Vehicle Schedule</Link>
+                </SwiperSlide>
+                <SwiperSlide>
+                  <Link to={`/Main_Menu/${id}/EditMyRides${search}`}>
+                    Edit My Rides
+                  </Link>
+                </SwiperSlide>
+                <SwiperSlide>
+                  <Link to={`/Main_Menu/${id}/Rides${search}`}>Rides</Link>
+                </SwiperSlide>
+              </Swiper>
+            </nav>
+          </div>
           <div className="TheRestOfTheSite">
             <Outlet />
           </div>
