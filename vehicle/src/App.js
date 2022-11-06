@@ -8,6 +8,7 @@ import Rides from "./pages/Rides/Rides";
 import AddVehicle from "./pages/Add_Vehicle/AddVehicle";
 import AddDestination from "./pages/AddDest/AddDestination";
 import AddUser from "./pages/AddUser/AddUser";
+import EditMyRides from "./pages/Edit_My_Rides/Edits_My_Rides";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="Main_Menu/:id/*" element={<MainMenu />}>
           <Route path="" element={<VehicleSchedule />} />
+          <Route path="EditMyRides" element={<EditMyRides />} />
           <Route path="Get_vehicle" element={<GetVehicle />} />
           <Route path="Rides" element={<Rides />} />
           <Route path="Add_Vehicle" element={<AddVehicle />} />

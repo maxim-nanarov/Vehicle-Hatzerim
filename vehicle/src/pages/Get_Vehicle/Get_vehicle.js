@@ -177,7 +177,6 @@ export default function GetVehicle() {
                     defaultValue={date.getHours() + ":" + date.getMinutes()}
                     name="Starting_Hour"
                     type="time"
-                    step={900}
                   />
                 </div>
               </div>
@@ -201,7 +200,6 @@ export default function GetVehicle() {
                     defaultValue={date.getHours() + ":" + date.getMinutes()}
                     name="Ending_Hour"
                     type="time"
-                    step={900}
                   />
                 </div>
               </div>
@@ -331,8 +329,8 @@ export default function GetVehicle() {
         });
       setOpen((o) => !o);
 
-      setSelectedVehicle(undefined);
-      window.location.reload();
+      // setSelectedVehicle(undefined);
+      // window.location.reload();
     }
   }
 }
