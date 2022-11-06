@@ -14,6 +14,12 @@ export default function EditMyRides() {
   const [Data, setData] = useState([]);
   const [DisplayData, setDisplayData] = useState();
   const [Delete, setDelete] = useState(0);
+  const [Update, setUpdate] = useState({
+    Destination: "",
+    Reason: "",
+    StartingTime: "",
+    FinishingTime: "",
+  });
 
   useEffect(() => {
     axios
@@ -27,7 +33,9 @@ export default function EditMyRides() {
         setData(res.data);
       });
   }, []);
-
+  useEffect(() => {
+    console.log(Update);
+  }, [Update]);
   useEffect(() => {
     let date = new Date();
     let count = 0;
@@ -42,37 +50,53 @@ export default function EditMyRides() {
         if (Edit === ride.ride_id) {
           return (
             <tr key={count}>
-              <form className="EditForm" onSubmit={Submit} id="addForm">
-                <th>
-                  <input value={ride.destination_name}></input>
-                </th>
-                <th>
-                  <input value={ride.reason_name}></input>
-                </th>
-                <th>{ride.vehicle_plate_num}</th>
-                <th>
-                  <input
-                    type="time"
-                    value={
-                      ride.starting_date.split("T")[1].split(":00.000Z")[0]
-                    }
-                  ></input>
-                </th>
-                <th>
-                  {/* {ride.finishing_date.split("T")[0] + */}
-                  {/* " " + */}
-                  {ride.finishing_date.split("T")[1].split(":00.000Z")[0]}
-                </th>
-                <th>{String(ride.will_take_riders)}</th>
-              </form>
+              <th>
+                <input
+                  defaultValue={ride.destination_name}
+                  onChange={(e) => {
+                    setUpdate({
+                      ...Update,
+                      Destination: e.target.value,
+                    });
+                  }}
+                ></input>
+              </th>
+              <th>
+                <input
+                  defaultValue={ride.reason_name}
+                  onChange={(e) => {
+                    setUpdate({
+                      ...Update,
+                      Reason: e.target.value,
+                    });
+                  }}
+                ></input>
+              </th>
+              <th>{ride.vehicle_plate_num}</th>
+              <th>
+                <input
+                  type="time"
+                  defaultValue={
+                    ride.starting_date.split("T")[1].split(":00.000Z")[0]
+                  }
+                  onChange={(e) => {
+                    setUpdate({
+                      ...Update,
+                      StartingTime: e.target.value,
+                    });
+                  }}
+                ></input>
+              </th>
+              <th>
+                {/* {ride.finishing_date.split("T")[0] + */}
+                {/* " " + */}
+                {ride.finishing_date.split("T")[1].split(":00.000Z")[0]}
+              </th>
+              <th>{String(ride.will_take_riders)}</th>
               <th
                 onClick={() => {
                   setEdit(ride.ride_id);
                 }}
-                className="Button"
-                type="submit"
-                value="Submit"
-                form="addForm"
               >
                 Submit
               </th>
