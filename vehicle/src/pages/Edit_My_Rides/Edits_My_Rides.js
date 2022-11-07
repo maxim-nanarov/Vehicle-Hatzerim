@@ -38,15 +38,16 @@ export default function EditMyRides() {
     setUpdateST(sDate);
     setUpdateFT(fDate);
     let Ride_Table = ReleventTable(Data, sdate);
-    console.log(sdate, fdate);
-    if (sdate >= fdate) {
+    console.log(sDate, fDate);
+    if (sDate >= fDate) {
       alert("starting date cant be bigger then the finishing date.");
       return undefined;
+    } else {
+      let result = availabeVehicle(vehicles, Ride_Table, UpdateST, UpdateFT);
+      console.log("available vehicels " + result);
+      setAv(result);
+      setOpen((o) => !o);
     }
-
-    let result = availabeVehicle(vehicles, Ride_Table, UpdateST, UpdateFT);
-    console.log("available vehicels " + result);
-    setAv(result);
   }
   function UpdateTheRow() {
     let data = {
@@ -199,7 +200,6 @@ export default function EditMyRides() {
                   }
                   setHelper(ride);
                   Test();
-                  setOpen((o) => !o);
                 }}
               >
                 Submit
