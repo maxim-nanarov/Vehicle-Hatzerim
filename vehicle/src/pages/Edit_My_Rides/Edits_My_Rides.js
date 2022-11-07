@@ -182,6 +182,7 @@ export default function EditMyRides() {
                     );
                   }
                   if (UpdateFT === "") {
+                    console.log("enterd the if when there is no input");
                     setUpdateFT(
                       ride.finishing_date.split("T")[1].split(":00.000Z")[0]
                     );
@@ -257,10 +258,9 @@ export default function EditMyRides() {
       let Ride_Table = ReleventTable(Data, sdate);
       setUpdateFT(fDate);
       setUpdateST(sDate);
-      console.log("State: ", UpdateST, UpdateFT);
+      console.log("State 1: ", UpdateST + " state 2: " + UpdateFT);
       if (sDate >= fDate) {
         alert("starting date cant be bigger then the finishing date.");
-        return undefined;
       } else {
         let result = availabeVehicle(vehicles, Ride_Table, UpdateST, UpdateFT);
         console.log("available vehicels " + result);
