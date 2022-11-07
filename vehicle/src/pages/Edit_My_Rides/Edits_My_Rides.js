@@ -240,20 +240,21 @@ export default function EditMyRides() {
     setDisplayData(a);
 
     if (UpdateFlag) {
+      console.log("=A= UpdateST: " + UpdateST);
+      console.log("=A= UpdateFT: " + UpdateFT);
       let sdate =
         new Date().toISOString().split("T")[0] + " " + UpdateST + ":00";
       let sDate = new Date(sdate);
       let fdate =
         new Date().toISOString().split("T")[0] + " " + UpdateFT + ":00";
       let fDate = new Date(fdate);
-      console.log(UpdateST, UpdateFT);
-
-      let Ride_Table = ReleventTable(Data, sdate);
       console.log(
-        new Date(sDate),
-        new Date(fDate),
-        new Date(sDate) > new Date(fDate)
+        "Update Starting Time: -" +
+          UpdateST +
+          "- Update Finishing Time: - " +
+          UpdateFT
       );
+      let Ride_Table = ReleventTable(Data, sdate);
       setUpdateFT(fDate);
       setUpdateST(sDate);
       console.log("State: ", UpdateST, UpdateFT);
@@ -268,7 +269,17 @@ export default function EditMyRides() {
         setUpdateFlag(false);
       }
     }
-  }, [Edit, Delete, Data, UpdateD, UpdateST, UpdateR, helper, UpdateFlag]);
+  }, [
+    Edit,
+    Delete,
+    Data,
+    UpdateD,
+    UpdateST,
+    UpdateFT,
+    UpdateR,
+    helper,
+    UpdateFlag,
+  ]);
 
   //the if that will return loading screen
   //if the main table isnt loaded yet from the server
