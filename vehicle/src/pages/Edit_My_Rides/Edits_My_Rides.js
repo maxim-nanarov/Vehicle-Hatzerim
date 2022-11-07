@@ -156,9 +156,15 @@ export default function EditMyRides() {
                 ></input>
               </th>
               <th>
-                {/* {ride.finishing_date.split("T")[0] + */}
-                {/* " " + */}
-                {ride.finishing_date.split("T")[1].split(":00.000Z")[0]}
+                <input
+                  type="time"
+                  defaultValue={
+                    ride.finishing_date.split("T")[1].split(":00.000Z")[0]
+                  }
+                  onChange={(e) => {
+                    setUpdateFT(e.target.value);
+                  }}
+                ></input>
               </th>
               <th>{String(ride.will_take_riders)}</th>
               <th
@@ -210,16 +216,8 @@ export default function EditMyRides() {
             <th>{ride.destination_name}</th>
             <th>{ride.reason_name}</th>
             <th>{ride.vehicle_plate_num}</th>
-            <th>
-              {/* {ride.starting_date.split("T")[0] +
-                " " + */}
-              {ride.starting_date.split("T")[1].split(":00.000Z")[0]}
-            </th>
-            <th>
-              {/* {ride.finishing_date.split("T")[0] + */}
-              {/* " " + */}
-              {ride.finishing_date.split("T")[1].split(":00.000Z")[0]}
-            </th>
+            <th>{ride.starting_date.split("T")[1].split(":00.000Z")[0]}</th>
+            <th>{ride.finishing_date.split("T")[1].split(":00.000Z")[0]}</th>
             <th>{String(ride.will_take_riders)}</th>
             <th
               onClick={() => {
