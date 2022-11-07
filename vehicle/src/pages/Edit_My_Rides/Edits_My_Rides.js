@@ -26,29 +26,10 @@ export default function EditMyRides() {
   const [SelectedVehicle, setSelectedVehicle] = useState();
   const [vehicles, setVehicels] = useState();
   const [availabeVehicleDisplay, setAvailabeVehicleDisplay] = useState();
-
+  const [UpdateFlag, setUpdateFlag] = useState(false);
   const [aV, setAv] = useState([]);
   let count = 0;
-  function Test() {
-    let sdate = new Date().toISOString().split("T")[0] + " " + UpdateST + ":00";
-    let sDate = new Date(sdate).toLocaleString();
-    let fdate = new Date().toISOString().split("T")[0] + " " + UpdateFT + ":00";
-    let fDate = new Date(fdate).toLocaleString();
-    console.log(new Date(UpdateST), new Date(UpdateFT), sDate, fDate);
-    setUpdateST(sDate);
-    setUpdateFT(fDate);
-    let Ride_Table = ReleventTable(Data, sdate);
-    console.log(sDate, fDate);
-    if (sDate >= fDate) {
-      alert("starting date cant be bigger then the finishing date.");
-      return undefined;
-    } else {
-      let result = availabeVehicle(vehicles, Ride_Table, UpdateST, UpdateFT);
-      console.log("available vehicels " + result);
-      setAv(result);
-      setOpen((o) => !o);
-    }
-  }
+  function Test() {}
   function UpdateTheRow() {
     let data = {
       destination: UpdateD,
@@ -135,6 +116,7 @@ export default function EditMyRides() {
   useEffect(() => {
     let date = new Date();
     let count = 0;
+    console.log(UpdateST);
     let a = Data.map((ride) => {
       if (
         ride.user_id === Number(id) &&
@@ -199,7 +181,7 @@ export default function EditMyRides() {
                     );
                   }
                   setHelper(ride);
-                  Test();
+                  setUpdateFlag(true);
                 }}
               >
                 Submit
@@ -258,7 +240,37 @@ export default function EditMyRides() {
       }
     });
     setDisplayData(a);
-  }, [Edit, Delete, Data, UpdateD, UpdateST, UpdateR, helper]);
+
+    if (UpdateFlag) {
+      let sdate =
+        new Date().toISOString().split("T")[0] + " " + UpdateST + ":00";
+      let sDate = new Date(sdate);
+      let fdate =
+        new Date().toISOString().split("T")[0] + " " + UpdateFT + ":00";
+      let fDate = new Date(fdate);
+      console.log(UpdateST, UpdateFT);
+
+      let Ride_Table = ReleventTable(Data, sdate);
+      console.log(
+        new Date(sDate),
+        new Date(fDate),
+        new Date(sDate) > new Date(fDate)
+      );
+      setUpdateFT(fDate);
+      setUpdateST(sDate);
+      console.log("State: ", UpdateST, UpdateFT);
+      if (sDate >= fDate) {
+        alert("starting date cant be bigger then the finishing date.");
+        return undefined;
+      } else {
+        let result = availabeVehicle(vehicles, Ride_Table, UpdateST, UpdateFT);
+        console.log("available vehicels " + result);
+        setAv(result);
+        setOpen((o) => !o);
+        setUpdateFlag(false);
+      }
+    }
+  }, [Edit, Delete, Data, UpdateD, UpdateST, UpdateR, helper, UpdateFlag]);
 
   //the if that will return loading screen
   //if the main table isnt loaded yet from the server
