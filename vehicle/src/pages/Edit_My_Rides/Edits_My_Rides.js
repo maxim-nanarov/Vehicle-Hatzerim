@@ -72,7 +72,6 @@ export default function EditMyRides() {
           count++;
 
           if (SelectedVehicle === vehicle.vehicle_plate_num) {
-            console.log(SelectedVehicle);
             return (
               <>
                 <tr
@@ -116,7 +115,6 @@ export default function EditMyRides() {
   useEffect(() => {
     let date = new Date();
     let count = 0;
-    console.log(UpdateST);
     let a = Data.map((ride) => {
       if (
         ride.user_id === Number(id) &&
@@ -151,7 +149,11 @@ export default function EditMyRides() {
                     ride.starting_date.split("T")[1].split(":00.000Z")[0]
                   }
                   onChange={(e) => {
-                    setUpdateST(e.target.value);
+                    setUpdateST(
+                      new Date(
+                        ride.starting_date.split("T")[0] + " " + e.target.value
+                      )
+                    );
                   }}
                 ></input>
               </th>
@@ -162,7 +164,11 @@ export default function EditMyRides() {
                     ride.finishing_date.split("T")[1].split(":00.000Z")[0]
                   }
                   onChange={(e) => {
-                    setUpdateFT(e.target.value);
+                    setUpdateFT(
+                      new Date(
+                        ride.finishing_date.split("T")[0] + " " + e.target.value
+                      )
+                    );
                   }}
                 ></input>
               </th>
@@ -177,15 +183,12 @@ export default function EditMyRides() {
                     setUpdateR(ride.reason_name);
                   }
                   if (UpdateST === "") {
-                    setUpdateST(
-                      ride.starting_date.split("T")[1].split(":00.000Z")[0]
-                    );
+                    let newDate = fixHours(ride.starting_date);
+                    setUpdateST(newDate);
                   }
                   if (UpdateFT === "") {
-                    console.log("enterd the if when there is no input");
-                    setUpdateFT(
-                      ride.finishing_date.split("T")[1].split(":00.000Z")[0]
-                    );
+                    let newDate = fixHours(ride.finishing_date);
+                    setUpdateFT(newDate);
                   }
                   setHelper(ride);
                   setUpdateFlag(true);
@@ -241,29 +244,16 @@ export default function EditMyRides() {
     setDisplayData(a);
 
     if (UpdateFlag) {
-      console.log("=A= UpdateST: " + UpdateST);
-      console.log("=A= UpdateFT: " + UpdateFT);
-      let sdate =
-        new Date().toISOString().split("T")[0] + " " + UpdateST + ":00";
-      let sDate = new Date(sdate);
-      let fdate =
-        new Date().toISOString().split("T")[0] + " " + UpdateFT + ":00";
-      let fDate = new Date(fdate);
-      console.log(
-        "Update Starting Time: -" +
-          UpdateST +
-          "- Update Finishing Time: - " +
-          UpdateFT
-      );
-      let Ride_Table = ReleventTable(Data, sdate);
-      setUpdateFT(fDate);
-      setUpdateST(sDate);
-      console.log("State 1: ", UpdateST + " state 2: " + UpdateFT);
-      if (sDate >= fDate) {
+      console.log("Update FT: " + UpdateFT);
+      console.log("Update ST: " + UpdateST);
+
+      let Ride_Table = ReleventTable(Data, UpdateST);
+
+      if (UpdateST >= UpdateFT) {
         alert("starting date cant be bigger then the finishing date.");
+        window.location.reload();
       } else {
         let result = availabeVehicle(vehicles, Ride_Table, UpdateST, UpdateFT);
-        console.log("available vehicels " + result);
         setAv(result);
         setOpen((o) => !o);
         setUpdateFlag(false);
@@ -353,7 +343,6 @@ function IfisinRangeCompiler(Rides, Starting_date_new, finnishing_date_new) {
       ResultFlag = true;
     }
     if (Rides[i].vehicle_plate_num !== Rides[i + 1].vehicle_plate_num) {
-      console.log(Rides[i].vehicle_plate_num + " this vehicle is available");
       if (!ResultFlag) {
         result.push(Rides[i].vehicle_plate_num);
       } else {
@@ -396,10 +385,6 @@ function availabeVehicle(
     for (let j = 0; j < vehicles.length; j++) {
       if (!ifExist(Rides, vehicles[j].vehicle_plate_num)) {
         result.push(vehicles[j].vehicle_plate_num);
-      } else {
-        console.log(
-          "this vehicle is used once: " + vehicles[j].vehicle_plate_num
-        );
       }
     }
     if (result.length > 0) {
@@ -436,4 +421,17 @@ function SortRideTable(Rides) {
   return Rides.sort(function (a, b) {
     return a.vehicle_plate_num - b.vehicle_plate_num;
   });
+}
+function fixHours(Date2) {
+  console.log("fix hours function commenced");
+  console.log(Date2, typeof Date2);
+  let date = new Date(Date2);
+  let newDate =
+    Date2.split("T")[0] +
+    " " +
+    String(date.getHours() - 2) +
+    ":" +
+    String(date.getMinutes());
+  console.log("the new date: " + new Date(newDate));
+  return new Date(newDate);
 }
