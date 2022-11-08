@@ -277,7 +277,12 @@ export default function EditMyRides() {
       } else {
         console.log(UpdateST);
         console.log(UpdateFT);
-        let result = availabeVehicle(vehicles, Ride_Table, UpdateST, UpdateFT);
+        let result = availabeVehicle(
+          vehicles,
+          Ride_Table,
+          UpdateST.toISOString(),
+          UpdateFT.toISOString()
+        );
         setAv(result);
         setOpen((o) => !o);
         setUpdateFlag(false);
