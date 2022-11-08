@@ -88,6 +88,23 @@ export default function EditMyRides() {
     console.log(reason_id, Destination_id, Edit, willTakeRiders);
   }
 
+  function DeleteRide() {
+    axios
+      .post("http://localhost:4003/Delete_Ride", {
+        data: {
+          ride_id: Delete,
+        },
+      })
+      .then((res) => {
+        console.log("worked");
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log("didnt work");
+        console.log(err);
+      });
+  }
+
   useEffect(() => {
     axios
       .get("https://vehicle-hatzerim.herokuapp.com/Get_Ride_data", {
@@ -294,6 +311,7 @@ export default function EditMyRides() {
             </tr>
           );
         } else if (Delete === ride.ride_id) {
+          DeleteRide(ride.ride_id);
           return (
             <tr key={count}>
               <th>DELETED</th>

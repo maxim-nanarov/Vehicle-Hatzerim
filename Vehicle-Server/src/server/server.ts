@@ -132,7 +132,7 @@ app.post("/Delete_Ride", (req, res) => {
   console.log(data);
 
   client.query(
-    `DELETE FROM ride WHERE ride_id = ${data.ride_id};`,
+    `DELETE FROM ride WHERE ride_id = '${data.ride_id}';`,
     (err: Error, response: any) => {
       if (err) throw err;
       res.send(response);
@@ -210,7 +210,7 @@ app.post("/Add_Vehicle", (req, res) => {
   res.send("it worked!!!");
 });
 //http://localhost:4002/Get_Ride_data
-const port = process.env.PORT || 4002;
+const port = process.env.PORT || 4003;
 app.listen(port, () => {
   initDb();
   console.log("Hosted: http://localhost:" + port);
