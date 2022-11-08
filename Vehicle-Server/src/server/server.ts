@@ -127,6 +127,43 @@ app.post("/User_data", (req, res) => {
   }
 });
 
+app.post("/Delete_Ride", (req, res) => {
+  let data = req.body.data;
+  console.log(data);
+
+  client.query(
+    `DELETE FROM ride WHERE ride_id = ${data.ride_id};`,
+    (err: Error, response: any) => {
+      if (err) throw err;
+      res.send(response);
+    }
+  );
+});
+
+app.post("/Update_Ride", (req, res) => {
+  let data = req.body.data;
+  console.log(data);
+
+  client.query(
+    `UPDATE ride
+    SET destination_id = '${Number(
+      data.destination_id
+    )}', will_take_riders = '${Boolean(
+      data.will_take_riders
+    )}', reason_id = '${Number(data.reason_id)}', vehicle_plate_num = '${Number(
+      data.vehicle_plate_num
+    )}', starting_date = '${data.startin_date}', finishing_date = '${
+      data.finishing_date
+    }'
+    WHERE ride_id = '${data.ride_id}';
+    `,
+    (err: Error, response: any) => {
+      if (err) throw err;
+      res.send(response);
+    }
+  );
+});
+
 app.post("/Ride_data", (req, res) => {
   const data = req.body.data;
   const dataS = req.body.data.Data;

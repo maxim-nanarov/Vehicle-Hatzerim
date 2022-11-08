@@ -11,6 +11,7 @@ export default function EditMyRides() {
   //going to be edited by the user choice.
   //scratch that, now the edit will be only
   //on one ride every time.
+  const [willTakeRiders, setUpdateWTR] = useState();
   let { id } = useParams();
   const [Edit, setEdit] = useState(0);
   const [Data, setData] = useState([]);
@@ -36,13 +37,55 @@ export default function EditMyRides() {
     console.log(UpdateD);
     console.log(UpdateR);
     console.log(UpdateST);
-    console.log(UpdateST);
+    console.log(UpdateFT);
     if (SelectedVehicle === undefined) {
       alert("Please choose a vehicle");
     } else {
       console.log(SelectedVehicle);
     }
-    console.log(Edit);
+    console.log("what?");
+    console.log("betwenn the loops");
+
+    let Destination_id = 0;
+    for (let i = 0; i < DestinationsTable.length; i++) {
+      if (DestinationsTable[i].destination_name === UpdateD) {
+        Destination_id = DestinationsTable[i].destination_id;
+      }
+    }
+    console.log("betwenn the loops");
+    let reason_id = 0;
+    ReasonTable.forEach((reason) => {
+      if (reason.reason_name === UpdateR) {
+        reason_id = reason.reason_id;
+      }
+    });
+    console.log(
+      "one last conosle.log before the reqeust to the server" + reason_id,
+      Destination_id
+    );
+    axios
+      .post("http://localhost:4002/Update_Ride", {
+        data: {
+          destination_id: Destination_id,
+          will_take_riders: willTakeRiders,
+          reason_id: reason_id,
+          vehicle_plate_num: SelectedVehicle,
+          startin_date: UpdateST,
+          finishing_date: UpdateFT,
+          ride_id: Edit,
+        },
+      })
+      .then((res) => {
+        console.log("worked");
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log("didnt work");
+        console.log(err);
+      });
+    setOpen((o) => !o);
+
+    console.log(reason_id, Destination_id, Edit, willTakeRiders);
   }
 
   useEffect(() => {
@@ -72,17 +115,25 @@ export default function EditMyRides() {
       });
 
     axios
-      .get(
-        "https://vehicle-hatzerim.herokuapp.com/Vehicles_And_Its_Relevent_Element",
-        {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-        }
-      )
+      .get("https://vehicle-hatzerim.herokuapp.com/Destinations", {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      })
       .then((res) => {
-        setVehicels(res.data);
+        setDT(res.data);
+      });
+
+    axios
+      .get("https://vehicle-hatzerim.herokuapp.com/reasons", {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        setRT(res.data);
       });
   }, []);
 
@@ -194,7 +245,16 @@ export default function EditMyRides() {
                   }}
                 ></input>
               </th>
-              <th>{String(ride.will_take_riders)}</th>
+              <th>
+                {String(ride.will_take_riders)}
+                <input
+                  type="checkBox"
+                  defaultValue={ride.will_take_riders}
+                  onChange={(e) => {
+                    setUpdateWTR(e.target.value);
+                  }}
+                ></input>
+              </th>
               <th
                 onClick={() => {
                   setEdit(ride.ride_id);
@@ -211,6 +271,9 @@ export default function EditMyRides() {
                   if (UpdateFT === "") {
                     let newDate = fixHours(ride.finishing_date);
                     setUpdateFT(newDate);
+                  }
+                  if (willTakeRiders === undefined) {
+                    setUpdateWTR(false);
                   }
                   setHelper(ride);
                   setUpdateFlag(true);
