@@ -28,15 +28,23 @@ export default function EditMyRides() {
   const [availabeVehicleDisplay, setAvailabeVehicleDisplay] = useState();
   const [UpdateFlag, setUpdateFlag] = useState(false);
   const [aV, setAv] = useState([]);
+  const [DestinationsTable, setDT] = useState([]);
+  const [ReasonTable, setRT] = useState([]);
   let count = 0;
-  function Test() {}
-  function UpdateTheRow() {
-    let data = {
-      destination: UpdateD,
-      Reason: UpdateR,
-      starting_date: UpdateST,
-    };
+
+  function Test() {
+    console.log(UpdateD);
+    console.log(UpdateR);
+    console.log(UpdateST);
+    console.log(UpdateST);
+    if (SelectedVehicle === undefined) {
+      alert("Please choose a vehicle");
+    } else {
+      console.log(SelectedVehicle);
+    }
+    console.log(Edit);
   }
+
   useEffect(() => {
     axios
       .get("https://vehicle-hatzerim.herokuapp.com/Get_Ride_data", {
@@ -47,6 +55,20 @@ export default function EditMyRides() {
       })
       .then((res) => {
         setData(res.data);
+      });
+
+    axios
+      .get(
+        "https://vehicle-hatzerim.herokuapp.com/Vehicles_And_Its_Relevent_Element",
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((res) => {
+        setVehicels(res.data);
       });
 
     axios
@@ -246,13 +268,15 @@ export default function EditMyRides() {
     if (UpdateFlag) {
       console.log("Update FT: " + UpdateFT);
       console.log("Update ST: " + UpdateST);
-
-      let Ride_Table = ReleventTable(Data, UpdateST);
+      console.log(Data, UpdateST);
+      let Ride_Table = ReleventTable(Data, UpdateST.toISOString());
 
       if (UpdateST >= UpdateFT) {
         alert("starting date cant be bigger then the finishing date.");
         window.location.reload();
       } else {
+        console.log(UpdateST);
+        console.log(UpdateFT);
         let result = availabeVehicle(vehicles, Ride_Table, UpdateST, UpdateFT);
         setAv(result);
         setOpen((o) => !o);
@@ -323,11 +347,19 @@ export function If_In_Range(start, finish, date) {
 
 function IfisinRangeCompiler(Rides, Starting_date_new, finnishing_date_new) {
   let ResultFlag = false;
+  console.log("if is range compiler");
   let result = [];
   for (let i = 0; i < Rides.length - 1; i++) {
     //if this if is true, then there's no doubt about it
     //the vehicle is used in the time given.
     //true === the time is between used times.
+    console.log(
+      If_In_Range(
+        Rides[i].starting_date,
+        Rides[i].finishing_date,
+        Starting_date_new
+      )
+    );
     if (
       If_In_Range(
         Rides[i].starting_date,
@@ -362,6 +394,7 @@ function availabeVehicle(
   Starting_date_new,
   finnishing_date_new
 ) {
+  console.log("Before vehicle that isnt in use funtion");
   let vehiclePlateNum = VehicleThatIsntInUse(vehicles, Rides);
   if (vehiclePlateNum !== undefined) {
     return vehiclePlateNum;
@@ -369,6 +402,8 @@ function availabeVehicle(
   if (Rides === []) {
     return undefined;
   }
+  console.log("Before if is in range funtion");
+
   let Availabe_Vehicles = IfisinRangeCompiler(
     Rides,
     Starting_date_new,
@@ -382,6 +417,7 @@ function availabeVehicle(
 
   function VehicleThatIsntInUse(vehicles, Rides) {
     let result = [];
+    console.log(Rides);
     for (let j = 0; j < vehicles.length; j++) {
       if (!ifExist(Rides, vehicles[j].vehicle_plate_num)) {
         result.push(vehicles[j].vehicle_plate_num);
@@ -422,8 +458,9 @@ function SortRideTable(Rides) {
     return a.vehicle_plate_num - b.vehicle_plate_num;
   });
 }
+//fixed the date converter because it was two hours late to the
+//desierd time
 function fixHours(Date2) {
-  console.log("fix hours function commenced");
   console.log(Date2, typeof Date2);
   let date = new Date(Date2);
   let newDate =
