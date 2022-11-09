@@ -59,20 +59,18 @@ export default function EditMyRides() {
         reason_id = reason.reason_id;
       }
     });
-    console.log(
-      "one last conosle.log before the reqeust to the server" + reason_id,
-      Destination_id
-    );
-    console.log("Update Final Time" + fixHoursForward(UpdateST));
+
+    console.log("Update Final Time" + fixHoursForward(UpdateFT));
+    console.log("Update Starting Time: " + fixHoursForward(UpdateST));
     axios
-      .post("http://localhost:4003/Update_Ride", {
+      .post("https://vehicle-hatzerim.herokuapp.com/Update_Ride", {
         data: {
           destination_id: Destination_id,
           will_take_riders: willTakeRiders,
           reason_id: reason_id,
           vehicle_plate_num: SelectedVehicle,
-          startin_date: UpdateST,
-          finishing_date: UpdateFT,
+          startin_date: fixHoursForward(UpdateST),
+          finishing_date: fixHoursForward(UpdateFT),
           ride_id: Edit,
         },
       })
@@ -564,9 +562,9 @@ function fixHoursForward(Date2) {
   console.log(Date2, typeof Date2);
   let date = new Date(Date2);
   let newDate =
-    Date2.split("T")[0] +
+    Date2.toISOString().split("T")[0] +
     " " +
-    String(date.getHours() - 4) +
+    String(date.getHours() + 2) +
     ":" +
     String(date.getMinutes());
   console.log("the new date: " + new Date(newDate));
