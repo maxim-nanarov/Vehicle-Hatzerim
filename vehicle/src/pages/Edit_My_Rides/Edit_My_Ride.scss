@@ -1,3 +1,27 @@
 .Green-Row {
   background-color: greenyellow;
 }
+.Edit-Line {
+  font-size: small;
+  width: 60%;
+  th {
+    padding: 0;
+    div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      input {
+        font-size: small;
+        background-color: rgb(247, 231, 200);
+        width: 60%;
+        transition: 1s;
+        border: 0px;
+        padding: 7px;
+        &:hover {
+          background-color: rgb(245, 179, 55);
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

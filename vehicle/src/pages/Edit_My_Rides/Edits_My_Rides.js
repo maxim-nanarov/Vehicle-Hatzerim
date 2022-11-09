@@ -213,63 +213,79 @@ export default function EditMyRides() {
         count++;
         if (Edit === ride.ride_id) {
           return (
-            <tr key={count}>
+            <tr className="Edit-Line" key={count}>
               <th>
-                <input
-                  defaultValue={ride.destination_name}
-                  onChange={(e) => {
-                    setUpdateD(e.target.value);
-                  }}
-                ></input>
+                <div>
+                  <input
+                    defaultValue={ride.destination_name}
+                    onChange={(e) => {
+                      setUpdateD(e.target.value);
+                    }}
+                  ></input>
+                </div>
               </th>
               <th>
-                <input
-                  defaultValue={ride.reason_name}
-                  onChange={(e) => {
-                    setUpdateR(e.target.value);
-                  }}
-                ></input>
-              </th>
-              <th>{ride.vehicle_plate_num}</th>
-              <th>
-                <input
-                  type="time"
-                  defaultValue={
-                    ride.starting_date.split("T")[1].split(":00.000Z")[0]
-                  }
-                  onChange={(e) => {
-                    setUpdateST(
-                      new Date(
-                        ride.starting_date.split("T")[0] + " " + e.target.value
-                      )
-                    );
-                  }}
-                ></input>
+                <div>
+                  <input
+                    defaultValue={ride.reason_name}
+                    onChange={(e) => {
+                      setUpdateR(e.target.value);
+                    }}
+                  ></input>
+                </div>
               </th>
               <th>
-                <input
-                  type="time"
-                  defaultValue={
-                    ride.finishing_date.split("T")[1].split(":00.000Z")[0]
-                  }
-                  onChange={(e) => {
-                    setUpdateFT(
-                      new Date(
-                        ride.finishing_date.split("T")[0] + " " + e.target.value
-                      )
-                    );
-                  }}
-                ></input>
+                <div>{ride.vehicle_plate_num}</div>
               </th>
               <th>
-                {String(ride.will_take_riders)}
-                <input
-                  type="checkBox"
-                  defaultValue={ride.will_take_riders}
-                  onChange={(e) => {
-                    setUpdateWTR(e.target.value);
-                  }}
-                ></input>
+                <div>
+                  <input
+                    type="time"
+                    defaultValue={
+                      ride.starting_date.split("T")[1].split(":00.000Z")[0]
+                    }
+                    onChange={(e) => {
+                      setUpdateST(
+                        new Date(
+                          ride.starting_date.split("T")[0] +
+                            " " +
+                            e.target.value
+                        )
+                      );
+                    }}
+                  ></input>
+                </div>
+              </th>
+              <th>
+                <div>
+                  <input
+                    type="time"
+                    defaultValue={
+                      ride.finishing_date.split("T")[1].split(":00.000Z")[0]
+                    }
+                    onChange={(e) => {
+                      setUpdateFT(
+                        new Date(
+                          ride.finishing_date.split("T")[0] +
+                            " " +
+                            e.target.value
+                        )
+                      );
+                    }}
+                  ></input>
+                </div>
+              </th>
+              <th>
+                <div>
+                  {String(ride.will_take_riders)}
+                  <input
+                    type="checkBox"
+                    defaultValue={ride.will_take_riders}
+                    onChange={(e) => {
+                      setUpdateWTR(e.target.value);
+                    }}
+                  ></input>
+                </div>
               </th>
               <th
                 onClick={() => {
@@ -295,7 +311,7 @@ export default function EditMyRides() {
                   setUpdateFlag(true);
                 }}
               >
-                Submit
+                <div> Submit</div>
               </th>
               <th
                 onClick={() => {
@@ -305,7 +321,7 @@ export default function EditMyRides() {
                   setUpdateST("");
                 }}
               >
-                Cancle
+                <div>Cancle</div>
               </th>
             </tr>
           );
