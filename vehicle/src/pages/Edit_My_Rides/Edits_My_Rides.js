@@ -427,7 +427,7 @@ export default function EditMyRides() {
             <h3>Are You Sure?</h3>
             <div className="Buttons-confirm-cancle">
               <button onClick={Test}>Confirm</button>
-              <button>Cancel</button>
+              <button onClick={setOpen((o) => !o)}>Cancel</button>
             </div>
           </div>
         </div>
