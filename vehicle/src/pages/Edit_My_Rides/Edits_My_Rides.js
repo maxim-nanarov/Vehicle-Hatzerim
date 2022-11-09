@@ -421,12 +421,14 @@ export default function EditMyRides() {
         {DisplayData}
       </table>
       <Popup open={open} closeOnDocumentClick onClose={closeModal}>
-        {availabeVehicleDisplay}
-        <div>
-          <h3>Are You Sure?</h3>
-          <div>
-            <button onClick={Test}>Confirm</button>
-            <button>Cancel</button>
+        <div className="Inside-popUp">
+          <div>{availabeVehicleDisplay}</div>
+          <div className="Inside-popUp-Buttons">
+            <h3>Are You Sure?</h3>
+            <div className="Buttons-confirm-cancle">
+              <button onClick={Test}>Confirm</button>
+              <button>Cancel</button>
+            </div>
           </div>
         </div>
       </Popup>
