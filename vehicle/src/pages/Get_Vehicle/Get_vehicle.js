@@ -205,13 +205,13 @@ export default function GetVehicle() {
               </div>
             </div>
             <div className="ChooseTypeVhicle">
-              <div>
+              <div className="Selection-Div">
                 <label>Destination: </label>
                 <select name="Destination" id="Destination">
                   {a}
                 </select>
               </div>
-              <div>
+              <div className="Selection-Div">
                 <label>Reason: </label>
                 <select name="Reason" id="Reason">
                   {b}
@@ -220,6 +220,7 @@ export default function GetVehicle() {
             </div>
             <div className="Hitch-hikers">
               <label>Will you take Hitch hickers?</label>
+
               <input
                 className="CheckBoxHitchhickers"
                 name="Take_Riders"
