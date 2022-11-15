@@ -42,21 +42,16 @@ Change the language from **English** to **Hebrew**.
 2. **SCSS**
 3. **JavaScript**
 4. **TypeScript**
-
-### Packages
-
-1. React-Date-Picker
-2. swiper/react
-3. reactjs-popup
+5. React-Date-Picker
+6. swiper/react
+7. reactjs-popup
 
 ## Back-end
 
-1. TypeScript
-2. Node.js
-
-### Packages
-
-1. axios
+1. **TypeScript**
+2. **Node.js**
+3. axios
+4. express
 
 ## Misc
 

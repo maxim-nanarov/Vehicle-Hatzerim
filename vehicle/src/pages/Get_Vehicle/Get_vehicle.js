@@ -227,6 +227,10 @@ export default function GetVehicle() {
                 id="Take_Riders"
                 type="checkBox"
               ></input>
+              <div className="CheckBox-TrueOrFalse">
+                <label className="WillTake">Yes</label>
+                <label className="WillNotTake">No</label>
+              </div>
             </div>
             <div className="innerDiv">
               <button

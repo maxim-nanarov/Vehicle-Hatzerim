@@ -53,7 +53,6 @@ select {
 
 .submitButton {
   margin-top: 4%;
-  padding: 5%;
   border-radius: 15%;
   background-color: rgb(255, 98, 1);
 }
@@ -95,12 +94,16 @@ select {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  height: 30%;
-  width: 30%;
+  height: 100%;
+  width: 100%;
   margin-bottom: 10px;
   Button {
-    height: inherit;
-    width: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2.5%;
+    height: 150%;
+    width: 30%;
     transition: 0.6s;
     &:hover {
       cursor: pointer;
@@ -119,50 +122,54 @@ select {
   }
 }
 .Hitch-hikers {
+  .WillTake {
+    transition: 1s;
+    opacity: 0;
+  }
+  .WillNotTake {
+    transition: 1s;
+  }
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   .CheckBoxHitchhickers {
     -webkit-appearance: none;
-    background-color: #fafafa;
-    border: 1px solid #cacece;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05),
-      inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);
-    padding: 9px;
-    border-radius: 3px;
-    display: inline-block;
-    position: relative;
-    transition: 0.5s;
-    width: 20%;
-    transition: 0.5s;
-
-    // &:active {
-    //   transition: 0.5s;
-    //   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05),
-    //     inset 0px 1px 3px rgba(0, 0, 0, 0.1);
-    // }
+    background-color: red;
+    border-radius: 10%;
+    display: flex;
+    width: 6vh;
+    height: 6vh;
+    justify-content: center;
+    align-items: center;
+    transition: 1s;
+    color: black;
+    font-size: xx-large;
+    content: "X";
+    &:hover {
+      cursor: pointer;
+      background-color: rgba(156, 39, 39, 0.647);
+    }
+    &:active {
+      background-color: rgba(172, 255, 47, 0.471);
+    }
     &:checked {
-      transition: 0.5s;
-      background-color: #ff4815;
-      border: 1px solid #adb8c0;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05),
-        inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05),
-        inset 15px 10px -12px rgba(255, 255, 255, 0.1);
-      color: #99a1a7;
+      background-color: greenyellow;
+      + .CheckBox-TrueOrFalse .WillNotTake {
+        opacity: 0;
+      }
+      + .CheckBox-TrueOrFalse .WillTake {
+        opacity: 1;
+      }
       &::after {
-        transition: 0.5s;
-        background-color: greenyellow;
-        height: 100%;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
         content: "\2714";
-        font-size: 150%;
-        position: absolute;
-        top: 0px;
         color: #000000;
       }
     }
+  }
+  .CheckBox-TrueOrFalse {
+    display: flex;
+    flex-direction: column;
   }
 }
 
