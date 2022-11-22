@@ -164,6 +164,22 @@ app.post("/Update_Ride", (req, res) => {
   );
 });
 
+app.post("/Update_Took_key", (req, res) => {
+  let data = req.body.data;
+  console.log(data);
+
+  client.query(
+    `UPDATE ride
+    SET took_key = ${data.Took_Key} 
+    WHERE ride_id = '${data.ride_id}';
+    `,
+    (err: Error, response: any) => {
+      if (err) throw err;
+      res.send(response);
+    }
+  );
+});
+
 app.post("/Ride_data", (req, res) => {
   const data = req.body.data;
   const dataS = req.body.data.Data;
@@ -174,7 +190,7 @@ app.post("/Ride_data", (req, res) => {
   console.log(data);
   console.log("plateNum: ", plateNum);
   client.query(
-    `INSERT INTO ride (ride_id,starting_date,finishing_date, will_take_riders, vehicle_plate_num,user_id,destination_id,reason_id) VALUES (DEFAULT,'${SD}','${ED}','${dataS.Take_Riders}','${plateNum}','${ID}','${dataS.Destination}','${dataS.Reason}');`,
+    `INSERT INTO ride (ride_id,starting_date,finishing_date, will_take_riders, vehicle_plate_num,user_id,destination_id,reason_id,took_key) VALUES (DEFAULT,'${SD}','${ED}','${dataS.Take_Riders}','${plateNum}','${ID}','${dataS.Destination}','${dataS.Reason}','f');`,
     (err: Error, response: any) => {
       if (err) throw err;
       res.send(response);
@@ -210,7 +226,7 @@ app.post("/Add_Vehicle", (req, res) => {
   res.send("it worked!!!");
 });
 //http://localhost:4002/Get_Ride_data
-const port = process.env.PORT || 4003;
+const port = process.env.PORT || 4004;
 app.listen(port, () => {
   initDb();
   console.log("Hosted: http://localhost:" + port);

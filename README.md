@@ -6,9 +6,6 @@ but there's a lot more to do in order to make it execoitonable.
 
 ## To Do:
 
-Right now, I'm in the trouble of finiding new server service.  
-what's more, There's a need for a total crud area for the admin.
-
 - Reason table modifier.
 - Vehicle table modifier.
 - User manager.
@@ -24,13 +21,11 @@ that takes two dates.
 
 Change the language from **English** to **Hebrew**.
 
-### I want to try:
+**There's a need to make the user only take one vehicle at a destiend time.**  
+**so he wont be able to take all the vehicles at the same time.**
 
-1. **render**: after further investigation, there's a need for  
-   **postgres\SQL service.**
-2. aws free services
-3. azure
-4. heroku paid version
+- I want to add age to the users table  
+  and user registrations.
 
 #
 

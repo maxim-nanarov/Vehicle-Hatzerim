@@ -67,7 +67,7 @@ export default function MainMenu() {
                 </SwiperSlide>
                 <SwiperSlide>
                   <Link to={`/Main_Menu/${id}/EditMyRides${search}`}>
-                    Edit My Rides
+                    My Rides
                   </Link>
                 </SwiperSlide>
                 <SwiperSlide>

@@ -89,6 +89,7 @@ export async function initDb() {
                           User_ID INTEGER NOT NULL,
                           Destination_ID INTEGER NOT NULL,
                           Reason_ID INTEGER NOT NULL,
+                          TOOK_KEY BOOLEAN NOT NULL,
                           CONSTRAINT FK_Vehicle FOREIGN KEY (Vehicle_Plate_Num)
                           REFERENCES Vehicles(Vehicle_Plate_Num),
                           CONSTRAINT fk_User FOREIGN KEY (User_ID)

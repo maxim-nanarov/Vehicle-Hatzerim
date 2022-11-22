@@ -31,20 +31,15 @@ export default function EditMyRides() {
   const [aV, setAv] = useState([]);
   const [DestinationsTable, setDT] = useState([]);
   const [ReasonTable, setRT] = useState([]);
+  const [TookKey, setTookKey] = useState(false);
   let count = 0;
 
   function Test() {
-    console.log(UpdateD);
-    console.log(UpdateR);
-    console.log(UpdateST);
-    console.log(UpdateFT);
     if (SelectedVehicle === undefined) {
       alert("Please choose a vehicle");
     } else {
       console.log(SelectedVehicle);
     }
-    console.log("what?");
-    console.log("betwenn the loops");
 
     let Destination_id = 0;
     for (let i = 0; i < DestinationsTable.length; i++) {
@@ -52,7 +47,6 @@ export default function EditMyRides() {
         Destination_id = DestinationsTable[i].destination_id;
       }
     }
-    console.log("betwenn the loops");
     let reason_id = 0;
     ReasonTable.forEach((reason) => {
       if (reason.reason_name === UpdateR) {
@@ -60,8 +54,6 @@ export default function EditMyRides() {
       }
     });
 
-    console.log("Update Final Time" + fixHoursForward(UpdateFT));
-    console.log("Update Starting Time: " + fixHoursForward(UpdateST));
     axios
       .post("https://vehicle-hatzerim.herokuapp.com/Update_Ride", {
         data: {
@@ -85,6 +77,27 @@ export default function EditMyRides() {
     setOpen((o) => !o);
 
     console.log(reason_id, Destination_id, Edit, willTakeRiders);
+  }
+  function UpdateTookKey(ride_id) {
+    console.log(ride_id);
+    if (ride_id !== undefined) {
+      axios
+        .post("http://localhost:4004/Update_Took_key", {
+          data: {
+            Took_Key: TookKey,
+            ride_id: ride_id,
+          },
+        })
+        .then((res) => {
+          console.log("worked");
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log("didnt work");
+          console.log(err);
+        });
+    }
+    console.log(ride_id, " Took Key: ", TookKey);
   }
 
   function DeleteRide() {
@@ -355,6 +368,18 @@ export default function EditMyRides() {
             >
               Delete
             </th>
+            <th
+              onClick={() => {
+                if (!TookKey) {
+                  setTookKey(true);
+                } else {
+                  setTookKey(false);
+                }
+                UpdateTookKey(ride.ride_id);
+              }}
+            >
+              Take key
+            </th>
           </tr>
         );
       }
@@ -384,6 +409,15 @@ export default function EditMyRides() {
         setUpdateFlag(false);
       }
     }
+    if (TookKey) {
+      console.log("The Took Key Element: " + TookKey);
+      //1) post request to Update the tookey in the DB.
+      //2) change the coulmn to the color green.
+      //3) change the took key button to return key.
+      //4) Delete the coulmn from the DB.
+    } else {
+      console.log("The Took Key Element: " + TookKey);
+    }
   }, [
     Edit,
     Delete,
@@ -394,6 +428,7 @@ export default function EditMyRides() {
     UpdateR,
     helper,
     UpdateFlag,
+    TookKey,
   ]);
 
   //the if that will return loading screen
@@ -417,6 +452,7 @@ export default function EditMyRides() {
           <th>Will Take Riders</th>
           <th>Edit</th>
           <th>Delete</th>
+          <th>Take key</th>
         </tr>
         {DisplayData}
       </table>
@@ -441,11 +477,6 @@ export default function EditMyRides() {
     </div>
   );
 }
-// function SortRideTable(Rides) {
-//   return Rides.sort(function (a, b) {
-//     return a.vehicle_plate_num - b.vehicle_plate_num;
-//   });
-// }
 
 export function If_In_Range(start, finish, date) {
   start = new Date(start);
@@ -459,9 +490,6 @@ function IfisinRangeCompiler(Rides, Starting_date_new, finnishing_date_new) {
   console.log("if is range compiler");
   let result = [];
   for (let i = 0; i < Rides.length - 1; i++) {
-    //if this if is true, then there's no doubt about it
-    //the vehicle is used in the time given.
-    //true === the time is between used times.
     console.log(
       If_In_Range(
         Rides[i].starting_date,
