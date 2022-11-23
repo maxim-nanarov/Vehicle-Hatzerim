@@ -62,16 +62,11 @@ export default function VehicleSchedule() {
       setFilter([]);
     }
   }, [plateNum, DestinationFilter]);
+
   let c;
   useEffect(() => {
     let newCount = 0;
     if (ChosenRide !== undefined) {
-      let sDate = new Date(ChosenRide.starting_date)
-        .toLocaleString()
-        .split(",")[0];
-      let fDate = new Date(ChosenRide.finishing_date)
-        .toLocaleString()
-        .split(",")[0];
       c = (
         <>
           <div className="Chosen-Display" key={newCount}>
@@ -159,6 +154,7 @@ export default function VehicleSchedule() {
             {/* <th>{Ride.will_take_riders.toString()} </th> */}
             <th>{prettyDate2(Ride.starting_date)} </th>
             <th>{prettyDate2(Ride.finishing_date)} </th>
+            <th>{String(Ride.took_key)}</th>
           </tr>
         );
       } else {
@@ -167,6 +163,8 @@ export default function VehicleSchedule() {
     });
   } else {
     a = Data.map((Ride) => {
+      console.log(Ride);
+
       count++;
       let sDate = new Date(Ride.starting_date).toLocaleString().split(",")[0];
       let fDate = new Date(Ride.finishing_date).toLocaleString().split(",")[0];
@@ -194,6 +192,9 @@ export default function VehicleSchedule() {
             {/* <th>{Ride.will_take_riders.toString()} </th> */}
             <th>{prettyDate2(Ride.starting_date)} </th>
             <th>{prettyDate2(Ride.finishing_date)} </th>
+            <th className={Ride.took_key ? "Green-th" : "Red-th"}>
+              {String(Ride.took_key)}
+            </th>
           </tr>
         );
       } else {
@@ -312,6 +313,7 @@ export default function VehicleSchedule() {
             >
               Finishing
             </th>
+            <th>The Driver Took The Key</th>
           </tr>
           {a}
         </table>
