@@ -10,15 +10,6 @@ but there's a lot more to do in order to make it execoitonable.
 - Vehicle table modifier.
 - User manager.
 
-I want to Add to the add vehicle page the table I added for the  
-vehicle schedual page which there's a specific table  
-that takes two dates.
-
-- **OR** Find a way to get the starting date and corolate it with  
-  the right hour
-- **OR** maybe try just to make the current format nicer to the  
-  eye via css and conclude it there.
-
 Change the language from **English** to **Hebrew**.
 
 **There's a need to make the user only take one vehicle at a destiend time.**  
@@ -26,6 +17,9 @@ Change the language from **English** to **Hebrew**.
 
 - I want to add age to the users table  
   and user registrations.
+
+- **Change the Took Key row to another color and change the button to Return**  
+  **Key button with function that deletes the row from the DB**
 
 #
 
@@ -67,3 +61,16 @@ Why?
 - how does the code understads that? well, via SQL request that gives  
   me the relvent information, and through it I understand if the vehicle  
   is availabe.
+
+### Through the project I learned about myself, and the way I work.
+
+- How to get the job done when I have the feeling  
+  of **burning out**.
+- How fun it can be to come up with new ideas and
+  implement it to the project.
+- allways ask someone who understand little about the  
+  project in order to hear other's opinion, it may be  
+  a waste of time, but when it's not, it's worth it.
+- in order to move forward I need to set myself a specific  
+  goal. In order to stay at the needed line of work and  
+  progress.

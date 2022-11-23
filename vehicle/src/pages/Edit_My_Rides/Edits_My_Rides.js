@@ -32,6 +32,7 @@ export default function EditMyRides() {
   const [DestinationsTable, setDT] = useState([]);
   const [ReasonTable, setRT] = useState([]);
   const [TookKey, setTookKey] = useState(false);
+  const [TookVehicleKey, setTookVehicleKey] = useState();
   let count = 0;
 
   function Test() {
@@ -82,7 +83,7 @@ export default function EditMyRides() {
     console.log(ride_id);
     if (ride_id !== undefined) {
       axios
-        .post("http://localhost:4004/Update_Took_key", {
+        .post("https://vehicle-hatzerim.herokuapp.com/Update_Took_key", {
           data: {
             Took_Key: TookKey,
             ride_id: ride_id,
@@ -345,6 +346,41 @@ export default function EditMyRides() {
               <th>DELETED</th>
             </tr>
           );
+        } else if (TookVehicleKey === ride.ride_id) {
+          return (
+            <tr className="Tooked-Key-row" key={count}>
+              <th>{ride.destination_name}</th>
+              <th>{ride.reason_name}</th>
+              <th>{ride.vehicle_plate_num}</th>
+              <th>{ride.starting_date.split("T")[1].split(":00.000Z")[0]}</th>
+              <th>{ride.finishing_date.split("T")[1].split(":00.000Z")[0]}</th>
+              <th>{String(ride.will_take_riders)}</th>
+              <th
+                onClick={() => {
+                  setEdit(ride.ride_id);
+                }}
+              >
+                Edit
+              </th>
+              <th
+                onClick={() => {
+                  setDelete(ride.ride_id);
+                }}
+              >
+                Delete
+              </th>
+              <th
+                onClick={() => {
+                  setTookKey(false);
+                  setDelete(ride.ride_id);
+                  UpdateTookKey(ride.ride_id);
+                  setTookVehicleKey(undefined);
+                }}
+              >
+                return key
+              </th>
+            </tr>
+          );
         }
         return (
           <tr key={count}>
@@ -372,8 +408,10 @@ export default function EditMyRides() {
               onClick={() => {
                 if (!TookKey) {
                   setTookKey(true);
+                  setTookVehicleKey(ride.ride_id);
                 } else {
                   setTookKey(false);
+                  setTookVehicleKey(undefined);
                 }
                 UpdateTookKey(ride.ride_id);
               }}
@@ -429,6 +467,7 @@ export default function EditMyRides() {
     helper,
     UpdateFlag,
     TookKey,
+    TookVehicleKey,
   ]);
 
   //the if that will return loading screen
