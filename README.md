@@ -19,13 +19,23 @@ for example:
 
 my (still in the works) **Main project**  
 the project for now in the most basic version works fine.  
-but there's a lot more to do in order to make it execoitonable.
+but there's a lot more to do in order to make it Good.
 
-## To Do:
+## To Do: Today's Task: **Create Request In The Server Which Will Be Relevent.**
 
 - Reason table modifier.
+  | Reason Id | Reason Name | Reason Score|
+  |-----------|-------------|-------------|
+  | number | `String` | number |
+
 - Vehicle table modifier.
+  | Vehicle plate number | type id | size id | size id|
+  |----------------------|---------|---------|--------|
+  | number | number | number | number|
 - User manager.
+  | user id | user name | user surname | user home phone | user work phone | user personal phone | is admin|
+  |---------|-----------|--------------|-----------------|-----------------|---------------------|---------|
+  | number | `String` | `String` | number | number | number | **`Boolean`** |
 
 Change the language from **English** to **Hebrew**.
 
