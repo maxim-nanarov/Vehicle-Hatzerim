@@ -131,6 +131,7 @@ tr:hover {
   margin-left: 10px;
   input {
     width: 90%;
+    border: 0px;
     transition: 0.3s;
     margin-top: 5px;
     margin-bottom: 5px;
@@ -142,6 +143,7 @@ tr:hover {
     &:focus {
       background-color: rgb(255, 166, 0);
       color: rgb(0, 0, 0);
+      border: 0px;
     }
   }
   .SpecificInput Button {

@@ -1,5 +1,22 @@
 # Vehicle-Hatzerim
 
+## Background
+
+I looked around where I live, And Where I live we have a fleet of vehicles and a lot of people who  
+need to use the fleet. We had a system which is old and complicated to the "Older" folks in my home town.
+So I tried to make a new program which is going to be easier to use and moreover, have extra functionality.
+for example:
+
+- Easier schedual table and filters to it - An Easier and shorter way to get a vehicle and cutting down unecesery rides.
+- Nicer UI/UX
+- An Option to get a specific vehicle every where you want.
+- If you want to get to a specific Ride you only need to click on the ride  
+  and you'll see the Riders Phone number so you could call.
+- As for the admin, **THERE WILL BE** a page where he can update all the tables in  
+  an easy fashion. moreover, he could configure some rules for expample:
+  - If a rider didnt take his key 15 minutes from when he orderd, then his ride is cancled.
+    or not, depends on the rider.
+
 my (still in the works) **Main project**  
 the project for now in the most basic version works fine.  
 but there's a lot more to do in order to make it execoitonable.

@@ -154,7 +154,9 @@ export default function VehicleSchedule() {
             {/* <th>{Ride.will_take_riders.toString()} </th> */}
             <th>{prettyDate2(Ride.starting_date)} </th>
             <th>{prettyDate2(Ride.finishing_date)} </th>
-            <th>{String(Ride.took_key)}</th>
+            <th className={Ride.took_key ? "Green-th" : "Red-th"}>
+              {String(Ride.took_key)}
+            </th>
           </tr>
         );
       } else {

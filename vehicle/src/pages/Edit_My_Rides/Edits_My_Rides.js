@@ -79,27 +79,6 @@ export default function EditMyRides() {
 
     console.log(reason_id, Destination_id, Edit, willTakeRiders);
   }
-  function UpdateTookKey(ride_id) {
-    console.log(ride_id);
-    if (ride_id !== undefined) {
-      axios
-        .post("https://vehicle-hatzerim.herokuapp.com/Update_Took_key", {
-          data: {
-            Took_Key: TookKey,
-            ride_id: ride_id,
-          },
-        })
-        .then((res) => {
-          console.log("worked");
-          console.log(res.data);
-        })
-        .catch((err) => {
-          console.log("didnt work");
-          console.log(err);
-        });
-    }
-    console.log(ride_id, " Took Key: ", TookKey);
-  }
 
   function DeleteRide() {
     axios
@@ -224,6 +203,7 @@ export default function EditMyRides() {
         new Date(ride.starting_date).toISOString().split("T")[0] >=
           date.toISOString().split("T")[0]
       ) {
+        console.log("The most relevent log: " + ride.took_key);
         count++;
         if (Edit === ride.ride_id) {
           return (
@@ -346,7 +326,7 @@ export default function EditMyRides() {
               <th>DELETED</th>
             </tr>
           );
-        } else if (TookVehicleKey === ride.ride_id) {
+        } else if (TookVehicleKey === ride.ride_id || ride.took_key) {
           return (
             <tr className="Tooked-Key-row" key={count}>
               <th>{ride.destination_name}</th>
@@ -373,7 +353,7 @@ export default function EditMyRides() {
                 onClick={() => {
                   setTookKey(false);
                   setDelete(ride.ride_id);
-                  UpdateTookKey(ride.ride_id);
+                  UpdateTookKey(ride.ride_id, false);
                   setTookVehicleKey(undefined);
                 }}
               >
@@ -406,14 +386,9 @@ export default function EditMyRides() {
             </th>
             <th
               onClick={() => {
-                if (!TookKey) {
-                  setTookKey(true);
-                  setTookVehicleKey(ride.ride_id);
-                } else {
-                  setTookKey(false);
-                  setTookVehicleKey(undefined);
-                }
-                UpdateTookKey(ride.ride_id);
+                setTookKey(true);
+                setTookVehicleKey(ride.ride_id);
+                UpdateTookKey(ride.ride_id, true);
               }}
             >
               Take key
@@ -447,14 +422,27 @@ export default function EditMyRides() {
         setUpdateFlag(false);
       }
     }
-    if (TookKey) {
-      console.log("The Took Key Element: " + TookKey);
-      //1) post request to Update the tookey in the DB.
-      //2) change the coulmn to the color green.
-      //3) change the took key button to return key.
-      //4) Delete the coulmn from the DB.
-    } else {
-      console.log("The Took Key Element: " + TookKey);
+
+    function UpdateTookKey(ride_id, TookKey) {
+      console.log(ride_id, TookKey);
+      if (ride_id !== undefined) {
+        axios
+          .post("https://vehicle-hatzerim.herokuapp.com/Update_Took_key", {
+            data: {
+              Took_Key: TookKey,
+              ride_id: ride_id,
+            },
+          })
+          .then((res) => {
+            console.log("worked");
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log("didnt work");
+            console.log(err);
+          });
+      }
+      console.log(ride_id, " Took Key: ", TookKey);
     }
   }, [
     Edit,
