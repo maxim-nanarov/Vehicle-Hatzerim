@@ -70,46 +70,66 @@ export default function VehicleSchedule() {
       c = (
         <>
           <div className="Chosen-Display" key={newCount}>
-            <table>
-              <tr className="Card">
-                <th>Vehicle plate number</th>
-                <th>Vehicle Type</th>
-                <th>Destination</th>
-                <th>will give rides </th>
-                <th>starting</th>
-                <th>finishing </th>
-              </tr>
-              <tr className="Card">
-                <th>{ChosenRide.vehicle_plate_num}</th>
-                <th>{ChosenRide.destination_name}</th>
-                {/* <th>{Ride.reason_name}</th> */}
-                <th>
-                  {ChosenRide.company_name +
-                    " | " +
-                    ChosenRide.size_name +
-                    " | " +
-                    ChosenRide.type_name}
-                </th>
-                <th>{ChosenRide.will_take_riders.toString()} </th>
-                <th>{prettyDate2(ChosenRide.starting_date)} </th>
-                <th>{prettyDate2(ChosenRide.finishing_date)} </th>
-              </tr>
+            <table className="Chosen-DisplayTable">
+              <thead>
+                <tr className="Chosen-DisplayRow">
+                  <th>Vehicle plate number</th>
+                  <th>Vehicle Type</th>
+                  <th>Destination</th>
+                  <th>will give rides </th>
+                  <th>starting</th>
+                  <th>finishing </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="Chosen-DisplayRow">
+                  <th data-label="Vehicle plate number">
+                    {ChosenRide.vehicle_plate_num}
+                  </th>
+                  <th data-label="Destination">
+                    {ChosenRide.destination_name}
+                  </th>
+                  {/* <th>{Ride.reason_name}</th> */}
+                  <th data-label="Type">
+                    {ChosenRide.company_name +
+                      " | " +
+                      ChosenRide.size_name +
+                      " | " +
+                      ChosenRide.type_name}
+                  </th>
+                  <th data-label="Will give rides">
+                    {ChosenRide.will_take_riders.toString()}{" "}
+                  </th>
+                  <th data-label="starting">
+                    {prettyDate2(ChosenRide.starting_date)}{" "}
+                  </th>
+                  <th data-label="finishing">
+                    {prettyDate2(ChosenRide.finishing_date)}{" "}
+                  </th>
+                </tr>
+              </tbody>
             </table>
-            <table>
-              <tr>
-                <th>User Name</th>
-                <th>User Personal Phone</th>
-                <th>User Work Phone</th>
-                <th>User Home Phone</th>
-              </tr>
-              <tr>
-                <th>
-                  {ChosenRide.user_name + "  " + ChosenRide.user_surname}{" "}
-                </th>
-                <th>{ChosenRide.user_personal_phone}</th>
-                <th>{ChosenRide.user_work_phone}</th>
-                <th>{ChosenRide.user_home_phone}</th>
-              </tr>
+            <table className="Chosen-DisplayTable">
+              <thead>
+                <tr className="Chosen-DisplayRow">
+                  <th>User Name</th>
+                  <th>User Personal Phone</th>
+                  <th>User Work Phone</th>
+                  <th>User Home Phone</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="Chosen-DisplayRow">
+                  <th data-label="Name">
+                    {ChosenRide.user_name + "  " + ChosenRide.user_surname}{" "}
+                  </th>
+                  <th data-label="Personal Phone">
+                    {ChosenRide.user_personal_phone}
+                  </th>
+                  <th data-label="Work phone">{ChosenRide.user_work_phone}</th>
+                  <th data-label="Home Phone">{ChosenRide.user_home_phone}</th>
+                </tr>
+              </tbody>
             </table>
           </div>
         </>
@@ -269,7 +289,7 @@ export default function VehicleSchedule() {
         </div>
       </div>
       <div>
-        <table>
+        <table className="Main-Table">
           <tr className="Card" key={count}>
             <th
               onClick={() => {
@@ -326,7 +346,6 @@ export default function VehicleSchedule() {
     </div>
   );
 }
-//return (x === y)? 0 : x? -1 : 1;
 function sortPlateNum(data) {
   return data.sort(function (a, b) {
     return a.vehicle_plate_num - b.vehicle_plate_num;
