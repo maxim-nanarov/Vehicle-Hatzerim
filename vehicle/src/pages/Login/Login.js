@@ -6,6 +6,7 @@ import "./Login.scss";
 
 export default function Login() {
   const [users, setUser] = useState();
+  //TO DO: change to chech the users password in the server.
   useEffect(() => {
     axios
       .get("https://vehicle-hatzerim.herokuapp.com/users", {
